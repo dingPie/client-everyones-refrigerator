@@ -1,0 +1,24 @@
+shape: sequence_diagram
+
+F: Feature
+PR1: PR(Feature -> Develop)
+D: Develop
+PR2: PR(Develop -> Main)
+M: Main
+
+PR Develop: {
+  F -> PR1: CI(Check Changed Native)
+}
+Merge Develop: {
+  PR1 -> D: Not Changed Native: Merge With Code Push(Staging)
+  PR1 -> D.Tag: Is Changed Native: Merge Only
+  D.Tag -> D.Tag: Release Tag(pre release) and Automatic Upload Store(Staging)
+}
+PR Main: {
+  D -> PR2: CI(Check Changed Native)
+}
+Merge Main: {
+  PR2 -> M: Not Changed Native: Merge With Code Push(Release)
+  PR2 -> M.Tag: Is Changed Native: Merge Only
+  M.Tag -> M.Tag: Release Tag(pre release) and Automatic Upload Store(Release)
+}

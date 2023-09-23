@@ -1,0 +1,42 @@
+name: CD_CODE_PUSH
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - ios/**
+      - android/**
+jobs:
+  continuous_deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set Environment
+        run: |
+          echo PROJECT_ENV=$(test ${GITHUB_REF##*/} = main && echo Release || echo Staging) >> $GITHUB_ENV
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Restore node_modules from cache
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        run: |
+          yarn install --frozen-lockfile
+          npm install -g appcenter-cli
+
+      - name: Deploy to Codepush
+        run: |
+          appcenter login --token ${{ secrets.APPCENTER_ACCESS_TOKEN }}
+          appcenter codepush release-react --app ${{ vars.CODE_PUSH_AOS_APP_NAME }} -d ${{ env.PROJECT_ENV }}
+          appcenter codepush release-react --app ${{ vars.CODE_PUSH_IOS_APP_NAME }} -d ${{ env.PROJECT_ENV }}

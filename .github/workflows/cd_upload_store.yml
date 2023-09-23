@@ -1,0 +1,186 @@
+name: CD_UPLOAD_STORE
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  set_environment:
+    runs-on: ubuntu-latest
+    outputs:
+      project_env: ${{ steps.set_output.outputs.project_env }}
+      version: ${{ steps.set_output.outputs.version }}
+      build_number: ${{ steps.set_output.outputs.build_number }}
+      platform: ${{ steps.set_output.outputs.platform }}
+    steps:
+      - name: Check Project Env
+        id: set_output
+        run: |
+          if [ "${{ github.event.release.prerelease }}" == "true" ]
+          then
+            echo project_env=Staging >> $GITHUB_OUTPUT
+          else
+            echo project_env=Release >> $GITHUB_OUTPUT
+          fi
+
+          input=${GITHUB_REF##*/}
+          regex="^([0-9]+\.[0-9]+\.[0-9]+)(\([0-9]+\))?-(ios|aos)$"
+          if [[ $input =~ $regex ]]
+          then
+            echo version=${BASH_REMATCH[1]} >> $GITHUB_OUTPUT
+            echo build_number=${BASH_REMATCH[2]:1:-1} >> $GITHUB_OUTPUT
+            echo platform=${BASH_REMATCH[3]} >> $GITHUB_OUTPUT
+          fi
+
+  upload_ios:
+    runs-on: macos-latest
+    needs: set_environment
+    if: ${{ needs.set_environment.outputs.platform == 'ios' }}
+    defaults:
+      run:
+        working-directory: ios
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: IOS Bump version
+        uses: yanamura/ios-bump-version@v1
+        with:
+          version: ${{ needs.set_environment.outputs.version }}
+          build-number: ${{ needs.set_environment.outputs.build_number }}
+          project-path: ios
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Restore node_modules from cache
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Setup Ruby (bundle)
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.5
+          bundler-cache: true
+
+      - name: Restore Pods cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ios/Pods
+            ~/Library/Caches/CocoaPods
+            ~/.cocoapods
+          key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+      - name: Install Pods
+        run: pod install --repo-update && cd ..
+
+      - name: Build IOS App
+        uses: yukiarrr/ios-build-action@v1.4.0
+        with:
+          project-path: ios/${{ vars.IOS_APP_SCHEME }}.xcodeproj
+          configuration: ${{ needs.set_environment.outputs.project_env }}
+          p12-base64: ${{ secrets.IOS_P12_BASE64 }}
+          mobileprovision-base64: ${{ secrets.IOS_MOBILE_PROVISION_BASE64 }}
+          code-signing-identity: iPhone Distribution
+          team-id: ${{ secrets.IOS_TEAM_ID }}
+          certificate-password: ${{ secrets.IOS_CERTIFICATE_PASSWORD }}
+          workspace-path: ios/${{ vars.IOS_APP_SCHEME }}.xcworkspace
+          scheme: ${{ vars.IOS_APP_SCHEME }}
+          output-path: artifacts/${{ vars.IOS_APP_SCHEME }}.ipa
+
+      - name: Upload app to TestFlight
+        uses: apple-actions/upload-testflight-build@v1
+        with:
+          app-path: ios/artifacts/${{ vars.IOS_APP_SCHEME }}.ipa
+          issuer-id: ${{ secrets.IOS_APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ secrets.IOS_APPSTORE_API_KEY_ID }}
+          api-private-key: ${{ secrets.IOS_APPSTORE_API_PRIVATE_KEY }}
+
+  upload_aos:
+    needs: set_environment
+    if: ${{ needs.set_environment.outputs.platform == 'aos' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: AOS Bump version
+        uses: chkfung/android-version-actions@v1.2.1
+        with:
+          gradlePath: android/app/build.gradle
+          versionName: ${{ needs.set_environment.outputs.version }}
+          versionCode: ${{ needs.set_environment.outputs.build_number }}
+
+      - name: Set up our JDK environment
+        uses: actions/setup-java@v1.4.3
+        with:
+          java-version: 11
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Restore node_modules from cache
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Cache Gradle Wrapper
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+
+      - name: Cache Gradle Dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-caches-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-caches-
+      - name: Make Gradlew Executable
+        run: cd android && chmod +x ./gradlew
+
+      - name: Set ENV
+        run: |
+          echo BUILD_TYPE=$(test ${{ needs.set_environment.outputs.project_env }} == Staging && echo bundleReleaseStaging || echo bundleRelease) >> $GITHUB_ENV
+          echo RELEASE_DIR=$(test ${{ needs.set_environment.outputs.project_env }} == Staging && echo releaseStaging || echo release) >> $GITHUB_ENV
+
+      - name: Build Android App Bundle
+        run: pwd && cd android && ./gradlew ${{ env.BUILD_TYPE }} --no-daemon && cd ..
+
+      - name: Sign App Bundle
+        id: sign_app
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: android/app/build/outputs/bundle/${{ env.RELEASE_DIR }}
+          signingKeyBase64: ${{ secrets.AOS_SIGNING_KEY }}
+          alias: ${{ secrets.AOS_ALIAS }}
+          keyStorePassword: ${{ secrets.AOS_KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.AOS_KEY_PASSWORD }}
+
+      - name: Upload App to Google Play
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.AOS_SERVICE_JSON }}
+          packageName: ${{ vars.PACKAGE_NAME }}
+          releaseFiles: android/app/build/outputs/bundle/${{ env.RELEASE_DIR }}/*.aab
+          track: alpha
+          status: draft
+          inAppUpdatePriority: 0
