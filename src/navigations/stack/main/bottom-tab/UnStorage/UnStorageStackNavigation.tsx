@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { UnStorageStackParamList } from '@/navigations/type';
 
 import LoginScreen from '@/screens/LoginScreen';
+import UnStorageScreen from '@/screens/UnStorageScreen';
 
 const Auth = createStackNavigator<UnStorageStackParamList>();
 
@@ -16,7 +17,7 @@ const UnStorageStackNavigation = () => {
       }}
       initialRouteName="UnStorage"
     >
-      <Auth.Screen name="UnStorage" component={LoginScreen} />
+      <Auth.Screen name="UnStorage" component={UnStorageScreen} />
     </Auth.Navigator>
   );
 };

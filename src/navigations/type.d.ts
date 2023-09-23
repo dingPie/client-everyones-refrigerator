@@ -35,6 +35,6 @@ export type UnStorageStackParamList = {
 
 export type MyPageStackParamList = {
   MySetting: undefined;
-  UserListSetting: undefined;
+  MemberSetting: undefined;
   RefrigeratorSetting: undefined;
 };

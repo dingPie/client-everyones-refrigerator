@@ -16,12 +16,12 @@ const BottomTabNavigation = () => {
       screenOptions={{ headerShown: false }}
       initialRouteName="HomeTab"
     >
-      <BottomTab.Screen name="HomeTab" component={HomeStackNavigation} />
-      <BottomTab.Screen name="MyPageTab" component={MyPageStackNavigation} />
       <BottomTab.Screen
         name="UnStorageTab"
         component={UnStorageStackNavigation}
       />
+      <BottomTab.Screen name="HomeTab" component={HomeStackNavigation} />
+      <BottomTab.Screen name="MyPageTab" component={MyPageStackNavigation} />
     </BottomTab.Navigator>
   );
 };

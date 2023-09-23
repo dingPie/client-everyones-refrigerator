@@ -5,6 +5,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { HomeStackParamList, MyPageStackParamList } from '@/navigations/type';
 
 import LoginScreen from '@/screens/LoginScreen';
+import MemberSettingScreen from '@/screens/MemberSettingScreen';
+import MySettingScreen from '@/screens/MySettingScreen';
+import RefrigeratorSettingScreen from '@/screens/RefrigeratorSettingScreen';
 
 const Auth = createStackNavigator<MyPageStackParamList>();
 
@@ -16,9 +19,12 @@ const MyPageStackNavigation = () => {
       }}
       initialRouteName="MySetting"
     >
-      <Auth.Screen name="MySetting" component={LoginScreen} />
-      <Auth.Screen name="RefrigeratorSetting" component={LoginScreen} />
-      <Auth.Screen name="UserListSetting" component={LoginScreen} />
+      <Auth.Screen name="MySetting" component={MySettingScreen} />
+      <Auth.Screen
+        name="RefrigeratorSetting"
+        component={RefrigeratorSettingScreen}
+      />
+      <Auth.Screen name="MemberSetting" component={MemberSettingScreen} />
     </Auth.Navigator>
   );
 };
