@@ -4,11 +4,12 @@ import Splash from '@/components/Splash';
 import withAppProvider from '@/hocs/withAppProvider';
 import useFCMPermissionService from '@/hooks/useFCMPermissionService';
 import useFCMWorkingService from '@/hooks/useFCMWorkingService';
-import Navigations from '@/navigations/stack/root/index';
 
 import { MY_IMAGES } from '@/image';
 import { flattenImageObject } from '@/utils/array/flatten-image-object';
 import { preLoadImage } from '@/utils/pre-load/pre-load-image';
+
+import Navigations from './src/navigations';
 
 /**
  *
