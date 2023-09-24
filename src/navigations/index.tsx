@@ -11,9 +11,9 @@ import { RootStackParamList } from './type';
 
 const Root = createStackNavigator<RootStackParamList>();
 
-export default function Navigations() {
+const Navigations = () => {
   // MOCK
-  const isLogin = true;
+  const isLogin = false;
 
   const [appIsReady, setAppIsReady] = React.useState(false);
 
@@ -54,4 +54,6 @@ export default function Navigations() {
       </Root.Navigator>
     </NavigationContainer>
   );
-}
+};
+
+export default Navigations;
