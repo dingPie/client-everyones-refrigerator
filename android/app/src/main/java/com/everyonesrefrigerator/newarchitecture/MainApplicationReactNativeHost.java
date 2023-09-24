@@ -1,4 +1,4 @@
-package com.everyonesrefrigerator.newarchitecture;
+package com.dingpie.everyonesrefrigerator.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.everyonesrefrigerator.BuildConfig;
-import com.everyonesrefrigerator.newarchitecture.components.MainComponentsRegistry;
-import com.everyonesrefrigerator.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.dingpie.everyonesrefrigerator.BuildConfig;
+import com.dingpie.everyonesrefrigerator.newarchitecture.components.MainComponentsRegistry;
+import com.dingpie.everyonesrefrigerator.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

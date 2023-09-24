@@ -1,4 +1,4 @@
-package com.everyonesrefrigerator;
+package com.dingpie.everyonesrefrigerator;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

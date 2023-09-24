@@ -1,4 +1,4 @@
-package com.everyonesrefrigerator.newarchitecture.components;
+package com.dingpie.everyonesrefrigerator.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;
