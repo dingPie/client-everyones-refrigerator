@@ -11,12 +11,22 @@ export const AUTH_API_MUTATION_KEY = {
     ['login', params].filter(isNotNull),
   REFRESH: (params?: Parameter<typeof authApi.refresh>) =>
     ['refresh', params].filter(isNotNull),
+  LOGOUT: (params?: Parameter<typeof authApi.logout>) =>
+    ['logout', params].filter(isNotNull),
 };
 
 export const useAuthLoginMutation = (
   params?: UseMutationParams<typeof authApi.login>,
 ) => {
   return useMutation(authApi.login, {
+    ...params?.options,
+  });
+};
+
+export const useAuthLogoutMutation = (
+  params?: UseMutationParams<typeof authApi.logout>,
+) => {
+  return useMutation(authApi.logout, {
     ...params?.options,
   });
 };

@@ -31,6 +31,14 @@ export class AuthApi {
     return data;
   };
 
+  logout = async (): Promise<any> => {
+    const { data } = await this.axios({
+      method: 'POST',
+      url: `/auth/logout`,
+    });
+    return data;
+  };
+
   refresh = async (req: RefreshDto): Promise<RefreshModel> => {
     const { data } = await this.axios({
       method: 'POST',
