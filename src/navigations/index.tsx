@@ -5,6 +5,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import { useGlobalContext } from '@/contexts/global/useGlobalStoreContext';
+
 import AuthStackNavigation from './stack/auth';
 import MainNavigation from './stack/main/MainNavigation';
 import { RootStackParamList } from './type';
@@ -13,9 +15,7 @@ const Root = createStackNavigator<RootStackParamList>();
 
 const Navigations = () => {
   // MOCK
-  const isLogin = false;
-
-  const [appIsReady, setAppIsReady] = React.useState(false);
+  const { isLogin } = useGlobalContext((ctx) => ctx.state);
 
   const { top } = useSafeAreaInsets();
 

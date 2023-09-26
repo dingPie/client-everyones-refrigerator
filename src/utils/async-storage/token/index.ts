@@ -7,8 +7,8 @@ import {
 const TOKEN_KEY = '@token';
 
 export type TokenType = {
-  access: string;
-  refresh: string;
+  accessToken: string;
+  refreshToken: string;
 };
 
 export const getToken = async () => {
