@@ -21,13 +21,13 @@ const addRefreshSubscriber = (callback: Request) => {
 const refreshToken = async () => {
   try {
     const token = await getToken();
-    if (!token?.refreshToken) throw new Error('not found refresh-token');
-    const { data: newToken }: { data: TokenType } = await axios.post(
+    if (!token) throw new Error('not found refresh-token');
+    const { data: accessToken }: { data: string } = await axios.post(
       `${ENV.API_BASE_URL}/v1/auth/refresh/`,
-      { refresh: token.refreshToken },
+      { refresh: token },
     );
-    setToken({ ...token, ...newToken });
-    return newToken;
+    setToken({ ...token, accessToken });
+    return accessToken;
   } catch (err) {
     // remove token
     console.log(err);
@@ -53,7 +53,7 @@ export const refresh = async (reqData?: AxiosRequestConfig) => {
       isTokenRefreshing = true;
       const token = await refreshToken();
       // TODO 필요할 경우 여기서 토큰을 저장한다.
-      onTokenRefreshed(token.accessToken);
+      onTokenRefreshed(token);
       // 완료되면 제거
       refreshSubscribers = [];
     } catch (error) {

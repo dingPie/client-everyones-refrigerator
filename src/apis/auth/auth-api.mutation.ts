@@ -9,12 +9,22 @@ import authApi from './auth-api';
 export const AUTH_API_MUTATION_KEY = {
   LOGIN: (params?: Parameter<typeof authApi.login>) =>
     ['login', params].filter(isNotNull),
+  REFRESH: (params?: Parameter<typeof authApi.refresh>) =>
+    ['refresh', params].filter(isNotNull),
 };
 
 export const useAuthLoginMutation = (
   params?: UseMutationParams<typeof authApi.login>,
 ) => {
   return useMutation(authApi.login, {
+    ...params?.options,
+  });
+};
+
+export const useAuthRefreshMutation = (
+  params?: UseMutationParams<typeof authApi.refresh>,
+) => {
+  return useMutation(authApi.refresh, {
     ...params?.options,
   });
 };
