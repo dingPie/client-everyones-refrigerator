@@ -20,9 +20,9 @@ const instance = axios.create({
 instance.interceptors.request.use(
   async (config) => {
     const token = await getToken();
-    const isAccess = !!token && !!token.access;
+    const isAccess = !!token && !!token.accessToken;
     if (isAccess) {
-      config.headers.setAuthorization(`Bearer ${token.access}`);
+      config.headers.setAuthorization(`Bearer ${token.accessToken}`);
     }
     return config;
   },
