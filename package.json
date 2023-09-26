@@ -107,5 +107,6 @@
     "win64",
     "linux"
   ],
-  "engineStrict": true
+  "engineStrict": true,
+  "proxy": "http://localhost:8080"
 }
