@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomTabParamList } from '@/navigations/type';
 
 import HomeStackNavigation from './Home/HomeStackNavigation';
-import MyPageStackNavigation from './MyPage/MyPageStackNavigation';
+import SettingStackNavigation from './Setting/SettingStackNavigation';
 import UnStorageStackNavigation from './UnStorage/UnStorageStackNavigation';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -21,7 +21,7 @@ const BottomTabNavigation = () => {
         component={UnStorageStackNavigation}
       />
       <BottomTab.Screen name="HomeTab" component={HomeStackNavigation} />
-      <BottomTab.Screen name="MyPageTab" component={MyPageStackNavigation} />
+      <BottomTab.Screen name="SettingTab" component={SettingStackNavigation} />
     </BottomTab.Navigator>
   );
 };

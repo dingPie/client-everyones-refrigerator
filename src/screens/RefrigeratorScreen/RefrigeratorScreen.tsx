@@ -5,15 +5,15 @@ import { Box, Text } from 'native-base';
 import { useNavigation } from '@react-navigation/core';
 import { NavigationProp } from '@react-navigation/native';
 
-import { MyPageStackParamList } from '@/navigations/type';
+import { SettingStackParamList } from '@/navigations/type';
 
-type RefrigeratorSettingNavigationProps = NavigationProp<
-  MyPageStackParamList,
-  'RefrigeratorSetting'
+type RefrigeratorNavigationProps = NavigationProp<
+  SettingStackParamList,
+  'Refrigerator'
 >;
 
-const RefrigeratorSettingScreen = () => {
-  const navigation = useNavigation<RefrigeratorSettingNavigationProps>();
+const RefrigeratorScreen = () => {
+  const navigation = useNavigation<RefrigeratorNavigationProps>();
 
   return (
     <Box
@@ -28,4 +28,4 @@ const RefrigeratorSettingScreen = () => {
   );
 };
 
-export default RefrigeratorSettingScreen;
+export default RefrigeratorScreen;

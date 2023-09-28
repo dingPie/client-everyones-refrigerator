@@ -5,15 +5,12 @@ import { Box, Text } from 'native-base';
 import { useNavigation } from '@react-navigation/core';
 import { NavigationProp } from '@react-navigation/native';
 
-import { MyPageStackParamList } from '@/navigations/type';
+import { SettingStackParamList } from '@/navigations/type';
 
-type MemberSettingNavigationProps = NavigationProp<
-  MyPageStackParamList,
-  'MemberSetting'
->;
+type MemberNavigationProps = NavigationProp<SettingStackParamList, 'Member'>;
 
-const MemberSettingScreen = () => {
-  const navigation = useNavigation<MemberSettingNavigationProps>();
+const MemberScreen = () => {
+  const navigation = useNavigation<MemberNavigationProps>();
 
   return (
     <Box
@@ -28,4 +25,4 @@ const MemberSettingScreen = () => {
   );
 };
 
-export default MemberSettingScreen;
+export default MemberScreen;

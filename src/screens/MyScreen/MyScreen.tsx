@@ -5,15 +5,12 @@ import { Box, Text } from 'native-base';
 import { useNavigation } from '@react-navigation/core';
 import { NavigationProp } from '@react-navigation/native';
 
-import { MyPageStackParamList } from '@/navigations/type';
+import { SettingStackParamList } from '@/navigations/type';
 
-type MySettingNavigationProps = NavigationProp<
-  MyPageStackParamList,
-  'MySetting'
->;
+type MyNavigationProps = NavigationProp<SettingStackParamList, 'My'>;
 
-const MySettingScreen = () => {
-  const navigation = useNavigation<MySettingNavigationProps>();
+const MyScreen = () => {
+  const navigation = useNavigation<MyNavigationProps>();
 
   return (
     <Box
@@ -28,4 +25,4 @@ const MySettingScreen = () => {
   );
 };
 
-export default MySettingScreen;
+export default MyScreen;
