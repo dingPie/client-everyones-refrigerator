@@ -80,10 +80,9 @@ const LoginScreen = () => {
       alignItems="center"
       justifyContent="space-between"
     >
-      {/* <Flex p="30px"></Flex> */}
-      <VStack space="40px" alignItems="center">
+      <VStack space="40px" alignItems="center" mt="50%">
         {/* P_TODO: 아이콘, 폰트 나중에 바꾸기 */}
-        <Text size="4xl.bold" mt="40%" color="white">
+        <Text size="4xl.bold" color="white">
           모두의 냉장고
         </Text>
         <CustomIcon name="SolidRefrigerator" size={120} color="white" />
