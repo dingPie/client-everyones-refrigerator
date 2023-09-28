@@ -4,12 +4,12 @@ import { createSlice } from '@/utils/react/create-slice';
 
 export type GlobalStateType = {
   isLogin: null | boolean;
-  count: number;
+  accessToken?: string;
 };
 
 const initialState: GlobalStateType = {
   isLogin: null,
-  count: 0,
+  accessToken: undefined,
 };
 
 // 개발 시 count state & reducer 삭제
@@ -17,14 +17,15 @@ const { reducer } = createSlice({
   initialState,
   reducers: {
     RESET: () => initialState,
-    SET_IS_LOGIN: (state, isLogin: boolean) => {
-      state.isLogin = isLogin;
+    LOGIN: (state, _accessToken: string) => {
+      state.isLogin = true;
+      state.accessToken = _accessToken;
+      return state;
     },
-    INCREMENT: (state, count: number) => {
-      state.count = count + 1;
-    },
-    DECREMENT: (state, count: number) => {
-      state.count = count - 1;
+    LOGOUT: (state) => {
+      state.isLogin = false;
+      state.accessToken = undefined;
+      return state;
     },
   },
 });

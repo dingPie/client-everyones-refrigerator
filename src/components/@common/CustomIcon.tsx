@@ -10,7 +10,7 @@ import { FillProps, SvgProps } from 'react-native-svg';
 
 import { ColorType } from 'native-base/lib/typescript/components/types';
 
-import * as Icons from '@/generated/icons/icons';
+import * as Icons from '@/assets/icons';
 
 export type IconsName = keyof typeof Icons;
 

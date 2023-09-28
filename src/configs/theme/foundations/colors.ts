@@ -1,30 +1,8 @@
 import { getColorSchema } from '@/utils/color-generator';
 
 const Light = {
-  primary: {
-    50: '#F5FFFA',
-    100: '#bafdde',
-    200: '#7ffbc1',
-    300: '#18e786',
-    400: '#21D782',
-    500: '#06BC67',
-    600: '#048b4c',
-    700: '#035931',
-    800: '#063D23',
-    900: '#012816',
-  },
-  secondary: {
-    50: '#fefcf2',
-    100: '#fdf5cb',
-    200: '#fcf1b7',
-    300: '#fbeda4',
-    400: '#fae990',
-    500: '#F9E57D',
-    600: '#f6d634',
-    700: '#d3b30a',
-    800: '#8a7506',
-    900: '#413703',
-  },
+  primary: getColorSchema('#A076F9'),
+  secondary: getColorSchema('#6528F7'),
   warning: getColorSchema('#FF6060'),
   success: getColorSchema('#4850FF'),
   gray: {

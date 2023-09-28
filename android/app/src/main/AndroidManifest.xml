@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.everyonesrefrigerator">
+  package="com.dingpie.everyonesrefrigerator">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
