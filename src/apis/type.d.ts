@@ -56,3 +56,9 @@ export type UnboxPromise<T extends Promise<any>> = T extends Promise<infer U>
 export type Parameter<T> = T extends (param: infer U) => any ? U : never;
 
 export type MyError = AxiosError;
+
+export interface ApiResponseType<T> {
+  code: string | number;
+  message: string;
+  result: T;
+}

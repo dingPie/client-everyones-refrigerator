@@ -20,6 +20,6 @@ export class RefrigeratorApi {
   };
 }
 
-const authApi = new RefrigeratorApi();
+const refrigeratorApi = new RefrigeratorApi();
 
-export default authApi;
+export default refrigeratorApi;
