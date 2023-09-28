@@ -1,5 +1,5 @@
 export interface LoginDto {
-  user_login_id: string;
+  userLoginId: string;
   provider: string;
-  provider_uid: string;
+  providerUid: string;
 }

@@ -29,10 +29,10 @@ function App() {
 
   const { mutate: authRefreshMutate } = useAuthRefreshMutation({
     options: {
-      onSuccess: (data, { refresh_token }) => {
+      onSuccess: (data, { refreshToken }) => {
         // P_TODO: 현재 임시로 accessToken은 두 곳에서 관리함.
         setToken({
-          refreshToken: refresh_token,
+          refreshToken,
           accessToken: data.accessToken,
         });
         dispatch({
@@ -61,7 +61,7 @@ function App() {
       const token = await getToken();
       if (!token) return;
       authRefreshMutate({
-        refresh_token: token.refreshToken,
+        refreshToken: token.refreshToken,
       });
     };
     initRefreshToken();

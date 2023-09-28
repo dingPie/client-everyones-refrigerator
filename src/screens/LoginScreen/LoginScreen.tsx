@@ -32,7 +32,7 @@ const LoginScreen = () => {
         setToken(data);
       },
       onError: (err) => {
-        console.log('로그인 에러: ', err?.response?.data);
+        console.log('로그인 에러: ', err?.response);
       },
     },
   });
@@ -54,8 +54,8 @@ const LoginScreen = () => {
       if (provider && uid && email) {
         loginMutate({
           provider,
-          user_login_id: email,
-          provider_uid: uid,
+          userLoginId: email,
+          providerUid: uid,
         });
       }
     } catch (err: any) {
