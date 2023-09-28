@@ -1,21 +1,27 @@
 import React, { memo } from 'react';
 
-import { Box, Flex, HStack, Pressable, Text } from 'native-base';
 import Carousel from 'react-native-reanimated-carousel';
+
+import { MyRefrigeratorItemType } from '@/apis/refrigerator-user/types/model/my-refrigerator-list-model';
 
 import { LAYOUT } from '@/constants/layout';
 
+import MyRefrigeratorCard from './MyRefrigeratorCard';
+import NewRefrigeratorCard from './NewRefrigeratorCard';
+
 interface RefrigeratorCarouselProps {
-  refrigeratorList: any[];
-  // viewerImageIdx: number;
-  // setViewerImageIdx: any;
+  refrigeratorList: MyRefrigeratorItemType[];
+  onPressMyRefrigeratorCard: (refrigeratorItem: MyRefrigeratorItemType) => void;
+  onPressCreateRefrigeratorButton: () => void;
+  onPressJoinOtherRefrigeratorButton: () => void;
 }
 
 const RefrigeratorCarousel = ({
   refrigeratorList,
-}: // viewerImageIdx,
-// setViewerImageIdx,
-RefrigeratorCarouselProps) => {
+  onPressMyRefrigeratorCard,
+  onPressCreateRefrigeratorButton,
+  onPressJoinOtherRefrigeratorButton,
+}: RefrigeratorCarouselProps) => {
   return (
     <Carousel
       loop={false}
@@ -29,26 +35,22 @@ RefrigeratorCarouselProps) => {
         parallaxScrollingOffset: 80,
       }}
       panGestureHandlerProps={{ activeOffsetX: [-10, 10] }}
-      renderItem={({ item }) => {
-        return (
-          <Pressable
-            flex={1}
-            alignSelf={'center'}
-            justifyContent="center"
-            py="20px"
-          >
-            <Flex
-              key={item.id}
-              flex={1}
-              width={LAYOUT.WINDOW_WIDTH * 0.85}
-              height={LAYOUT.WINDOW_HEIGHT * 0.5}
-              borderRadius={'16px'}
-              bgColor="red.100"
-              shadow={5}
-            >
-              <Text>dddd</Text>
-            </Flex>
-          </Pressable>
+      renderItem={({ item, index }) => {
+        return item.refrigerator.id === -1 ? (
+          <NewRefrigeratorCard
+            key={-1}
+            isCanNew={refrigeratorList.length !== 6} // P_TODO: 상수분리 예정
+            onPressCreateRefrigeratorButton={onPressCreateRefrigeratorButton}
+            onPressJoinOtherRefrigeratorButton={
+              onPressJoinOtherRefrigeratorButton
+            }
+          />
+        ) : (
+          <MyRefrigeratorCard
+            key={item.refrigerator.id}
+            refrigeratorItem={item}
+            onPressMyRefrigeratorCard={onPressMyRefrigeratorCard}
+          />
         );
       }}
     />
