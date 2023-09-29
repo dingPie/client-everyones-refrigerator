@@ -55,7 +55,7 @@ const NewRefrigeratorCard = ({
                 </Button>
                 <Button
                   onPress={onPressJoinOtherRefrigeratorButton}
-                  variant="solid"
+                  variant="outline"
                   borderWidth="2px"
                   borderColor="primary.500"
                   w="100%"
