@@ -15,8 +15,6 @@ import {
   useDisclose,
 } from 'native-base';
 
-// import { ModalDataProps } from './ModalProvider';
-
 interface ModalButtonProps {
   text: string;
   onPress?: () => void;
