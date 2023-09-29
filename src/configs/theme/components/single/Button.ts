@@ -94,8 +94,8 @@ export const Button = {
     ...baseTheme.components.Button.baseStyle,
     _focus: { boxShadow: 'none' },
   },
-  variants: {
-    solid: variantSolid,
-  },
+  // variants: {
+  //   solid: variantSolid,
+  // },
   sizes,
 };

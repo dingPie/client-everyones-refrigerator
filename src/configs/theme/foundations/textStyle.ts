@@ -5,31 +5,31 @@ export const normalStyle = {
     fontWeight: '700',
   },
   '4xl': {
-    fontSize: '36px',
+    fontSize: '42px',
     lineHeight: '40px',
   },
   '3xl': {
-    fontSize: '30px',
+    fontSize: '36px',
     lineHeight: '36px',
   },
   '2xl': {
-    fontSize: '24px',
+    fontSize: '30px',
     lineHeight: '32px',
   },
   xl: {
-    fontSize: '20px',
+    fontSize: '24px',
     lineHeight: '30px',
   },
   lg: {
-    fontSize: '18px',
+    fontSize: '20px',
     lineHeight: '27px',
   },
   md: {
-    fontSize: '16px',
+    fontSize: '18px',
     lineHeight: '24px',
   },
   sm: {
-    fontSize: '14px',
+    fontSize: '15px',
     lineHeight: '21px',
   },
   xs: {
