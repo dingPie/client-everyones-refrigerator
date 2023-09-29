@@ -1,0 +1,25 @@
+import { useQuery } from '@tanstack/react-query';
+
+import { UseQueryParams } from '@/types/module/react-query/use-query-params';
+import { isNotNull } from '@/utils/validate/is-not-null';
+
+import refrigeratorSpaceApi from './refrigerator-space-api';
+
+export const REFRIGERATOR_SPACE_API_QUERY_KEY = {
+  GET_REFRIGERATOR_SPACE_LIST: (
+    params: Parameter<typeof refrigeratorSpaceApi.list>,
+  ) => ['refrigerator-space-list', params].filter(isNotNull),
+};
+
+export function useGetRefrigeratorSpaceListQuery(
+  params: UseQueryParams<typeof refrigeratorSpaceApi.list>,
+) {
+  const queryKey = REFRIGERATOR_SPACE_API_QUERY_KEY.GET_REFRIGERATOR_SPACE_LIST(
+    params.variables,
+  );
+  return useQuery(
+    queryKey,
+    () => refrigeratorSpaceApi.list(params.variables),
+    params?.options,
+  );
+}
