@@ -10,3 +10,5 @@ export type RefrigeratorSpacePurposeTypeType =
   | 'kimchi';
 
 export type RefrigeratorSpaceShapeTypeType = 'shelf' | 'drawer' | 'door';
+
+export type ItemStatusType = 'storage' | 'used' | 'discarded';
