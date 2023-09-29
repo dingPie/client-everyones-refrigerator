@@ -50,36 +50,41 @@ const CommonModal = ({
       {component ? (
         component
       ) : (
-        <Modal.Content py="20px" px="24px">
-          <VStack justifyContent="space-between" space="36px">
-            <VStack space="15px">
-              <Text size="xl.bold" {...titleProps}>
-                {title}
+        <Modal.Content p="24px">
+          <VStack justifyContent="space-between" space="30px">
+            <Text size="xl.bold" {...titleProps}>
+              {title}
+            </Text>
+
+            {!!content && (
+              <Text size="md" color="gray.700" {...contentProps}>
+                {content}
               </Text>
-              {!!content && (
-                <Text
-                  size="md"
-                  color="gray.700"
-                  textAlign="center"
-                  {...contentProps}
-                >
-                  {content}
-                </Text>
-              )}
-            </VStack>
-            <HStack space="10px" w="100%">
+            )}
+
+            <HStack justifyContent="flex-end" space="10px" w="100%" mt="10px">
               {!!buttons?.length &&
                 buttons?.map((button, idx) => (
                   <Button
                     key={idx + button?.text}
-                    w="100%"
                     variant={button.isCancel ? 'outline' : 'solid'}
                     onPress={
                       button.isCancel ? () => onClose(modalKey) : button.onPress
                     }
                     {...button.buttonStyle}
                   >
-                    {button.text}
+                    <Text
+                      size="md.bold"
+                      color={
+                        button.isCancel
+                          ? 'primary.500'
+                          : button.buttonStyle?.color
+                          ? button.buttonStyle?.color
+                          : 'white'
+                      }
+                    >
+                      {button.text}
+                    </Text>
                   </Button>
                 ))}
             </HStack>
