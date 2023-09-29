@@ -3,3 +3,10 @@ export type RefrigeratorUserAuthorityType =
   | 'manager'
   | 'normal'
   | 'waiting';
+
+export type RefrigeratorSpacePurposeTypeType =
+  | 'refrigeration'
+  | 'freeze'
+  | 'kimchi';
+
+export type RefrigeratorSpaceShapeTypeType = 'shelf' | 'drawer' | 'door';
