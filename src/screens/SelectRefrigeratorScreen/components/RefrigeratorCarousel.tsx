@@ -27,7 +27,7 @@ const RefrigeratorCarousel = ({
       loop={false}
       data={refrigeratorList}
       width={LAYOUT.WINDOW_WIDTH}
-      height={LAYOUT.WINDOW_HEIGHT * 0.6}
+      height={LAYOUT.WINDOW_HEIGHT * 0.5}
       mode="parallax"
       modeConfig={{
         parallaxAdjacentItemScale: 0.8,
