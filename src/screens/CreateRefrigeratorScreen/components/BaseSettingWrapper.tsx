@@ -1,24 +1,32 @@
 import React from 'react';
 
 import { Checkbox, HStack, Text, VStack } from 'native-base';
+import { Controller, useFormContext } from 'react-hook-form';
 
 import CustomInput from '@/components/#Atoms/CustomInput';
 import RowLabelWrapper from '@/components/#Atoms/RowLabelWrapper';
+import CustomInputController from '@/components/#Molecules/CustomInputController';
+
+import { CreateRefrigeratorFormDataType } from '../useCreateRefrigeratorForm';
 
 interface BaseSettingWrapperProps {}
 
 const BaseSettingWrapper = ({}: BaseSettingWrapperProps) => {
+  const { control } = useFormContext<CreateRefrigeratorFormDataType>();
+
   return (
     <VStack space="16px" px="16px">
       <Text size="2xl.bold">기본 설정</Text>
 
       <VStack space="8px">
         <RowLabelWrapper label="냉장고 이름" isRequire>
-          <CustomInput flex={1} placeholder="이 냉장고의 이름" />
+          <CustomInputController keyName={'name'} />
         </RowLabelWrapper>
+
         <RowLabelWrapper label="냉장고 코드">
-          <CustomInput flex={1} placeholder="AAAAAA 형식의 대문자 6자리" />
+          <CustomInputController keyName={'code'} />
         </RowLabelWrapper>
+
         <RowLabelWrapper
           label="최대 보관 갯수"
           isRequire
@@ -27,20 +35,23 @@ const BaseSettingWrapper = ({}: BaseSettingWrapperProps) => {
           }}
         >
           <HStack
-            flex={1}
+            w="124px"
             space="8px"
             justifyContent="flex-end"
             alignItems="center"
           >
-            <CustomInput
+            <CustomInputController
+              keyName={'maxCountStoragePerUser'}
               keyboardType="numeric"
               placeholder="최대 1,000개"
-              w="100px"
               size="sm"
+              w="100px"
+              isShowError={false}
             />
             <Text>개</Text>
           </HStack>
         </RowLabelWrapper>
+
         <RowLabelWrapper
           label="최대 보관 일"
           isRequire
@@ -49,20 +60,23 @@ const BaseSettingWrapper = ({}: BaseSettingWrapperProps) => {
           }}
         >
           <HStack
-            flex={1}
+            w="124px"
             space="8px"
             justifyContent="flex-end"
             alignItems="center"
           >
-            <CustomInput
+            <CustomInputController
+              keyName={'maxStoragePeriod'}
               keyboardType="numeric"
               placeholder="최대 30일"
-              w="100px"
               size="sm"
+              w="100px"
+              isShowError={false}
             />
             <Text>일</Text>
           </HStack>
         </RowLabelWrapper>
+
         <RowLabelWrapper
           label="보관한 사람 이름 공개"
           labelProps={{
@@ -73,7 +87,23 @@ const BaseSettingWrapper = ({}: BaseSettingWrapperProps) => {
             h: '40px',
           }}
         >
-          <Checkbox value={''} size="md" />
+          <Controller
+            name="isShowUserName"
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <Checkbox
+                  value=""
+                  isChecked={value}
+                  onChange={onChange}
+                  size="md"
+                  mr="-14px"
+                >
+                  {''}
+                </Checkbox>
+              );
+            }}
+          />
         </RowLabelWrapper>
       </VStack>
     </VStack>
