@@ -5,12 +5,17 @@ import { Box, Text } from 'native-base';
 import { useNavigation } from '@react-navigation/core';
 import { NavigationProp } from '@react-navigation/native';
 
+import { useGlobalContext } from '@/contexts/global/useGlobalStoreContext';
 import { HomeStackParamList } from '@/navigations/type';
 
 type MainNavigationProps = NavigationProp<HomeStackParamList, 'Main'>;
 
 const MainScreen = () => {
   const navigation = useNavigation<MainNavigationProps>();
+
+  const { refrigeratorId } = useGlobalContext((ctx) => ctx.state);
+
+  console.log('$$$$$$$$$$$', refrigeratorId);
 
   return (
     <Box

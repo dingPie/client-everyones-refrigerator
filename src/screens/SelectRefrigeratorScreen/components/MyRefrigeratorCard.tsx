@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 
-import { Pressable, Text, VStack } from 'native-base';
+import { HStack, Pressable, Text, VStack } from 'native-base';
 
 import { MyRefrigeratorItemType } from '@/apis/refrigerator-user/types/model/my-refrigerator-list-model';
 
@@ -47,11 +47,14 @@ const MyRefrigeratorCard = ({
         shadow={5}
       >
         <CustomIcon name="SolidRefrigerator" size={160} color="black" />
-        <VStack space="4px" alignItems="center">
+        <VStack space="6px" alignItems="center">
           <Text size="2xl.bold">{refrigeratorItem.refrigerator.name}</Text>
-          <Text size="md">
-            {LABEL.USER.AUTHORITY[refrigeratorItem.authority]}
-          </Text>
+          <HStack>
+            <Text size="md">{`내 권한: `}</Text>
+            <Text size="md.bold">
+              {LABEL.USER.AUTHORITY[refrigeratorItem.authority]}
+            </Text>
+          </HStack>
         </VStack>
       </VStack>
     </Pressable>
