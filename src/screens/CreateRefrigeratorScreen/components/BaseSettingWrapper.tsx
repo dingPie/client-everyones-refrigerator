@@ -3,7 +3,6 @@ import React from 'react';
 import { Checkbox, HStack, Text, VStack } from 'native-base';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import CustomInput from '@/components/#Atoms/CustomInput';
 import RowLabelWrapper from '@/components/#Atoms/RowLabelWrapper';
 import CustomInputController from '@/components/#Molecules/CustomInputController';
 
@@ -15,7 +14,7 @@ const BaseSettingWrapper = ({}: BaseSettingWrapperProps) => {
   const { control } = useFormContext<CreateRefrigeratorFormDataType>();
 
   return (
-    <VStack space="16px" px="16px">
+    <VStack space="16px" mb="40px">
       <Text size="2xl.bold">기본 설정</Text>
 
       <VStack space="8px">
