@@ -6,6 +6,7 @@ import FlipperAsyncStorage from 'rn-flipper-async-storage-advanced';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import CodePushManager from '@/components/Codepush/CodePushManager';
+import ModalProvider from '@/contexts/Modal/ModalProvider';
 import { GlobalStoreProvider } from '@/contexts/global/useGlobalStoreContext';
 import useCodePush from '@/hooks/useCodePush';
 
@@ -32,7 +33,9 @@ function withAppProvider<T extends React.ComponentType<any>>(AppComponent: T) {
             />
           ) : (
             <GlobalStoreProvider>
-              <AppComponent {...props} />
+              <ModalProvider>
+                <AppComponent {...props} />
+              </ModalProvider>
             </GlobalStoreProvider>
           )}
           <FlipperAsyncStorage />

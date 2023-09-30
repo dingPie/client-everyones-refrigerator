@@ -10,6 +10,7 @@ module.exports = {
   },
   plugins: [
     '@babel/plugin-transform-modules-commonjs',
+    'react-native-reanimated/plugin',
     [
       'module:react-native-dotenv',
       {

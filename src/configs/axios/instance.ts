@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 
-import { getToken } from '@/utils/async-storage/token';
+import { deleteToken, getToken } from '@/utils/async-storage/token';
 import { apiLogger } from '@/utils/logger/api-logger';
 import styledConsole from '@/utils/logger/styled-console';
 
@@ -41,8 +41,8 @@ instance.interceptors.response.use(
     try {
       const { response: res, config: reqData } = error || {};
       const { status } = res || { status: 400 };
-      const isUnAuthError = status === 401;
-      const isExpiredToken = status === 444;
+      const isUnAuthError = status === 429;
+      const isExpiredToken = status === 419;
 
       if (isDev)
         apiLogger({ status, reqData, resData: error, method: 'error' });
@@ -52,15 +52,13 @@ instance.interceptors.response.use(
       }
 
       if (isUnAuthError) {
-        // deleteToken();
-        // if (isClient) Router.push(ROUTE.LOGIN);
-        // return Promise.reject(error);
+        deleteToken();
+        // P_TODO: 리프레시 만료 되었을 때 어떻게하지?
       }
 
       return Promise.reject(error);
     } catch (e) {
       styledConsole({
-        //
         method: 'error',
         topic: 'UN_HANDLED',
         title: 'axios-interceptor',
