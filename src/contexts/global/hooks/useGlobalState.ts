@@ -5,11 +5,13 @@ import { createSlice } from '@/utils/react/create-slice';
 export type GlobalStateType = {
   isLogin: null | boolean;
   accessToken?: string;
+  refrigeratorId: null | number;
 };
 
 const initialState: GlobalStateType = {
   isLogin: null,
   accessToken: undefined,
+  refrigeratorId: null,
 };
 
 // 개발 시 count state & reducer 삭제
@@ -25,6 +27,10 @@ const { reducer } = createSlice({
     LOGOUT: (state) => {
       state.isLogin = false;
       state.accessToken = undefined;
+      return state;
+    },
+    SET_REFRIGERATOR_ID: (state, _refrigeratorId) => {
+      state.refrigeratorId = _refrigeratorId;
       return state;
     },
   },
