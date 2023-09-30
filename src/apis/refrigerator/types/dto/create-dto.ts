@@ -3,4 +3,5 @@ export interface CreateDto {
   isShowUserName: boolean;
   maxCountStoragePerUser: number;
   userName: string;
+  code: string;
 }

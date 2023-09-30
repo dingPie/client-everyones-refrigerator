@@ -2,7 +2,8 @@ import React, { useMemo } from 'react';
 
 import { IInputProps, Input } from 'native-base';
 
-interface CustomInputProps extends Omit<IInputProps, 'variant' | 'size'> {
+export interface CustomInputProps
+  extends Omit<IInputProps, 'variant' | 'size'> {
   size?: 'sm' | 'md' | 'lg';
   variant?: 'underline' | 'outline';
 }
@@ -25,7 +26,7 @@ const CustomInput = ({
       case 'lg':
         return { fontSize: 'lg', h: '60px' };
       default:
-        return { height: '48px' };
+        return { h: '48px' };
     }
   }, [size]);
 

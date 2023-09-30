@@ -20,7 +20,13 @@ const RowLabelWrapper = ({
   labelProps,
 }: RowLabelWrapperProps) => {
   return (
-    <HStack space="12px" alignItems="center" w="100%" {...boxProps}>
+    <HStack
+      space="40px"
+      justifyContent="space-between"
+      alignItems="center"
+      w="100%"
+      {...boxProps}
+    >
       <HStack space="2px" w="100px" flexShrink={0} {...labelProps}>
         <Text size="md" color="gray.800" flexShrink={0}>
           {label}
