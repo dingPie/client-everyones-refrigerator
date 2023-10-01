@@ -29,7 +29,7 @@ const CreateRefrigeratorScreen = () => {
   const onPressAddEmptyRefrigeratorButton = useCallback(() => {
     const newList = [...refrigeratorSpaceList, emptyRefrigeratorSpaceItem];
     createRefrigeratorMethod.setValue('refrigeratorSpaceList', newList, {
-      shouldValidate: true,
+      // shouldValidate: true,
     });
   }, [createRefrigeratorMethod, refrigeratorSpaceList]);
 
@@ -39,7 +39,7 @@ const CreateRefrigeratorScreen = () => {
         (_, idx) => index !== idx,
       );
       createRefrigeratorMethod.setValue('refrigeratorSpaceList', removedList, {
-        shouldValidate: true,
+        // shouldValidate: true,
       });
     },
     [createRefrigeratorMethod, refrigeratorSpaceList],
@@ -71,7 +71,7 @@ const CreateRefrigeratorScreen = () => {
             <>
               <BaseSettingWrapper />
               <Text size="2xl.bold" mb="16px">
-                기본 설정
+                냉장고 칸 별 설정
               </Text>
             </>
           )}
