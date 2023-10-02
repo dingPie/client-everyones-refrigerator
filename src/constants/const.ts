@@ -6,6 +6,12 @@ export const REFRIGERATOR_USER = {
     WAITING: 'waiting',
   },
 };
+export const REFRIGERATOR = {
+  STATUS: {
+    OPERATION: 'operation',
+    WAIT_FOR_DELETION: 'wait_for_deletion',
+  },
+};
 
 export const REFRIGERATOR_SPACE = {
   SHAPE_TYPE: {
