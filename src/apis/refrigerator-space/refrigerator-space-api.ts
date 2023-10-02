@@ -5,6 +5,7 @@ import instance from '@/configs/axios/instance';
 import { ApiResponseType } from '../type';
 import { CreateListDto } from './types/dto/create-list-dto';
 import { ListDto } from './types/dto/list-dto';
+import { CreateListModel } from './types/model/create-list-dto';
 import { ListModel } from './types/model/list-model';
 
 export class RefrigeratorSpaceApi {
@@ -22,7 +23,9 @@ export class RefrigeratorSpaceApi {
     return data;
   };
 
-  createList = async (body: CreateListDto): Promise<ApiResponseType<any>> => {
+  createList = async (
+    body: CreateListDto,
+  ): Promise<ApiResponseType<CreateListModel>> => {
     const { data } = await this.axios({
       method: 'POST',
       url: `/refrigerator-space/create-list`,
