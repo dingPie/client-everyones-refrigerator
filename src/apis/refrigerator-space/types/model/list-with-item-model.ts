@@ -5,7 +5,7 @@ import {
   RefrigeratorSpaceShapeTypeType,
 } from '@/types/type';
 
-export interface RefrigeratorSpaceItemType {
+export interface RefrigeratorSpaceWithItemItemType {
   id: number;
   name: string;
   maxCountPerSpace: number;
@@ -15,4 +15,4 @@ export interface RefrigeratorSpaceItemType {
   itemInfoList: ItemInfoItemType[]; // P_TODO; 추후 받아오는 데이터 간소화 할 수도 있음.
 }
 
-export type ListWithItemModel = RefrigeratorSpaceItemType[];
+export type ListWithItemModel = RefrigeratorSpaceWithItemItemType[];
