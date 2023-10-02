@@ -38,3 +38,11 @@ export type SettingStackParamList = {
   Member: undefined;
   Refrigerator: undefined;
 };
+
+export type CompositeScreenNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<MainStackParamList, 'BottomTab'>,
+  CompositeNavigationProp<
+    BottomTabNavigationProp<BottomTabParamList, 'HomeTab'>,
+    StackNavigationProp<HomeStackParamList, 'Main'>
+  >
+>;

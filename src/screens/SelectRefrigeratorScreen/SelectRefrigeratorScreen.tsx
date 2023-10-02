@@ -1,15 +1,9 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
-
-import { Alert } from 'react-native';
+import React, { useCallback, useMemo } from 'react';
 
 import { HStack, Pressable, Text, VStack, useDisclose } from 'native-base';
 import { FormProvider } from 'react-hook-form';
 
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import {
-  CompositeNavigationProp,
-  useNavigation,
-} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -25,10 +19,8 @@ import useCustomModal from '@/contexts/Modal/useCustomModal';
 import { useGlobalContext } from '@/contexts/global/useGlobalStoreContext';
 import useCustomToast from '@/hooks/useCustomToast';
 import {
-  BottomTabParamList,
-  HomeStackParamList,
+  CompositeScreenNavigationProp,
   IntroStackParamList,
-  MainStackParamList,
 } from '@/navigations/type';
 
 import { deleteToken } from '@/utils/async-storage/token';
@@ -38,14 +30,6 @@ import RefrigeratorCarousel from './components/RefrigeratorCarousel';
 import useJoinRefrigeratorForm from './useJoinRefrigeratorForm';
 
 type IntroNavigationProp = StackNavigationProp<IntroStackParamList>;
-
-type CompositeScreenNavigationProp = CompositeNavigationProp<
-  StackNavigationProp<MainStackParamList, 'BottomTab'>,
-  CompositeNavigationProp<
-    BottomTabNavigationProp<BottomTabParamList, 'HomeTab'>,
-    StackNavigationProp<HomeStackParamList, 'Main'>
-  >
->;
 
 const SelectRefrigeratorScreen = () => {
   const navigation = useNavigation<IntroNavigationProp>();
