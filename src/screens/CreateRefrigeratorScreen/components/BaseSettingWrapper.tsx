@@ -14,8 +14,16 @@ const BaseSettingWrapper = ({}: BaseSettingWrapperProps) => {
   const { control } = useFormContext<CreateRefrigeratorFormDataType>();
 
   return (
-    <VStack space="16px" mb="40px">
-      <Text size="2xl.bold">냉장고 기본 설정</Text>
+    <VStack
+      space="16px"
+      pb="20px"
+      mb="20px"
+      px="16px"
+      bgColor="white"
+      borderBottomColor="gray.100"
+      borderBottomWidth="6px"
+    >
+      <Text size="2xl.bold">그룹 기본 설정</Text>
 
       <VStack space="8px">
         <RowLabelWrapper label="냉장고 이름" isRequire>

@@ -42,9 +42,11 @@ const RefrigeratorSpaceInputItem = ({
     <VStack
       space="16px"
       p="16px"
+      mx="16px"
       mb="16px"
       bgColor="primary.50"
       borderRadius="6px"
+      shadow={2}
     >
       <HStack justifyContent="space-between" alignItems="center">
         <Text size="lg.bold"> {`${index + 1}번 칸`} </Text>

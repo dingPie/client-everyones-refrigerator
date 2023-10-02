@@ -37,7 +37,7 @@ const CustomInputController = ({
         }}
       />
       {!!errors?.[keyName] && isShowError && (
-        <Text size="sm" color="warning.500">
+        <Text size="sm" color="warning.500" mt="4px">
           {errors?.[keyName]?.message as string}
         </Text>
       )}
