@@ -43,6 +43,7 @@ export const createRefrigeratorFormSchema = yup.object({
   name: yup.string().required('냉장고 그룹의 이름이 필요합니다.'),
   code: yup.string().matches(regex.createRefrigeratorCode, {
     message: '6자리 대문자 코드를 입력해주세요.',
+    excludeEmptyString: true,
   }), // P_MEMO: 얘는 없으면 자동생성
   userName: yup.string().required('이 그룹의 내 이름을 설정해주세요.'),
   maxCountStoragePerUser: yup
@@ -50,7 +51,10 @@ export const createRefrigeratorFormSchema = yup.object({
     .required('최대 보관일 설정이 필요합니다.'),
   maxStoragePeriod: yup.number().required('최대 보관 갯수를 설정해주세요.'), // P_MEMO: 이건 받아서 각 칸당 설정해줘야 함.
   isShowUserName: yup.bool().required(),
-  refrigeratorSpaceList: yup.array().of(refrigeratorSpaceSchema).required(),
+  refrigeratorSpaceList: yup
+    .array()
+    .of(refrigeratorSpaceSchema)
+    .required('누락된 값이 있습니다.'),
 });
 
 const useCreateRefrigeratorForm = (
