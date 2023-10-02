@@ -6,10 +6,22 @@ import { FormProvider, useWatch } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
+import { useRefrigeratorSpaceCreateListMutation } from '@/apis/refrigerator-space/refrigerator-space-api.mutation';
+import { useRefrigeratorCreateMutation } from '@/apis/refrigerator/refrigerator-api.mutation';
+
 import RowLabelWrapper from '@/components/#Atoms/RowLabelWrapper';
 import CustomInputController from '@/components/#Molecules/CustomInputController';
+import { useGlobalContext } from '@/contexts/global/useGlobalStoreContext';
 import useCustomToast from '@/hooks/useCustomToast';
-import { MainStackParamList } from '@/navigations/type';
+import {
+  CompositeScreenNavigationProp,
+  MainStackParamList,
+} from '@/navigations/type';
+
+import {
+  RefrigeratorSpacePurposeTypeType,
+  RefrigeratorSpaceShapeTypeType,
+} from '@/types/type';
 
 import BaseSettingWrapper from './components/BaseSettingWrapper';
 import RefrigeratorSpaceInputItem from './components/RefrigeratorSpaceInputItem';
@@ -21,6 +33,8 @@ type MainNavigationProp = StackNavigationProp<MainStackParamList>;
 
 const CreateRefrigeratorScreen = () => {
   const navigation = useNavigation<MainNavigationProp>();
+  const mainNavigation = useNavigation<CompositeScreenNavigationProp>();
+  const { dispatch } = useGlobalContext((ctx) => ctx);
   const Toast = useCustomToast();
 
   const createRefrigeratorMethod = useCreateRefrigeratorForm();
@@ -29,6 +43,59 @@ const CreateRefrigeratorScreen = () => {
     control: createRefrigeratorMethod.control,
     name: 'refrigeratorSpaceList',
   });
+
+  const { mutate: refrigeratorCreateMutate } = useRefrigeratorCreateMutation({
+    options: {
+      onSuccess: (data) => {
+        const { getValues } = createRefrigeratorMethod;
+        // P_MEMO: 타입정의 및 maxStoragePeriod 합성
+        const refrigeratorSpaceList = getValues('refrigeratorSpaceList').map(
+          (v) => ({
+            ...v,
+            purposeType: v.purposeType as RefrigeratorSpacePurposeTypeType,
+            shapeType: v.shapeType as RefrigeratorSpaceShapeTypeType,
+            maxStoragePeriod: getValues('maxStoragePeriod'),
+          }),
+        );
+        // P_MEMO: 냉장고 생성 후 칸도 생성 해줌
+        refrigeratorSpaceCreateListMutate({
+          refrigeratorId: data.result.id,
+          refrigeratorSpaceList,
+        });
+      },
+      onError: (err: any) => {
+        console.log('냉장고 생성 에러', err.response.data?.message);
+        Toast.show({
+          title: err.response.data?.message || '',
+          status: 'error',
+        });
+      },
+    },
+  });
+
+  const { mutate: refrigeratorSpaceCreateListMutate } =
+    useRefrigeratorSpaceCreateListMutation({
+      options: {
+        onSuccess: (data) => {
+          mainNavigation.navigate('BottomTab');
+          // P_TODO: Async Storage 로 바꿀 수 있음.
+          dispatch({
+            type: 'SET_REFRIGERATOR_ID',
+            payload: data.result.refrigeratorId,
+          });
+          Toast.show({
+            title: '새 냉장고 생성에 성공했어요.',
+          });
+        },
+        onError: (err: any) => {
+          console.log('냉장고 칸 목록 에러', err.response.data?.message);
+          Toast.show({
+            title: err.response.data?.message || '',
+            status: 'error',
+          });
+        },
+      },
+    });
 
   const onPressAddEmptyRefrigeratorButton = useCallback(() => {
     const newList = [...refrigeratorSpaceList, emptyRefrigeratorSpaceItem];
@@ -50,23 +117,31 @@ const CreateRefrigeratorScreen = () => {
   );
 
   // 냉장고 생성 버튼
-  const onPressCreateRefrigeratorButton = createRefrigeratorMethod.handleSubmit(
-    async () => {
-      console.log('냉장고 생성');
-      const {
-        formState: { errors, isValid },
-        trigger,
-      } = createRefrigeratorMethod;
-      console.log('444');
-      // if (!isValid) {
-      // }
+  const onPressCreateRefrigeratorButton = useCallback(async () => {
+    const {
+      getValues,
+      formState: { errors, isValid },
+      trigger,
+    } = createRefrigeratorMethod;
 
-      await trigger();
-      await trigger();
+    if (!isValid) {
+      Toast.show({
+        title: '누락된 값이 있습니다.',
+        status: 'error',
+        alertProps: { bottom: '60px' },
+      });
+    }
 
-      console.log('$$$$$$$$$$$$', errors, isValid);
-    },
-  );
+    await trigger();
+
+    refrigeratorCreateMutate({
+      name: getValues('name'),
+      code: getValues('code'),
+      maxCountStoragePerUser: getValues('maxCountStoragePerUser'),
+      isShowUserName: getValues('isShowUserName'),
+      userName: getValues('userName'),
+    });
+  }, [Toast, createRefrigeratorMethod, refrigeratorCreateMutate]);
 
   return (
     <FormProvider {...createRefrigeratorMethod}>
@@ -87,8 +162,9 @@ const CreateRefrigeratorScreen = () => {
           keyExtractor={(_, index) => index.toString()}
           ListHeaderComponent={() => (
             <>
+              {/* 상단 냉장고 기본 설정 */}
               <BaseSettingWrapper />
-
+              {/* 중단 냉장고에서 사용할 내 이름 설정 */}
               <RowLabelWrapper
                 label="이 그룹에서 내 이름"
                 isRequire
@@ -131,10 +207,6 @@ const CreateRefrigeratorScreen = () => {
           ListFooterComponentStyle={{
             marginBottom: 40,
           }}
-          // px="16px"
-          // contentContainerStyle={{
-          //   paddingHorizontal: 16,
-          // }}
         />
 
         <Flex
