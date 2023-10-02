@@ -3,6 +3,7 @@ import * as yup from 'yup';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 
+import { REFRIGERATOR_SPACE } from '@/constants/const';
 import { regex } from '@/utils/regex';
 
 export interface CreateRefrigeratorFormDataType {
@@ -24,19 +25,17 @@ export interface CreateRefrigeratorFormDataType {
 export const emptyRefrigeratorSpaceItem = {
   name: '',
   maxCountPerSpace: 0,
-  purposeType: '',
-  shapeType: '',
+  purposeType: REFRIGERATOR_SPACE.PURPOSE_TYPE.REFRIGERATION,
+  shapeType: REFRIGERATOR_SPACE.SHAPE_TYPE.SHELF,
 };
 
 const refrigeratorSpaceSchema = yup.object({
-  name: yup.string().required('이 냉장고에서 사용할 이름을 입력해주세요.'),
+  name: yup.string().required('이 칸 이름을 설정해주세요'),
   maxCountPerSpace: yup
     .number()
-    .required('이 냉장고에서 사용할 이름을 입력해주세요.'),
-  purposeType: yup
-    .string()
-    .required('이 냉장고에서 사용할 이름을 입력해주세요.'),
-  shapeType: yup.string().required('이 냉장고에서 사용할 이름을 입력해주세요.'),
+    .required('이 칸의 최대 보관 갯수를 설정해주세요.'),
+  purposeType: yup.string().required('이 칸의 보관 유형을 설정해주세요.'),
+  shapeType: yup.string().required('이 칸의 형태를 설정해주세요.'),
 });
 
 export const createRefrigeratorFormSchema = yup.object({

@@ -64,10 +64,10 @@ const RefrigeratorSpaceInputItem = ({
       </HStack>
 
       <VStack space="8px">
-        <RowLabelWrapper label="냉장고 이름" isRequire>
+        <RowLabelWrapper label="칸 별 이름" isRequire>
           <CustomInputController
             keyName={`refrigeratorSpaceList.${index}.name`}
-            size="sm"
+            placeholder="냉장실 1번칸"
           />
         </RowLabelWrapper>
         <RowLabelWrapper
@@ -78,7 +78,7 @@ const RefrigeratorSpaceInputItem = ({
           }}
         >
           <HStack
-            w="124px"
+            w="144px"
             space="8px"
             justifyContent="flex-end"
             alignItems="center"
@@ -87,8 +87,7 @@ const RefrigeratorSpaceInputItem = ({
               keyName={`refrigeratorSpaceList.${index}.maxCountPerSpace`}
               keyboardType="numeric"
               placeholder="최대 1,000개"
-              size="sm"
-              w="100px"
+              w="120px"
               isShowError={false}
             />
             <Text>개</Text>
@@ -111,7 +110,8 @@ const RefrigeratorSpaceInputItem = ({
                 <Select
                   selectedValue={value}
                   onValueChange={onChange}
-                  minWidth="124px"
+                  size="md"
+                  minWidth="144px"
                   h="40px"
                   bgColor="white"
                   placeholder="보관 유형"
@@ -158,7 +158,8 @@ const RefrigeratorSpaceInputItem = ({
                 <Select
                   selectedValue={value}
                   onValueChange={onChange}
-                  minWidth="124px"
+                  size="md"
+                  minWidth="144px"
                   h="40px"
                   bgColor="white"
                   placeholder="칸 형태"

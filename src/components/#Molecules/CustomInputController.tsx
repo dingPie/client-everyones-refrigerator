@@ -27,12 +27,7 @@ const CustomInputController = ({
         control={control}
         render={({ field: { onChange, value } }) => {
           return (
-            <CustomInput
-              placeholder="AAAAAA_1"
-              value={value}
-              onChangeText={onChange}
-              {...props}
-            />
+            <CustomInput value={value} onChangeText={onChange} {...props} />
           );
         }}
       />

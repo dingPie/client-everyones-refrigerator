@@ -17,7 +17,7 @@ const BaseSettingWrapper = ({}: BaseSettingWrapperProps) => {
     <VStack
       space="16px"
       pb="20px"
-      mb="20px"
+      mb="12px"
       px="16px"
       bgColor="white"
       borderBottomColor="gray.100"
@@ -27,11 +27,17 @@ const BaseSettingWrapper = ({}: BaseSettingWrapperProps) => {
 
       <VStack space="8px">
         <RowLabelWrapper label="냉장고 이름" isRequire>
-          <CustomInputController keyName={'name'} />
+          <CustomInputController
+            keyName={'name'}
+            placeholder="이 냉장고 그룹의 이름"
+          />
         </RowLabelWrapper>
 
         <RowLabelWrapper label="냉장고 코드">
-          <CustomInputController keyName={'code'} />
+          <CustomInputController
+            keyName={'code'}
+            placeholder="AAAAAA 형태의 대문자 6자리"
+          />
         </RowLabelWrapper>
 
         <RowLabelWrapper
@@ -42,7 +48,7 @@ const BaseSettingWrapper = ({}: BaseSettingWrapperProps) => {
           }}
         >
           <HStack
-            w="124px"
+            w="144px"
             space="8px"
             justifyContent="flex-end"
             alignItems="center"
@@ -51,8 +57,7 @@ const BaseSettingWrapper = ({}: BaseSettingWrapperProps) => {
               keyName={'maxCountStoragePerUser'}
               keyboardType="numeric"
               placeholder="최대 1,000개"
-              size="sm"
-              w="100px"
+              w="120px"
               isShowError={false}
             />
             <Text>개</Text>
@@ -67,7 +72,7 @@ const BaseSettingWrapper = ({}: BaseSettingWrapperProps) => {
           }}
         >
           <HStack
-            w="124px"
+            w="144px"
             space="8px"
             justifyContent="flex-end"
             alignItems="center"
@@ -76,8 +81,7 @@ const BaseSettingWrapper = ({}: BaseSettingWrapperProps) => {
               keyName={'maxStoragePeriod'}
               keyboardType="numeric"
               placeholder="최대 30일"
-              size="sm"
-              w="100px"
+              w="120px"
               isShowError={false}
             />
             <Text>일</Text>
