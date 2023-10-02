@@ -14,6 +14,7 @@ import {
 interface ToastComponentProps {
   title: string;
   description?: string;
+  status?: 'success' | 'error' | 'info' | 'warning';
   alertProps?: IAlertProps;
 }
 
@@ -23,15 +24,16 @@ const useCustomToast = () => {
   const ToastComponent = ({
     title,
     description,
-    ...props
+    status = 'success',
+    alertProps,
   }: ToastComponentProps) => (
     <Alert
       maxW="90%"
       h="auto"
-      status="success"
+      status={status}
       mx="20px"
-      bgColor="primary.100"
-      {...props}
+      bgColor={`${status}.100`}
+      {...alertProps}
     >
       <HStack w="100%" justifyContent="space-between" alignItems="flex-start">
         <HStack space="16px" flexShrink={1}>
