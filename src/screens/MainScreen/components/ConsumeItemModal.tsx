@@ -53,9 +53,18 @@ const ConsumeItemModal = ({
 
         {/* body */}
         <HStack alignItems="center" justifyContent="space-between" mb="32px">
-          <Text size="lg" maxW={LAYOUT.WINDOW_WIDTH - 220 + 'px'} noOfLines={2}>
-            {selectedItem?.name}
-          </Text>
+          <VStack space="4px">
+            <Text
+              size="lg.bold"
+              maxW={LAYOUT.WINDOW_WIDTH - 220 + 'px'}
+              noOfLines={2}
+            >
+              {selectedItem?.name}
+            </Text>
+            <Text color="gray.700">
+              {`현재 보관중인 갯수${selectedItem?.storageQuantity || 0}`}
+            </Text>
+          </VStack>
           <HStack alignItems="center" space="8px">
             <HStack
               alignItems="center"
