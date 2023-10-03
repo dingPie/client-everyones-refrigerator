@@ -1,3 +1,5 @@
+export type RefrigeratorStatusType = 'operation' | 'wait_for_deletion';
+
 export type RefrigeratorUserAuthorityType =
   | 'admin'
   | 'manager'

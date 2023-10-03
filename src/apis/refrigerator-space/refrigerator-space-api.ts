@@ -5,7 +5,9 @@ import instance from '@/configs/axios/instance';
 import { ApiResponseType } from '../type';
 import { CreateListDto } from './types/dto/create-list-dto';
 import { ListDto } from './types/dto/list-dto';
+import { CreateListModel } from './types/model/create-list-dto';
 import { ListModel } from './types/model/list-model';
+import { ListWithItemModel } from './types/model/list-with-item-model';
 
 export class RefrigeratorSpaceApi {
   axios: AxiosInstance = instance;
@@ -22,7 +24,20 @@ export class RefrigeratorSpaceApi {
     return data;
   };
 
-  createList = async (body: CreateListDto): Promise<ApiResponseType<any>> => {
+  listWithItem = async (
+    params: ListDto,
+  ): Promise<ApiResponseType<ListWithItemModel>> => {
+    const { data } = await this.axios({
+      method: 'GET',
+      url: `/refrigerator-space/list-with-item`,
+      params,
+    });
+    return data;
+  };
+
+  createList = async (
+    body: CreateListDto,
+  ): Promise<ApiResponseType<CreateListModel>> => {
     const { data } = await this.axios({
       method: 'POST',
       url: `/refrigerator-space/create-list`,

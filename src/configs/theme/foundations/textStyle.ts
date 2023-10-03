@@ -29,11 +29,11 @@ export const normalStyle = {
     lineHeight: '24px',
   },
   sm: {
-    fontSize: '14px',
+    fontSize: '15px',
     lineHeight: '21px',
   },
   xs: {
-    fontSize: '12px',
+    fontSize: '14px',
     lineHeight: '18px',
   },
 };
