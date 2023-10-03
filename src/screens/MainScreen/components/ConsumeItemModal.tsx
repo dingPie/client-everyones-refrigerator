@@ -21,12 +21,14 @@ interface ConsumeItemModalProps extends IModalProps {
   selectedItem: ItemInfoItemType | null;
   consumeNum: string;
   setConsumeNum: Dispatch<SetStateAction<string>>;
+  onPressConsumeItemConfirmButton: () => void;
 }
 
 const ConsumeItemModal = ({
   selectedItem,
   consumeNum,
   setConsumeNum,
+  onPressConsumeItemConfirmButton,
   ...props
 }: ConsumeItemModalProps) => {
   const onClickPlusConsumeNum = useCallback(() => {
@@ -62,7 +64,7 @@ const ConsumeItemModal = ({
               {selectedItem?.name}
             </Text>
             <Text color="gray.700">
-              {`현재 보관중인 갯수${selectedItem?.storageQuantity || 0}`}
+              {`현재 보관중인 갯수: ${selectedItem?.storageQuantity || 0} 개`}
             </Text>
           </VStack>
           <HStack alignItems="center" space="8px">
@@ -131,7 +133,12 @@ const ConsumeItemModal = ({
               아니요
             </Text>
           </Button>
-          <Button flex={1} fontSize="16px" py="12px">
+          <Button
+            onPress={onPressConsumeItemConfirmButton}
+            flex={1}
+            fontSize="16px"
+            py="12px"
+          >
             <Text size="md.bold" color="white">
               네, 소비했어요
             </Text>
