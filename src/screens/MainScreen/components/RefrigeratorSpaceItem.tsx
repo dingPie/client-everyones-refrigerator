@@ -44,9 +44,9 @@ const RefrigeratorSpaceItem = ({
           </HStack>
         </HStack>
 
-        <HStack justifyContent="space-between">
+        {/* <HStack justifyContent="space-between">
           <Text size="md.bold">현재 보관된 상품</Text>
-        </HStack>
+        </HStack> */}
         <HStack>
           <FlatList
             horizontal

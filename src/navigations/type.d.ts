@@ -24,9 +24,9 @@ export type BottomTabParamList = Partial<{
 }>;
 
 export type HomeStackParamList = {
-  Main: undefined; // P_TODO: refrigerator_id
-  Space: undefined;
-  AddItem: undefined; // P_TODO: route 확인
+  Main: undefined;
+  Space: { id: number }; // P_MEMO: space id
+  AddItem: { id?: number }; // P_TODO: 추후 이미 선택된 UI를 위해 다른 방법이 있을수도.
 };
 
 export type UnStorageStackParamList = {
