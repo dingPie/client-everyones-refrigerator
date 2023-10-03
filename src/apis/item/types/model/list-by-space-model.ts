@@ -8,7 +8,7 @@ export interface ItemInfoItemType {
   createdAt: Date | string;
   updatedAt: Date | string;
   userId: number;
-  storage_quantity: number;
+  storageQuantity: number;
   refrigeratorSpaceId: number;
 }
 
