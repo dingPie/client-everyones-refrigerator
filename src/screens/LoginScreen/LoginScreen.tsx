@@ -28,7 +28,10 @@ const LoginScreen = () => {
   const { mutate: loginMutate } = useAuthLoginMutation({
     options: {
       onSuccess: (data) => {
-        dispatch({ type: 'LOGIN', payload: data.accessToken });
+        dispatch({
+          type: 'LOGIN',
+          payload: { _accessToken: data.accessToken, _id: data.user.id },
+        });
         setToken(data);
       },
       onError: (err) => {
