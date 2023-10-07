@@ -83,6 +83,8 @@ const HeaderInfoWrapper = ({
           {''}
         </Checkbox>
       </HStack>
+
+      {/* P_TODO: 추후 sort 기능 추가될 수 있음. */}
     </VStack>
   );
 };
