@@ -2,13 +2,15 @@ import { AxiosInstance } from 'axios';
 
 import instance from '@/configs/axios/instance';
 
-import { ApiResponseType } from '../type';
+import { ApiInfiniteResponseType, ApiResponseType } from '../type';
 import { CreateDto } from './types/dto/create-dto';
-import { ListBySpaceDto } from './types/dto/list-by-space-dto';
-import { ListByStatusDto } from './types/dto/list-by-status';
+import { ListBySpaceWithPaginationDto } from './types/dto/list-by-space-dto';
+import { ListByStatusWithPaginationDto } from './types/dto/list-by-status';
+import { TotalCountBySpaceDto } from './types/dto/total-count-by-space-dto';
 import { UpdateDto } from './types/dto/update-dto';
 import { ListBySpaceModel } from './types/model/list-by-space-model';
 import { ListByStatusDtoModel } from './types/model/list-by-status-model';
+import { TotalCountBySpaceModel } from './types/model/total-count-by-space-model';
 import { UpdateModel } from './types/model/update-model';
 
 export class ItemApi {
@@ -18,8 +20,8 @@ export class ItemApi {
   }
 
   listBySpace = async (
-    params: ListBySpaceDto,
-  ): Promise<ApiResponseType<ListBySpaceModel>> => {
+    params: ListBySpaceWithPaginationDto,
+  ): Promise<ApiInfiniteResponseType<ListBySpaceModel>> => {
     const { data } = await this.axios({
       method: 'GET',
       url: `/item/list-by-space`,
@@ -29,11 +31,22 @@ export class ItemApi {
   };
 
   listByStatus = async (
-    params: ListByStatusDto,
-  ): Promise<ApiResponseType<ListByStatusDtoModel>> => {
+    params: ListByStatusWithPaginationDto,
+  ): Promise<ApiInfiniteResponseType<ListByStatusDtoModel>> => {
     const { data } = await this.axios({
       method: 'GET',
       url: `/item/list-by-status`,
+      params,
+    });
+    return data;
+  };
+
+  totalCountBySpace = async (
+    params: TotalCountBySpaceDto,
+  ): Promise<ApiResponseType<TotalCountBySpaceModel>> => {
+    const { data } = await this.axios({
+      method: 'GET',
+      url: `/item/total-count-by-space`,
       params,
     });
     return data;
