@@ -34,3 +34,26 @@ export const ITEM = {
     // EXPIRED: "expired", // P_TODO: expired는 그냥 itemInfo의 날짜로 계산하자.
   },
 };
+
+export const IMAGE_URL_LIST = [
+  {
+    name: 'salad',
+    uri: 'https://drive.google.com/uc?export=view&id=1ZTbeenhvVWWAGXtSFYfxIf8ofKOtr9Yl',
+  },
+  {
+    name: 'rice',
+    uri: 'https://drive.google.com/uc?export=view&id=1ViMkJxNo487YaeeC0CiHAghzSzARoC3Z',
+  },
+  {
+    name: 'chicken',
+    uri: 'https://drive.google.com/uc?export=view&id=1WqQHjEbo8w4qSRfJhZEnRj2qP0n_UEKG',
+  },
+  {
+    name: 'drink',
+    uri: 'https://drive.google.com/uc?export=view&id=1D9tlt5JdJqala4Vib2Htr7mQ4XIrjfP5',
+  },
+  {
+    name: 'cookie',
+    uri: 'https://drive.google.com/uc?export=view&id=1yhYWsGhAV8Iprgacp6TImL73Zoiq4dz2',
+  },
+];
