@@ -12,6 +12,8 @@ import {
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { RefrigeratorSpaceItemType } from '@/apis/refrigerator-space/types/model/list-model';
+import { MyInfoByRefrigeratorItemType } from '@/apis/refrigerator-user/types/model/my-info-by-refrigerator-model';
+import { MyRefrigeratorItemType } from '@/apis/refrigerator/types/model/by-id-model';
 
 import ColumnLabelWrapper from '@/components/#Atoms/ColumnLabelWrapper';
 import RowLabelWrapper from '@/components/#Atoms/RowLabelWrapper';
@@ -21,13 +23,21 @@ import { AddItemDataType } from '../useAddItemForm';
 
 interface InputWrapperProps {
   refrigeratorSpaceList?: RefrigeratorSpaceItemType[];
+  refrigeratorInfo?: MyRefrigeratorItemType;
+  myInfoByRefrigeratorInfo?: MyInfoByRefrigeratorItemType;
 }
 
-const InputWrapper = ({ refrigeratorSpaceList }: InputWrapperProps) => {
+const InputWrapper = ({
+  refrigeratorSpaceList,
+  refrigeratorInfo,
+  myInfoByRefrigeratorInfo,
+}: InputWrapperProps) => {
   const { control } = useFormContext<AddItemDataType>();
 
+  console.log('$$$$$$$$$$ 어디보자', refrigeratorInfo);
+
   return (
-    <VStack space="12px">
+    <VStack space="20px">
       <ColumnLabelWrapper label="추가할 냉장고 공간" isRequire>
         <Controller
           name="refrigeratorSpaceId"
@@ -100,16 +110,22 @@ const InputWrapper = ({ refrigeratorSpaceList }: InputWrapperProps) => {
         </HStack>
       </RowLabelWrapper>
 
-      <RowLabelWrapper
-        label="내 이름 보이기"
-        labelProps={{
-          w: 'auto',
-        }}
-        boxProps={{
-          justifyContent: 'space-between',
-          h: '40px',
-        }}
+      <HStack
+        space="40px"
+        justifyContent="space-between"
+        // alignItems="center"
+        w="100%"
       >
+        <VStack w="auto" space="4px">
+          <Text size="lg" color="gray.800">
+            내 이름 보이기
+          </Text>
+          <Text size="sm" color="gray.700">
+            {
+              '냉장고 관리자가 이름 표시를 설정해놓았다면\n모든 사용자의 이름이 공개돼요'
+            }
+          </Text>
+        </VStack>
         <Controller
           name="ownerName"
           control={control}
@@ -118,8 +134,10 @@ const InputWrapper = ({ refrigeratorSpaceList }: InputWrapperProps) => {
               <Checkbox
                 value=""
                 isChecked={!!value}
-                // P_TODO: 내 이름 넣어야 함.
-                onChange={() => onChange(value ? '' : 'dd')}
+                onChange={() =>
+                  onChange(value ? '' : myInfoByRefrigeratorInfo?.userName)
+                }
+                isDisabled={refrigeratorInfo?.isShowUserName}
                 size="md"
                 mr="-14px"
               >
@@ -128,7 +146,7 @@ const InputWrapper = ({ refrigeratorSpaceList }: InputWrapperProps) => {
             );
           }}
         />
-      </RowLabelWrapper>
+      </HStack>
 
       <ColumnLabelWrapper label="간단한 설명">
         <CustomInputController
