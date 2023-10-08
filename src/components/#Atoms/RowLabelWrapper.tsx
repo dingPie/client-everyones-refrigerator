@@ -27,8 +27,8 @@ const RowLabelWrapper = ({
       w="100%"
       {...boxProps}
     >
-      <HStack space="2px" w="100px" flexShrink={0} {...labelProps}>
-        <Text size="md" color="gray.800" flexShrink={0}>
+      <HStack space="2px" w="120px" flexShrink={0} {...labelProps}>
+        <Text size="lg" color="gray.800" flexShrink={0}>
           {label}
         </Text>
         {isRequire && <RequireStar />}

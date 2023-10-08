@@ -1,6 +1,6 @@
 import { RefrigeratorStatusType } from '@/types/type';
 
-export interface ByIdModel {
+export interface MyRefrigeratorItemType {
   id: number;
   code: string;
   name: string;
@@ -9,3 +9,5 @@ export interface ByIdModel {
   isShowUserName: boolean;
   status: RefrigeratorStatusType;
 }
+
+export type ByIdModel = MyRefrigeratorItemType;
