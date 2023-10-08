@@ -126,7 +126,7 @@ const CreateRefrigeratorScreen = () => {
 
     if (!isValid) {
       Toast.show({
-        title: '누락된 값이 있습니다.',
+        title: '필수 값을 입력해주세요.',
         status: 'error',
         alertProps: { bottom: '60px' },
       });

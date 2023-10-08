@@ -31,7 +31,7 @@ const SpaceInItemItem = ({
         >
           <CustomFastImage
             source={{
-              uri: '',
+              uri: item.imgUrl,
             }}
             resizeMode="stretch"
             w="100%"
