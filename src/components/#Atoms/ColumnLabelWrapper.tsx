@@ -22,7 +22,7 @@ const ColumnLabelWrapper = ({
   return (
     <VStack space="8px" {...boxProps}>
       <HStack space="2px" {...labelProps}>
-        <Text size="md" color="gray.800">
+        <Text size="lg" color="gray.800">
           {label}
         </Text>
         {isRequire && <RequireStar />}
