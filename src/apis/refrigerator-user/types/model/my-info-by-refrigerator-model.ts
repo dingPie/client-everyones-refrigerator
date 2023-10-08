@@ -1,6 +1,6 @@
 import { RefrigeratorUserAuthorityType } from '@/types/type';
 
-export interface MyInfoByRefrigeratorModel {
+export interface MyInfoByRefrigeratorItemType {
   id: number;
   userName: string;
   authority: RefrigeratorUserAuthorityType;
@@ -13,3 +13,5 @@ export interface MyInfoByRefrigeratorModel {
     userLoginId: 'cpie1216@gmail.com';
   };
 }
+
+export type MyInfoByRefrigeratorModel = MyInfoByRefrigeratorItemType;
