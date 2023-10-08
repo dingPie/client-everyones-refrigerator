@@ -19,8 +19,8 @@ import { MyInfoByRefrigeratorItemType } from '@/apis/refrigerator-user/types/mod
 import { MyRefrigeratorItemType } from '@/apis/refrigerator/types/model/by-id-model';
 
 import ColumnLabelWrapper from '@/components/#Atoms/ColumnLabelWrapper';
+import CountInput from '@/components/#Atoms/CountInput';
 import CustomFastImage from '@/components/#Atoms/CustomFastImage';
-import CustomInput from '@/components/#Atoms/CustomInput';
 import RowLabelWrapper from '@/components/#Atoms/RowLabelWrapper';
 import CustomInputController from '@/components/#Molecules/CustomInputController';
 
@@ -58,7 +58,7 @@ const InputWrapper = ({
                 onValueChange={onChange}
                 size="md"
                 minWidth="144px"
-                h="40px"
+                h="48px"
                 bgColor="white"
                 placeholder="보관 유형"
                 _selectedItem={{
@@ -86,7 +86,7 @@ const InputWrapper = ({
       <RowLabelWrapper label="상품명" isRequire>
         <CustomInputController
           keyName={'name'}
-          placeholder="이 냉장고 그룹의 이름"
+          placeholder="보관할 상품명 입력"
         />
       </RowLabelWrapper>
 
@@ -149,15 +149,13 @@ const InputWrapper = ({
             control={control}
             render={({ field: { onChange, value } }) => {
               return (
-                <CustomInput
-                  w="100%"
-                  value={value.toString()} // P_MEMO: 이거 타입떄뭉네 표출안됨.
-                  onChangeText={onChange}
-                />
+                <HStack space="8px" alignItems="center">
+                  <CountInput value={value} setValue={onChange} />
+                  <Text>개</Text>
+                </HStack>
               );
             }}
           />
-          <Text>개</Text>
         </HStack>
       </RowLabelWrapper>
 
@@ -203,6 +201,7 @@ const InputWrapper = ({
         <CustomInputController
           keyName={'memo'}
           placeholder="최대 24 자 까지 입력이 가능합니다."
+          maxLength={24}
         />
       </ColumnLabelWrapper>
     </VStack>

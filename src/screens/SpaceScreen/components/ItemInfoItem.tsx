@@ -36,7 +36,7 @@ const ItemInfoItem = ({ item, onPressConsumeItem }: ItemInfoItemProps) => {
         >
           <CustomFastImage
             source={{
-              uri: '',
+              uri: item.imgUrl,
             }}
             resizeMode="stretch"
             w="100%"
