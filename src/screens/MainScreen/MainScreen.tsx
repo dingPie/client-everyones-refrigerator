@@ -15,11 +15,11 @@ import {
 import { RefrigeratorSpaceWithItemItemType } from '@/apis/refrigerator-space/types/model/list-with-item-model';
 import { useGetRefrigeratorByIdQuery } from '@/apis/refrigerator/refrigerator-api.query';
 
+import ConsumeItemModal from '@/components/#Molecules/ConsumeItemModal';
 import { useGlobalContext } from '@/contexts/global/useGlobalStoreContext';
 import useCustomToast from '@/hooks/useCustomToast';
 import { HomeStackParamList } from '@/navigations/type';
 
-import ConsumeItemModal from './components/ConsumeItemModal';
 import RefrigeratorSpaceItem from './components/RefrigeratorSpaceItem';
 
 type MainNavigationProps = NavigationProp<HomeStackParamList, 'Main'>;
@@ -114,6 +114,11 @@ const MainScreen = () => {
     (refrigeratorSpaceWithItem: RefrigeratorSpaceWithItemItemType) => {
       navigation.navigate('Space', {
         id: refrigeratorSpaceWithItem.id,
+        name: refrigeratorSpaceWithItem.name,
+        maxCountPerSpace: refrigeratorSpaceWithItem.maxCountPerSpace,
+        maxStoragePeriod: refrigeratorSpaceWithItem.maxStoragePeriod,
+        purposeType: refrigeratorSpaceWithItem.purposeType,
+        shapeType: refrigeratorSpaceWithItem.shapeType,
       });
     },
     [navigation],

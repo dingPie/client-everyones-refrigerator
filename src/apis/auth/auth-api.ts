@@ -5,6 +5,7 @@ import { TokenType } from '@/utils/async-storage/token';
 
 import { LoginDto } from './types/dto/login-dto';
 import { RefreshDto } from './types/dto/refresh-dto';
+import { LoginModel } from './types/model/login-model';
 import { RefreshModel } from './types/model/refresh-model';
 
 export class AuthApi {
@@ -22,7 +23,7 @@ export class AuthApi {
   //   return data;
   // };
 
-  login = async (req: LoginDto): Promise<TokenType> => {
+  login = async (req: LoginDto): Promise<LoginModel> => {
     const { data } = await this.axios({
       method: 'POST',
       url: `/auth/login`,

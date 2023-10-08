@@ -25,7 +25,7 @@ export type BottomTabParamList = Partial<{
 
 export type HomeStackParamList = {
   Main: undefined;
-  Space: { id: number }; // P_MEMO: space id
+  Space: RefrigeratorSpaceItemType; // P_MEMO: 일단 상세보기 API 없이 다 가져감.
   AddItem: { id?: number }; // P_TODO: 추후 이미 선택된 UI를 위해 다른 방법이 있을수도.
 };
 

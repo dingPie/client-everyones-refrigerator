@@ -7,7 +7,8 @@ import { FlatList, HStack, Text, VStack } from 'native-base';
 import { ItemInfoItemType } from '@/apis/item/types/model/list-by-space-model';
 import { RefrigeratorSpaceWithItemItemType } from '@/apis/refrigerator-space/types/model/list-with-item-model';
 
-import CustomIcon from '@/components/@common/CustomIcon';
+import RefrigeratorPurposeIcon from '@/components/#Atoms/RefrigeratorPurposeIcon';
+import RefrigeratorShapeIcon from '@/components/#Atoms/RefrigeratorShapeIcon';
 
 import SpaceInItemItem from './SpaceInItemItem';
 
@@ -38,9 +39,17 @@ const RefrigeratorSpaceItem = ({
       >
         <HStack justifyContent="space-between" alignItems="center">
           <Text size="xl.bold"> {refrigeratorSpaceWithItem.name} </Text>
-          <HStack space="8px">
-            <CustomIcon name="Water" size={20} />
-            <CustomIcon name="Drawer" size={20} />
+          <HStack space="8px" alignItems="center">
+            <RefrigeratorPurposeIcon
+              purposeType={refrigeratorSpaceWithItem.purposeType}
+              size={24}
+              color="black"
+            />
+            <RefrigeratorShapeIcon
+              shapeType={refrigeratorSpaceWithItem.shapeType}
+              size={24}
+              color="black"
+            />
           </HStack>
         </HStack>
 

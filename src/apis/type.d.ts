@@ -62,3 +62,12 @@ export interface ApiResponseType<T> {
   message: string;
   result: T;
 }
+
+export interface ApiInfiniteResponseType<T> {
+  code: string | number;
+  message: string;
+  result: {
+    cursor: number | null; // null 이면 다음없음.
+    data: T;
+  };
+}

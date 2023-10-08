@@ -3,4 +3,6 @@ export interface CreateDto {
   imgUrl: string;
   quantity: number;
   refrigeratorSpaceId: number;
+  memo?: string;
+  ownerName?: string;
 }
