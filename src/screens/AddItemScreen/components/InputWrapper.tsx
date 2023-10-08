@@ -1,6 +1,9 @@
 import React from 'react';
 
+import { Pressable } from 'react-native';
+
 import {
+  Box,
   CheckIcon,
   Checkbox,
   ChevronDownIcon,
@@ -16,8 +19,12 @@ import { MyInfoByRefrigeratorItemType } from '@/apis/refrigerator-user/types/mod
 import { MyRefrigeratorItemType } from '@/apis/refrigerator/types/model/by-id-model';
 
 import ColumnLabelWrapper from '@/components/#Atoms/ColumnLabelWrapper';
+import CustomFastImage from '@/components/#Atoms/CustomFastImage';
+import CustomInput from '@/components/#Atoms/CustomInput';
 import RowLabelWrapper from '@/components/#Atoms/RowLabelWrapper';
 import CustomInputController from '@/components/#Molecules/CustomInputController';
+
+import { MY_IMAGES } from '@/image';
 
 import { AddItemDataType } from '../useAddItemForm';
 
@@ -25,12 +32,14 @@ interface InputWrapperProps {
   refrigeratorSpaceList?: RefrigeratorSpaceItemType[];
   refrigeratorInfo?: MyRefrigeratorItemType;
   myInfoByRefrigeratorInfo?: MyInfoByRefrigeratorItemType;
+  onPressImgUrlIcon: () => void;
 }
 
 const InputWrapper = ({
   refrigeratorSpaceList,
   refrigeratorInfo,
   myInfoByRefrigeratorInfo,
+  onPressImgUrlIcon,
 }: InputWrapperProps) => {
   const { control } = useFormContext<AddItemDataType>();
 
@@ -81,6 +90,42 @@ const InputWrapper = ({
         />
       </RowLabelWrapper>
 
+      <RowLabelWrapper
+        label="상품명"
+        isRequire
+        boxProps={{
+          alignItems: 'flex-start',
+        }}
+      >
+        <Controller
+          name="imgUrl"
+          control={control}
+          render={({ field: { value } }) => {
+            return (
+              <Pressable onPress={onPressImgUrlIcon}>
+                <Box
+                  borderRadius="8px"
+                  bgColor="gray.200"
+                  size="80px"
+                  p="6px"
+                  mr="12px"
+                >
+                  <CustomFastImage
+                    source={{
+                      uri: value,
+                    }}
+                    fallbackSource={MY_IMAGES.EMPTY_PLUS}
+                    resizeMode="stretch"
+                    w="100%"
+                    h="100%"
+                  />
+                </Box>
+              </Pressable>
+            );
+          }}
+        />
+      </RowLabelWrapper>
+
       {/* P_TODO: 아이콘 input  추가해야 함. */}
 
       <RowLabelWrapper
@@ -99,12 +144,18 @@ const InputWrapper = ({
           justifyContent="flex-end"
           alignItems="center"
         >
-          <CustomInputController
-            keyName={'quantity'}
-            keyboardType="numeric"
-            placeholder="상품 갯수"
-            w="120px"
-            isShowError={false}
+          <Controller
+            name="quantity"
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <CustomInput
+                  w="100%"
+                  value={value.toString()} // P_MEMO: 이거 타입떄뭉네 표출안됨.
+                  onChangeText={onChange}
+                />
+              );
+            }}
           />
           <Text>개</Text>
         </HStack>
