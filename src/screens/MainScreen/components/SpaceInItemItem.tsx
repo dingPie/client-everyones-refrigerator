@@ -19,8 +19,8 @@ const SpaceInItemItem = ({
   onPressSpaceInItem,
 }: SpaceInItemItemProps) => {
   return (
-    <Pressable onPress={() => onPressSpaceInItem(item)}>
-      <VStack space="6px" mr="16px">
+    <VStack space="6px" mr="16px">
+      <Pressable onPress={() => onPressSpaceInItem(item)}>
         <Box
           borderRadius="8px"
           bgColor={
@@ -38,25 +38,25 @@ const SpaceInItemItem = ({
             h="100%"
           />
         </Box>
-        <VStack
-          w="auto"
-          py="4px"
-          px="8px"
-          space="0px"
-          bgColor="rgba(0, 0, 0, 0.8)"
-          borderRadius="4px"
-          maxW="150px"
-        >
-          <Text color="white" textAlign="left" noOfLines={1}>
-            {item.name}
-          </Text>
-          <Text color="white">
-            {dayjs(item.expireDate).format('YYYY-MM-DD 까지')}
-          </Text>
-          {item.ownerName && <Text color="white"> {item.ownerName} </Text>}
-        </VStack>
+      </Pressable>
+      <VStack
+        w="auto"
+        py="4px"
+        px="8px"
+        space="0px"
+        bgColor="rgba(0, 0, 0, 0.8)"
+        borderRadius="4px"
+        maxW="150px"
+      >
+        <Text color="white" textAlign="left" noOfLines={1}>
+          {item.name}
+        </Text>
+        <Text color="white">
+          {dayjs(item.expireDate).format('YYYY-MM-DD 까지')}
+        </Text>
+        {item.ownerName && <Text color="white"> {item.ownerName} </Text>}
       </VStack>
-    </Pressable>
+    </VStack>
   );
 };
 
