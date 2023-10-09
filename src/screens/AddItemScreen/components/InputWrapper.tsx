@@ -43,10 +43,9 @@ const InputWrapper = ({
 }: InputWrapperProps) => {
   const { control } = useFormContext<AddItemDataType>();
 
-  console.log('$$$$$$$$$$ 어디보자', refrigeratorInfo);
-
   return (
     <VStack space="20px">
+      {/* 냉장고 공간 설정 selectbox */}
       <ColumnLabelWrapper label="추가할 냉장고 공간" isRequire>
         <Controller
           name="refrigeratorSpaceId"
@@ -83,6 +82,7 @@ const InputWrapper = ({
         />
       </ColumnLabelWrapper>
 
+      {/* 상품명 입력 */}
       <RowLabelWrapper label="상품명" isRequire>
         <CustomInputController
           keyName={'name'}
@@ -90,8 +90,9 @@ const InputWrapper = ({
         />
       </RowLabelWrapper>
 
+      {/* 현재는 몇가지 아이콘 중 이미지 선택 */}
       <RowLabelWrapper
-        label="상품명"
+        label="아이콘 선택"
         isRequire
         boxProps={{
           alignItems: 'flex-start',
@@ -126,8 +127,7 @@ const InputWrapper = ({
         />
       </RowLabelWrapper>
 
-      {/* P_TODO: 아이콘 input  추가해야 함. */}
-
+      {/* 상품 갯수 추가 가능한 input */}
       <RowLabelWrapper
         label="보관할 상품 갯수"
         isRequire
@@ -159,12 +159,8 @@ const InputWrapper = ({
         </HStack>
       </RowLabelWrapper>
 
-      <HStack
-        space="40px"
-        justifyContent="space-between"
-        // alignItems="center"
-        w="100%"
-      >
+      {/* 내 이름 보이기 checkbox */}
+      <HStack space="40px" justifyContent="space-between" w="100%">
         <VStack w="auto" space="4px">
           <Text size="lg" color="gray.800">
             내 이름 보이기

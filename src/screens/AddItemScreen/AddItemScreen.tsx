@@ -1,36 +1,27 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 
-import { Pressable } from 'react-native';
-
-import {
-  Actionsheet,
-  Box,
-  FlatList,
-  Flex,
-  FormControl,
-  HStack,
-  Text,
-  VStack,
-  useDisclose,
-} from 'native-base';
+import { Button, Flex, Text, VStack, useDisclose } from 'native-base';
 import { FormProvider } from 'react-hook-form';
 
 import { useNavigation } from '@react-navigation/core';
 import { NavigationProp } from '@react-navigation/native';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { useGetRefrigeratorSpaceListQuery } from '@/apis/refrigerator-space/refrigerator-space-api.query';
+import { useItemCreateMutation } from '@/apis/item/item-api.mutation';
+import {
+  REFRIGERATOR_SPACE_API_QUERY_KEY,
+  useGetRefrigeratorSpaceListQuery,
+} from '@/apis/refrigerator-space/refrigerator-space-api.query';
 import { useGetMyInfoByRefrigeratorQuery } from '@/apis/refrigerator-user/refrigerator-user-api.query';
 import { REFRIGERATOR_API_QUERY_KEY } from '@/apis/refrigerator/refrigerator-api.query';
 import { MyRefrigeratorItemType } from '@/apis/refrigerator/types/model/by-id-model';
 import { ApiResponseType } from '@/apis/type';
 
-import RowLabelWrapper from '@/components/#Atoms/RowLabelWrapper';
-import CustomInputController from '@/components/#Molecules/CustomInputController';
 import { useGlobalContext } from '@/contexts/global/useGlobalStoreContext';
 import useCustomToast from '@/hooks/useCustomToast';
 import { HomeStackParamList } from '@/navigations/type';
 
+import ImageSelectActionsheet from './components/ImageSelectActionsheet';
 import InputWrapper from './components/InputWrapper';
 import useAddItemForm from './useAddItemForm';
 
@@ -38,9 +29,11 @@ type AddItemNavigationProps = NavigationProp<HomeStackParamList, 'AddItem'>;
 
 const AddItemScreen = () => {
   const navigation = useNavigation<AddItemNavigationProps>();
-  const reactQuery = useQueryClient();
-  const addItemMethod = useAddItemForm();
+  const queryClient = useQueryClient();
   const Toast = useCustomToast();
+
+  const addItemMethod = useAddItemForm();
+  const { getValues, setValue } = addItemMethod;
 
   const { refrigeratorId } = useGlobalContext((ctx) => ctx.state);
 
@@ -55,6 +48,7 @@ const AddItemScreen = () => {
           '$######## 이 냉장고의 내 정보 불러오기 에러',
           err.response.data?.message,
         );
+
         Toast.show({
           title: err.response.data?.message || '',
           status: 'error',
@@ -71,12 +65,12 @@ const AddItemScreen = () => {
   // P_MEMO: 냉장고 정보는 거의 불변성을 지니는 정보기 때문에 API 호출이 아닌 getData 사용
   const refrigeratorInfo = useMemo(
     () =>
-      reactQuery.getQueriesData<ApiResponseType<MyRefrigeratorItemType>>(
+      queryClient.getQueriesData<ApiResponseType<MyRefrigeratorItemType>>(
         REFRIGERATOR_API_QUERY_KEY.GET_BY_ID({
           id: refrigeratorId || -1,
         }),
       )[0][1]?.result,
-    [reactQuery, refrigeratorId],
+    [queryClient, refrigeratorId],
   );
 
   const { data: refrigeratorSpaceListData } = useGetRefrigeratorSpaceListQuery({
@@ -85,15 +79,34 @@ const AddItemScreen = () => {
     },
     options: {
       enabled: !!refrigeratorId,
-      onSuccess: (data) => {
-        console.log('$######## 냉장고 정보', data);
-      },
       onError: (err: any) => {
         console.log(
-          '$######## 냉장고 정보 불러오기 에러',
+          '$######## 냉장고 칸 정보 불러오기 에러',
           err.response.data?.message,
         );
+        Toast.show({
+          title: err.response.data?.message || '',
+          status: 'error',
+        });
+      },
+    },
+  });
 
+  const { mutate: itemCreateMutate } = useItemCreateMutation({
+    options: {
+      onSuccess: (data) => {
+        Toast.show({
+          title: '새 상품 추가에 성공했어요.',
+        });
+        queryClient.invalidateQueries(
+          REFRIGERATOR_SPACE_API_QUERY_KEY.GET_WITH_ITEM_LIST({
+            refrigeratorId: refrigeratorId || -1,
+          }),
+        );
+        navigation.goBack();
+      },
+      onError: (err: any) => {
+        console.log('$######## 아이템 추가 에러', err.response.data?.message);
         Toast.show({
           title: err.response.data?.message || '',
           status: 'error',
@@ -108,12 +121,51 @@ const AddItemScreen = () => {
     onOpen: onOpenIconActionSheet,
   } = useDisclose();
 
+  const onPressSelectIcon = useCallback(
+    (imgUrl: string) => {
+      setValue('imgUrl', imgUrl);
+      onCloseIconActionSheet();
+    },
+    [onCloseIconActionSheet, setValue],
+  );
+
+  const onPressImgUrlIcon = useCallback(
+    () => onOpenIconActionSheet(),
+    [onOpenIconActionSheet],
+  );
+
+  // P_TODO: 추가 가능한 갯수에 대한 유효성검사는 백엔드에서 처리함 . FE에서 더 처리하려면 API를 추가로 호출해야 하는데, 굳이 그럴 필요가 없다.
+  const onPressAddItemButton = useCallback(async () => {
+    const isValid =
+      getValues('refrigeratorSpaceId') ||
+      getValues('name') ||
+      getValues('imgUrl') ||
+      getValues('quantity');
+
+    if (!isValid) {
+      Toast.show({
+        title: '필수 값을 입력해주세요.',
+        status: 'error',
+      });
+      return;
+    }
+
+    itemCreateMutate({
+      name: getValues('name'),
+      imgUrl: getValues('imgUrl'),
+      quantity: Number(getValues('quantity')),
+      refrigeratorSpaceId: Number(getValues('refrigeratorSpaceId')),
+      ownerName: getValues('ownerName'),
+      memo: getValues('memo'),
+    });
+  }, [Toast, getValues, itemCreateMutate]);
+
   // P_MEMO: 이 이름 보이기 외에도 해야될게 있다면 여기서 init 해줌.
   useEffect(() => {
     if (refrigeratorInfo?.isShowUserName && myInfoByRefrigeratorInfo) {
-      addItemMethod.setValue('ownerName', myInfoByRefrigeratorInfo?.userName);
+      setValue('ownerName', myInfoByRefrigeratorInfo?.userName);
     }
-  }, [addItemMethod, myInfoByRefrigeratorInfo, refrigeratorInfo]);
+  }, [addItemMethod, myInfoByRefrigeratorInfo, refrigeratorInfo, setValue]);
 
   return (
     <>
@@ -132,34 +184,24 @@ const AddItemScreen = () => {
             refrigeratorSpaceList={refrigeratorSpaceListData?.result}
             refrigeratorInfo={refrigeratorInfo}
             myInfoByRefrigeratorInfo={myInfoByRefrigeratorInfo}
+            onPressImgUrlIcon={onPressImgUrlIcon}
           />
         </FormProvider>
       </VStack>
 
-      <Actionsheet
-        // isOpen={isOpenIconActionSheet}
-        isOpen={true}
+      <ImageSelectActionsheet
+        isOpen={isOpenIconActionSheet}
         onClose={onCloseIconActionSheet}
-      >
-        <Actionsheet.Content h="200px" px="16px">
-          <Flex w="100%" mb="24px">
-            <Text size="lg.bold">아이콘 선택</Text>
-          </Flex>
-          <FlatList
-            data={[1, 2, 3, 4, 5]}
-            horizontal
-            renderItem={({ item }) => (
-              // P_TODO: URL 선택 이벤트 넣어야 함.
-              // P_TODO: 그리고..나중엔 이미지 업로드 같은걸로 해야지...
-              <Pressable>
-                <Box bgColor="primary.200" boxSize="100px" mr="16px">
-                  <Text>{item} </Text>
-                </Box>
-              </Pressable>
-            )}
-          />
-        </Actionsheet.Content>
-      </Actionsheet>
+        onPressSelectIcon={onPressSelectIcon}
+      />
+
+      <Flex p="16px" bgColor="white">
+        <Button onPress={onPressAddItemButton} w="100%">
+          <Text color="white" size="lg.bold">
+            물건 추가하기
+          </Text>
+        </Button>
+      </Flex>
     </>
   );
 };
