@@ -54,7 +54,6 @@ const SpaceInItemItem = ({
         <Text color="white">
           {dayjs(item.expireDate).format('YYYY-MM-DD 까지')}
         </Text>
-        {item.ownerName && <Text color="white"> {item.ownerName} </Text>}
       </VStack>
     </VStack>
   );
