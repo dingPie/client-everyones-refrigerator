@@ -53,7 +53,7 @@ export const createRefrigeratorFormSchema = yup.object({
   refrigeratorSpaceList: yup
     .array()
     .of(refrigeratorSpaceSchema)
-    .required('누락된 값이 있습니다.'),
+    .required('필수 값을 입력해주세요.'),
 });
 
 const useCreateRefrigeratorForm = (

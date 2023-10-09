@@ -81,7 +81,7 @@ const MainScreen = () => {
 
   const refrigeratorSpaceWithItemList = useMemo(
     () => refrigeratorSpaceWithItemListData?.result || [],
-    [refrigeratorSpaceWithItemListData?.result],
+    [refrigeratorSpaceWithItemListData],
   );
 
   const { mutate: itemUpdateMutate } = useItemUpdateMutation({

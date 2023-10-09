@@ -17,6 +17,8 @@ import { ItemInfoItemType } from '@/apis/item/types/model/list-by-space-model';
 
 import { LAYOUT } from '@/constants/layout';
 
+import CountInput from '../#Atoms/CountInput';
+
 interface ConsumeItemModalProps extends IModalProps {
   selectedItem: ItemInfoItemType | null;
   consumeNum: string;
@@ -31,20 +33,6 @@ const ConsumeItemModal = ({
   onPressConsumeItemConfirmButton,
   ...props
 }: ConsumeItemModalProps) => {
-  const onClickPlusConsumeNum = useCallback(() => {
-    setConsumeNum((prev) =>
-      Number(prev) < (selectedItem?.storageQuantity || 0)
-        ? (Number(prev) + 1).toString()
-        : prev,
-    );
-  }, [selectedItem?.storageQuantity, setConsumeNum]);
-
-  const onClickMinusConsumeNum = useCallback(() => {
-    setConsumeNum((prev) =>
-      Number(prev) > 1 ? (Number(prev) - 1).toString() : '1',
-    );
-  }, [setConsumeNum]);
-
   return (
     <Modal size="xl" {...props}>
       <Modal.Content p="24px" bgColor="white">
@@ -68,51 +56,11 @@ const ConsumeItemModal = ({
             </Text>
           </VStack>
           <HStack alignItems="center" space="8px">
-            <HStack
-              alignItems="center"
-              borderRadius="4px"
-              borderWidth="1px"
-              borderColor="gray.300"
-              bgColor="white"
-              w="88px"
-            >
-              <Input
-                value={consumeNum}
-                onChangeText={setConsumeNum}
-                keyboardType="numeric"
-                borderWidth="0px"
-                w="60px"
-                h="48px"
-                _focus={{
-                  bgColor: 'white',
-                }}
-              />
-              <VStack flex={1}>
-                <Pressable onPress={onClickPlusConsumeNum}>
-                  <HStack
-                    bgColor="gray.50"
-                    justifyContent="center"
-                    alignItems="center"
-                    w="28px"
-                    h="24px"
-                  >
-                    <ChevronUpIcon size="4" w="100%" />
-                  </HStack>
-                </Pressable>
-
-                <Pressable onPress={onClickMinusConsumeNum}>
-                  <HStack
-                    bgColor="gray.50"
-                    justifyContent="center"
-                    alignItems="center"
-                    w="28px"
-                    h="24px"
-                  >
-                    <ChevronDownIcon size="4" />
-                  </HStack>
-                </Pressable>
-              </VStack>
-            </HStack>
+            <CountInput
+              value={consumeNum}
+              setValue={setConsumeNum}
+              max={selectedItem?.storageQuantity}
+            />
 
             <Text>개</Text>
           </HStack>

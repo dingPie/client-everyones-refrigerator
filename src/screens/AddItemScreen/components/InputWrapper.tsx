@@ -1,6 +1,9 @@
 import React from 'react';
 
+import { Pressable } from 'react-native';
+
 import {
+  Box,
   CheckIcon,
   Checkbox,
   ChevronDownIcon,
@@ -16,8 +19,12 @@ import { MyInfoByRefrigeratorItemType } from '@/apis/refrigerator-user/types/mod
 import { MyRefrigeratorItemType } from '@/apis/refrigerator/types/model/by-id-model';
 
 import ColumnLabelWrapper from '@/components/#Atoms/ColumnLabelWrapper';
+import CountInput from '@/components/#Atoms/CountInput';
+import CustomFastImage from '@/components/#Atoms/CustomFastImage';
 import RowLabelWrapper from '@/components/#Atoms/RowLabelWrapper';
 import CustomInputController from '@/components/#Molecules/CustomInputController';
+
+import { MY_IMAGES } from '@/image';
 
 import { AddItemDataType } from '../useAddItemForm';
 
@@ -25,19 +32,20 @@ interface InputWrapperProps {
   refrigeratorSpaceList?: RefrigeratorSpaceItemType[];
   refrigeratorInfo?: MyRefrigeratorItemType;
   myInfoByRefrigeratorInfo?: MyInfoByRefrigeratorItemType;
+  onPressImgUrlIcon: () => void;
 }
 
 const InputWrapper = ({
   refrigeratorSpaceList,
   refrigeratorInfo,
   myInfoByRefrigeratorInfo,
+  onPressImgUrlIcon,
 }: InputWrapperProps) => {
   const { control } = useFormContext<AddItemDataType>();
 
-  console.log('$$$$$$$$$$ 어디보자', refrigeratorInfo);
-
   return (
     <VStack space="20px">
+      {/* 냉장고 공간 설정 selectbox */}
       <ColumnLabelWrapper label="추가할 냉장고 공간" isRequire>
         <Controller
           name="refrigeratorSpaceId"
@@ -49,7 +57,7 @@ const InputWrapper = ({
                 onValueChange={onChange}
                 size="md"
                 minWidth="144px"
-                h="40px"
+                h="48px"
                 bgColor="white"
                 placeholder="보관 유형"
                 _selectedItem={{
@@ -74,15 +82,52 @@ const InputWrapper = ({
         />
       </ColumnLabelWrapper>
 
+      {/* 상품명 입력 */}
       <RowLabelWrapper label="상품명" isRequire>
         <CustomInputController
           keyName={'name'}
-          placeholder="이 냉장고 그룹의 이름"
+          placeholder="보관할 상품명 입력"
         />
       </RowLabelWrapper>
 
-      {/* P_TODO: 아이콘 input  추가해야 함. */}
+      {/* 현재는 몇가지 아이콘 중 이미지 선택 */}
+      <RowLabelWrapper
+        label="아이콘 선택"
+        isRequire
+        boxProps={{
+          alignItems: 'flex-start',
+        }}
+      >
+        <Controller
+          name="imgUrl"
+          control={control}
+          render={({ field: { value } }) => {
+            return (
+              <Pressable onPress={onPressImgUrlIcon}>
+                <Box
+                  borderRadius="8px"
+                  bgColor="gray.200"
+                  size="80px"
+                  p="6px"
+                  mr="12px"
+                >
+                  <CustomFastImage
+                    source={{
+                      uri: value,
+                    }}
+                    fallbackSource={MY_IMAGES.EMPTY_PLUS}
+                    resizeMode="stretch"
+                    w="100%"
+                    h="100%"
+                  />
+                </Box>
+              </Pressable>
+            );
+          }}
+        />
+      </RowLabelWrapper>
 
+      {/* 상품 갯수 추가 가능한 input */}
       <RowLabelWrapper
         label="보관할 상품 갯수"
         isRequire
@@ -99,23 +144,23 @@ const InputWrapper = ({
           justifyContent="flex-end"
           alignItems="center"
         >
-          <CustomInputController
-            keyName={'quantity'}
-            keyboardType="numeric"
-            placeholder="상품 갯수"
-            w="120px"
-            isShowError={false}
+          <Controller
+            name="quantity"
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <HStack space="8px" alignItems="center">
+                  <CountInput value={value} setValue={onChange} />
+                  <Text>개</Text>
+                </HStack>
+              );
+            }}
           />
-          <Text>개</Text>
         </HStack>
       </RowLabelWrapper>
 
-      <HStack
-        space="40px"
-        justifyContent="space-between"
-        // alignItems="center"
-        w="100%"
-      >
+      {/* 내 이름 보이기 checkbox */}
+      <HStack space="40px" justifyContent="space-between" w="100%">
         <VStack w="auto" space="4px">
           <Text size="lg" color="gray.800">
             내 이름 보이기
@@ -152,6 +197,7 @@ const InputWrapper = ({
         <CustomInputController
           keyName={'memo'}
           placeholder="최대 24 자 까지 입력이 가능합니다."
+          maxLength={24}
         />
       </ColumnLabelWrapper>
     </VStack>

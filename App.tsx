@@ -37,7 +37,7 @@ function App() {
         });
         dispatch({
           type: 'LOGIN',
-          payload: data.accessToken,
+          payload: { _accessToken: data.accessToken, _id: data.user.id },
         });
       },
       onError: (err) => {

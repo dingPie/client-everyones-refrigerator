@@ -33,13 +33,14 @@ const useCustomToast = () => {
       status={status}
       mx="20px"
       bgColor={`${status}.100`}
+      bottom="80px"
       {...alertProps}
     >
       <HStack w="100%" justifyContent="space-between" alignItems="flex-start">
         <HStack space="16px" flexShrink={1}>
           <Alert.Icon mt="4px" />
-          <VStack>
-            <Text size="md.bold" color="coolGray.800">
+          <VStack w="85%">
+            <Text size="md" color="coolGray.800">
               {title}
             </Text>
             {!!description && (
