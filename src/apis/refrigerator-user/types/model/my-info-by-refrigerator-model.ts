@@ -9,8 +9,8 @@ export interface MyInfoByRefrigeratorItemType {
   isAlertEtc: boolean;
   isShowExpireDate: boolean;
   user: {
-    provider: 'google.com';
-    userLoginId: 'cpie1216@gmail.com';
+    provider: string;
+    userLoginId: string;
   };
 }
 
