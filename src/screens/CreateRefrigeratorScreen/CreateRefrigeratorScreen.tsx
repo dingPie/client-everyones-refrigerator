@@ -128,7 +128,6 @@ const CreateRefrigeratorScreen = () => {
       Toast.show({
         title: '필수 값을 입력해주세요.',
         status: 'error',
-        alertProps: { bottom: '60px' },
       });
     }
 

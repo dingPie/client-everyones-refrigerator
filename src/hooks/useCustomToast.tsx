@@ -33,6 +33,7 @@ const useCustomToast = () => {
       status={status}
       mx="20px"
       bgColor={`${status}.100`}
+      bottom="80px"
       {...alertProps}
     >
       <HStack w="100%" justifyContent="space-between" alignItems="flex-start">
