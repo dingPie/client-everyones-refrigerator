@@ -1,12 +1,13 @@
-import React, { useCallback, useState } from 'react';
-
-import { Box, Flex, Text } from 'native-base';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { useNavigation } from '@react-navigation/core';
 import { NavigationProp } from '@react-navigation/native';
 
 import CustomTabView from '@/components/@Layout/CustomTabView';
 import { UnStorageStackParamList } from '@/navigations/type';
+
+import DiscardedItemListTab from './components/DiscardedItemListTab';
+import UsedItemListTab from './components/UsedItemListTab';
 
 const routes = [
   {
@@ -32,17 +33,9 @@ const UnStorageScreen = () => {
   const renderScene = useCallback(({ route }: { route: { key: string } }) => {
     switch (route.key) {
       case 'used':
-        return (
-          <Flex flex={1}>
-            <Text> 사용한 상품탭 </Text>
-          </Flex>
-        );
+        return <UsedItemListTab />;
       case 'discarded':
-        return (
-          <Flex flex={1}>
-            <Text> 폐기된 상품탭 </Text>
-          </Flex>
-        );
+        return <DiscardedItemListTab />;
     }
   }, []);
 
