@@ -11,3 +11,5 @@ export { default as Shelf } from './svg/shelf.svg';
 export { default as Setting } from './svg/setting.svg';
 export { default as Home } from './svg/home.svg';
 export { default as Used } from './svg/used.svg';
+
+export { default as User } from './svg/user.svg';
