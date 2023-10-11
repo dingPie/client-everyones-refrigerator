@@ -1,22 +1,20 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 
-import {
-  Avatar,
-  Box,
-  Button,
-  HStack,
-  ScrollView,
-  Text,
-  VStack,
-} from 'native-base';
+import { ScrollView, Text, VStack } from 'native-base';
+import { FormProvider } from 'react-hook-form';
+import { Provider } from 'react-redux';
 
 import { useNavigation } from '@react-navigation/core';
 import { NavigationProp } from '@react-navigation/native';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { useAuthLogoutMutation } from '@/apis/auth/auth-api.mutation';
-import { useGetMyInfoByRefrigeratorQuery } from '@/apis/refrigerator-user/refrigerator-user-api.query';
+import { usePatchRefrigeratorUserMyInfoByRefrigeratorMutation } from '@/apis/refrigerator-user/refrigerator-user-api.mutation';
+import {
+  REFRIGERATOR_USER_API_QUERY_KEY,
+  useGetMyInfoByRefrigeratorQuery,
+} from '@/apis/refrigerator-user/refrigerator-user-api.query';
 
-import CustomIcon from '@/components/@common/CustomIcon';
 import useCustomModal from '@/contexts/Modal/useCustomModal';
 import { useGlobalContext } from '@/contexts/global/useGlobalStoreContext';
 import useCustomToast from '@/hooks/useCustomToast';
@@ -25,11 +23,15 @@ import { SettingStackParamList } from '@/navigations/type';
 import { deleteToken } from '@/utils/async-storage/token';
 
 import AuthInfoWrapper from './components/AuthInfoWrapper';
+import NotificationWrapper from './components/NotificationWrapper';
+import useEditNotificationForm from './useEditNotificationForm';
 
 type MyNavigationProps = NavigationProp<SettingStackParamList, 'My'>;
 
 const MyScreen = () => {
   const navigation = useNavigation<MyNavigationProps>();
+  const queryClient = useQueryClient();
+  const useEditNotificationMethod = useEditNotificationForm();
   const Toast = useCustomToast();
   const Modal = useCustomModal();
   const { refrigeratorId } = useGlobalContext((ctx) => ctx.state);
@@ -55,6 +57,11 @@ const MyScreen = () => {
     },
   });
 
+  const myInfoByRefrigeratorInfo = useMemo(
+    () => myInfoByRefrigeratorData?.result,
+    [myInfoByRefrigeratorData?.result],
+  );
+
   const { mutate: authLogoutMutate } = useAuthLogoutMutation({
     options: {
       onSuccess: () => {
@@ -64,16 +71,38 @@ const MyScreen = () => {
           title: '로그아웃 되었어요.',
         });
       },
-      onError: (err) => {
+      onError: (err: any) => {
         console.log('@@@ 로그아웃 에러', err);
+        Toast.show({
+          title: err.response.data?.message || '',
+          status: 'error',
+        });
       },
     },
   });
 
-  const myInfoByRefrigeratorInfo = useMemo(
-    () => myInfoByRefrigeratorData?.result,
-    [myInfoByRefrigeratorData?.result],
-  );
+  const { mutate: patchRefrigeratorUserMyInfoByRefrigeratorMutate } =
+    usePatchRefrigeratorUserMyInfoByRefrigeratorMutation({
+      options: {
+        onSuccess: () => {
+          Toast.show({
+            title: '내 권한 수정이 완료되었어요.',
+          });
+          queryClient.invalidateQueries([
+            REFRIGERATOR_USER_API_QUERY_KEY.GET_MY_INFO_BY_REFRIGERATOR({
+              refrigeratorId: refrigeratorId || -1,
+            }),
+          ]);
+        },
+        onError: (err: any) => {
+          console.log('@@@ 로그아웃 에러', err);
+          Toast.show({
+            title: err.response.data?.message || '',
+            status: 'error',
+          });
+        },
+      },
+    });
 
   const onPressLogoutButton = useCallback(() => {
     Modal.show({
@@ -92,8 +121,55 @@ const MyScreen = () => {
     });
   }, [Modal, authLogoutMutate]);
 
+  const onPressSaveEditNotificationButton = useCallback(async () => {
+    //  P_TODO: 저장되어야 함.
+
+    // P_TODO: 아니 왜 defaultValue는 안먹음?
+
+    await useEditNotificationMethod.trigger();
+
+    console.log(
+      '$$$$$$$$$$$$$$$',
+      refrigeratorId,
+      useEditNotificationMethod.getValues(),
+    );
+
+    patchRefrigeratorUserMyInfoByRefrigeratorMutate({
+      refrigeratorId: refrigeratorId || -1,
+      ...useEditNotificationMethod.getValues(),
+    });
+  }, [
+    patchRefrigeratorUserMyInfoByRefrigeratorMutate,
+    refrigeratorId,
+    useEditNotificationMethod,
+  ]);
+  console.log(refrigeratorId);
+
+  useEffect(() => {
+    if (!myInfoByRefrigeratorInfo) return;
+
+    console.log('ㅡ아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ', myInfoByRefrigeratorInfo);
+
+    useEditNotificationMethod.setValue(
+      'isAlertEtc',
+      myInfoByRefrigeratorInfo?.isAlertEtc,
+    );
+    useEditNotificationMethod.setValue(
+      'isShowExpireDate',
+      myInfoByRefrigeratorInfo?.isShowExpireDate,
+    );
+    useEditNotificationMethod.setValue(
+      'lunchAlertTime',
+      myInfoByRefrigeratorInfo?.lunchAlertTime,
+    );
+    useEditNotificationMethod.setValue(
+      'beforeExpireAlertDate',
+      myInfoByRefrigeratorInfo?.beforeExpireAlertDate,
+    );
+  }, [myInfoByRefrigeratorInfo, useEditNotificationMethod]);
+
   return (
-    <ScrollView flex={1} h="100%" bgColor="gray.100" py="24px" px="16px">
+    <ScrollView flex={1} h="100%" bgColor="white" py="24px" px="16px">
       <VStack flex={1} space="24px">
         <Text size="3xl.bold">내 정보</Text>
 
@@ -102,6 +178,14 @@ const MyScreen = () => {
           myInfoByRefrigeratorInfo={myInfoByRefrigeratorInfo}
           onPressLogoutButton={onPressLogoutButton}
         />
+
+        <FormProvider {...useEditNotificationMethod}>
+          <NotificationWrapper
+            onPressSaveEditNotificationButton={
+              onPressSaveEditNotificationButton
+            }
+          />
+        </FormProvider>
       </VStack>
     </ScrollView>
   );

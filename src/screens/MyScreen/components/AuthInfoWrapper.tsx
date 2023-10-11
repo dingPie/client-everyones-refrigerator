@@ -22,6 +22,7 @@ const AuthInfoWrapper = ({
         <Button
           onPress={onPressLogoutButton}
           bgColor="gray.800"
+          size="sm"
           _pressed={{
             bgColor: 'gray.900',
           }}
