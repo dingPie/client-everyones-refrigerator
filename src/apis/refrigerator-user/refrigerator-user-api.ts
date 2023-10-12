@@ -7,6 +7,7 @@ import { AuthorityDto } from './types/dto/authority-dto';
 import { GetMyInfoByRefrigeratorDto } from './types/dto/get-my-info-by-refrigerator-dto';
 import { JoinDto } from './types/dto/join-dto';
 import { PatchMyInfoByRefrigeratorDto } from './types/dto/pach-my-info-by-refrigerator-dto copy';
+import { WithdrawalDto } from './types/dto/withdrawal-dto';
 import { MyInfoByRefrigeratorModel } from './types/model/my-info-by-refrigerator-model';
 import { MyRefrigeratorListModel } from './types/model/my-refrigerator-list-model';
 
@@ -61,6 +62,17 @@ export class RefrigeratorUserApi {
     const { data } = await this.axios({
       method: 'PATCH',
       url: `/refrigerator-user/my-info-by-refrigerator`,
+      data: req,
+    });
+    return data;
+  };
+
+  withdrawal = async (
+    req: WithdrawalDto,
+  ): Promise<ApiResponseType<boolean>> => {
+    const { data } = await this.axios({
+      method: 'DELETE',
+      url: `/refrigerator-user/withdrawal`,
       data: req,
     });
     return data;
