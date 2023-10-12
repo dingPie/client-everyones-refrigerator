@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 
-import { Button, HStack, Text, VStack } from 'native-base';
+import { Button, HStack, Pressable, Text, VStack } from 'native-base';
 
 import { MyInfoByRefrigeratorItemType } from '@/apis/refrigerator-user/types/model/my-info-by-refrigerator-model';
 
@@ -19,18 +19,11 @@ const AuthInfoWrapper = ({
     <VStack space="12px">
       <HStack justifyContent="space-between" alignItems="center">
         <Text size="2xl.bold">연결된 계정</Text>
-        <Button
-          onPress={onPressLogoutButton}
-          bgColor="gray.800"
-          size="sm"
-          _pressed={{
-            bgColor: 'gray.900',
-          }}
-        >
-          <Text size="md.bold" color="white" px="12px">
+        <Pressable onPress={onPressLogoutButton}>
+          <Text size="md" color="gray.800" px="12px">
             로그아웃
           </Text>
-        </Button>
+        </Pressable>
       </HStack>
       <VStack space="8px">
         <HStack

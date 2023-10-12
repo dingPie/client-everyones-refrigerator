@@ -37,14 +37,7 @@ const NotificationWrapper = ({
     <VStack space="12px">
       <HStack justifyContent="space-between" alignItems="center">
         <Text size="xl.bold">알림설정</Text>
-        <Button
-          onPress={onPressSaveEditNotificationButton}
-          bgColor="gray.800"
-          size="sm"
-          _pressed={{
-            bgColor: 'gray.900',
-          }}
-        >
+        <Button onPress={onPressSaveEditNotificationButton} size="sm">
           <Text size="md.bold" color="white" px="12px">
             저장하기
           </Text>
