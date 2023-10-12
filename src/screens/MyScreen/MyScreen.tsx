@@ -1,15 +1,24 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 
-import { ScrollView, Text, VStack } from 'native-base';
+import {
+  Button,
+  HStack,
+  Pressable,
+  ScrollView,
+  Text,
+  VStack,
+} from 'native-base';
 import { FormProvider } from 'react-hook-form';
-import { Provider } from 'react-redux';
 
 import { useNavigation } from '@react-navigation/core';
 import { NavigationProp } from '@react-navigation/native';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useAuthLogoutMutation } from '@/apis/auth/auth-api.mutation';
-import { usePatchRefrigeratorUserMyInfoByRefrigeratorMutation } from '@/apis/refrigerator-user/refrigerator-user-api.mutation';
+import {
+  usePatchRefrigeratorUserMyInfoByRefrigeratorMutation,
+  useRefrigeratorWithdrawalMutation,
+} from '@/apis/refrigerator-user/refrigerator-user-api.mutation';
 import {
   REFRIGERATOR_USER_API_QUERY_KEY,
   useGetMyInfoByRefrigeratorQuery,
@@ -104,6 +113,38 @@ const MyScreen = () => {
       },
     });
 
+  const { mutate: withdrawalMutate } = useRefrigeratorWithdrawalMutation({
+    options: {
+      onSuccess: (data) => {
+        if (data.result) {
+          Toast.show({
+            title: '내 권한 수정이 완료되었어요.',
+          });
+          queryClient.invalidateQueries([
+            REFRIGERATOR_USER_API_QUERY_KEY.GET_MY_INFO_BY_REFRIGERATOR({
+              refrigeratorId: refrigeratorId || -1,
+            }),
+          ]);
+          deleteToken();
+          dispatch({ type: 'LOGOUT' });
+        } else {
+          // 이미 보관중인 상품이 있을 떄 실패
+          Toast.show({
+            status: 'error',
+            title: data.message,
+          });
+        }
+      },
+      onError: (err: any) => {
+        console.log('@@@ 로그아웃 에러', err);
+        Toast.show({
+          title: err.response.data?.message || '',
+          status: 'error',
+        });
+      },
+    },
+  });
+
   const onPressLogoutButton = useCallback(() => {
     Modal.show({
       title: '로그아웃',
@@ -122,17 +163,7 @@ const MyScreen = () => {
   }, [Modal, authLogoutMutate]);
 
   const onPressSaveEditNotificationButton = useCallback(async () => {
-    //  P_TODO: 저장되어야 함.
-
-    // P_TODO: 아니 왜 defaultValue는 안먹음?
-
     await useEditNotificationMethod.trigger();
-
-    console.log(
-      '$$$$$$$$$$$$$$$',
-      refrigeratorId,
-      useEditNotificationMethod.getValues(),
-    );
 
     patchRefrigeratorUserMyInfoByRefrigeratorMutate({
       refrigeratorId: refrigeratorId || -1,
@@ -143,12 +174,32 @@ const MyScreen = () => {
     refrigeratorId,
     useEditNotificationMethod,
   ]);
-  console.log(refrigeratorId);
+
+  const onPressWithdrawalButton = useCallback(() => {
+    Modal.show({
+      title: '냉장고 탈퇴',
+      content:
+        '현재 냉장고에서 나갈까요?\n보관중인 상품이 있다면 탈퇴가 불가능해요.',
+      buttons: [
+        {
+          text: '아니오',
+          isCancel: true,
+        },
+        {
+          text: '네',
+          onPress: () => {
+            Modal.close();
+            withdrawalMutate({
+              refrigeratorId: refrigeratorId || -1,
+            });
+          },
+        },
+      ],
+    });
+  }, [Modal, refrigeratorId, withdrawalMutate]);
 
   useEffect(() => {
     if (!myInfoByRefrigeratorInfo) return;
-
-    console.log('ㅡ아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ', myInfoByRefrigeratorInfo);
 
     useEditNotificationMethod.setValue(
       'isAlertEtc',
@@ -186,6 +237,14 @@ const MyScreen = () => {
             }
           />
         </FormProvider>
+
+        <HStack justifyContent="flex-end">
+          <Pressable onPress={() => onPressWithdrawalButton()}>
+            <Text size="md" color="gray.800">
+              냉장고 나가기
+            </Text>
+          </Pressable>
+        </HStack>
       </VStack>
     </ScrollView>
   );

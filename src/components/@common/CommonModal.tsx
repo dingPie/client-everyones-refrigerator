@@ -71,6 +71,8 @@ const CommonModal = ({
                     onPress={
                       button.isCancel ? () => onClose(modalKey) : button.onPress
                     }
+                    size="sm"
+                    minW="80px"
                     {...button.buttonStyle}
                   >
                     <Text
