@@ -7,6 +7,7 @@ import { NavigationProp } from '@react-navigation/native';
 import CustomTabView from '@/components/@Layout/CustomTabView';
 import { SettingStackParamList } from '@/navigations/type';
 
+import MemberTab from './components/MemberTab';
 import MyInfoTab from './components/MyInfoTab';
 
 const routes = [
@@ -34,7 +35,7 @@ const MyScreen = () => {
       case 'my':
         return <MyInfoTab />;
       case 'member':
-        return <Text>으아</Text>;
+        return <MemberTab />;
       case 'refrigerator':
         return <Text>으아ㅏ아ㅏ</Text>;
     }
