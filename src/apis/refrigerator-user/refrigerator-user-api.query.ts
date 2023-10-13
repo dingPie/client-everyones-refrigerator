@@ -10,6 +10,9 @@ export const REFRIGERATOR_USER_API_QUERY_KEY = {
   GET_MY_INFO_BY_REFRIGERATOR: (
     params: Parameter<typeof refrigeratorUserApi.getMyInfoByRefrigerator>,
   ) => ['my-info-by-refrigerator', params].filter(isNotNull),
+  GET_USER_LIST_BY_REFRIGERATOR: (
+    params: Parameter<typeof refrigeratorUserApi.userListByRefrigerator>,
+  ) => ['list-by-refrigerator', params].filter(isNotNull),
 };
 
 export function useGetMyRefrigeratorListQuery(
@@ -32,6 +35,20 @@ export function useGetMyInfoByRefrigeratorQuery(
   return useQuery(
     queryKey,
     () => refrigeratorUserApi.getMyInfoByRefrigerator(params.variables),
+    params?.options,
+  );
+}
+
+export function useGetUserListByRefrigeratorQuery(
+  params: UseQueryParams<typeof refrigeratorUserApi.userListByRefrigerator>,
+) {
+  const queryKey =
+    REFRIGERATOR_USER_API_QUERY_KEY.GET_USER_LIST_BY_REFRIGERATOR(
+      params.variables,
+    );
+  return useQuery(
+    queryKey,
+    () => refrigeratorUserApi.userListByRefrigerator(params.variables),
     params?.options,
   );
 }
