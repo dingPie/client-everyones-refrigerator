@@ -79,6 +79,7 @@ const CustomTabView = ({
       initialLayout={{ width: LAYOUT.WINDOW_WIDTH }}
       style={[tabStyle]}
       {...tabProps}
+      lazy={true}
     />
   );
 };
