@@ -1,43 +1,38 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 
-import {
-  Button,
-  FlatList,
-  HStack,
-  Pressable,
-  ScrollView,
-  Text,
-  VStack,
-} from 'native-base';
-import { FormProvider } from 'react-hook-form';
+import { Button, FlatList, Flex, Text, VStack, useDisclose } from 'native-base';
 
 import { useNavigation } from '@react-navigation/core';
 import { NavigationProp } from '@react-navigation/native';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { useGetUserListByRefrigeratorQuery } from '@/apis/refrigerator-user/refrigerator-user-api.query';
+import { usePatchRefrigeratorUserAuthorityMutation } from '@/apis/refrigerator-user/refrigerator-user-api.mutation';
+import {
+  REFRIGERATOR_USER_API_QUERY_KEY,
+  useGetUserListByRefrigeratorQuery,
+} from '@/apis/refrigerator-user/refrigerator-user-api.query';
+import {
+  GetUserListByRefrigeratorModel,
+  UserListByRefrigeratorItemType,
+} from '@/apis/refrigerator-user/types/model/get-user-list-by-refrigerator-model';
+import { ApiResponseType } from '@/apis/type';
 
-import useCustomModal from '@/contexts/Modal/useCustomModal';
 import { useGlobalContext } from '@/contexts/global/useGlobalStoreContext';
 import useCustomToast from '@/hooks/useCustomToast';
+import useGetMyAuthority from '@/hooks/useGetMyAuthority';
 import { SettingStackParamList } from '@/navigations/type';
 
-import { deleteToken } from '@/utils/async-storage/token';
-
-import useEditNotificationForm from '../useEditNotificationForm';
-import AuthInfoWrapper from './AuthInfoWrapper';
-import NotificationWrapper from './NotificationWrapper';
+import MemberItem from './MemberItem';
 
 type MyNavigationProps = NavigationProp<SettingStackParamList, 'My'>;
 
 const MemberTab = () => {
   const navigation = useNavigation<MyNavigationProps>();
   const queryClient = useQueryClient();
-  const useEditNotificationMethod = useEditNotificationForm();
   const Toast = useCustomToast();
-  const Modal = useCustomModal();
   const { refrigeratorId } = useGlobalContext((ctx) => ctx.state);
-  const dispatch = useGlobalContext((ctx) => ctx.dispatch);
+
+  const { isManager } = useGetMyAuthority();
 
   const { data: userListByRefrigeratorData } =
     useGetUserListByRefrigeratorQuery({
@@ -56,17 +51,93 @@ const MemberTab = () => {
       },
     });
 
+  const { mutate: patchAuthorityMutate } =
+    usePatchRefrigeratorUserAuthorityMutation({
+      options: {
+        onSuccess: (data, variables) => {
+          // P_MEMO: 먜 API를 칠 때 마다 invalidQuery를 치는건 너무 API 호출이 잦음. 해당 방식으로 처리.
+          queryClient.setQueryData<
+            ApiResponseType<GetUserListByRefrigeratorModel>
+          >(
+            REFRIGERATOR_USER_API_QUERY_KEY.GET_USER_LIST_BY_REFRIGERATOR({
+              refrigeratorId: refrigeratorId || -1,
+            }),
+            (curr) => {
+              if (!curr) return;
+              const newValue = curr?.result?.userList.map((user) =>
+                user.userId === variables.userId
+                  ? { ...user, authority: variables.authority }
+                  : user,
+              );
+              return {
+                ...curr,
+                result: {
+                  userList: newValue,
+                },
+              };
+            },
+          );
+        },
+
+        onError: (err: any) => {
+          console.log('권한 변경 에러', err.response.data?.message);
+          Toast.show({
+            title: err.response.data?.message || '',
+            status: 'error',
+          });
+        },
+      },
+    });
+
   const userListByRefrigerator = useMemo(
     () => userListByRefrigeratorData?.result.userList,
     [userListByRefrigeratorData?.result],
   );
 
+  const { isOpen: isEditAuthority, onToggle: onToggleEditAuthority } =
+    useDisclose();
+
+  const onChangeUserAuthority = useCallback(
+    ({
+      userId,
+      authority,
+    }: Omit<UserListByRefrigeratorItemType, 'id' | 'userName'>) => {
+      patchAuthorityMutate({
+        userId,
+        refrigeratorId: refrigeratorId || -1,
+        authority,
+      });
+    },
+    [patchAuthorityMutate, refrigeratorId],
+  );
+
   return (
     <FlatList
-      data={[]}
-      renderItem={({}) => {
-        return <></>;
+      data={userListByRefrigerator}
+      renderItem={({ item }) => {
+        return (
+          <MemberItem
+            memberInfo={item}
+            onChangeMemberAuthority={onChangeUserAuthority}
+            isEditAuthority={isEditAuthority}
+          />
+        );
       }}
+      bgColor="white"
+      px="16px"
+      py="24px"
+      ListHeaderComponent={
+        <Flex flexDir="row" justifyContent="space-between" mb="12px" h="40px">
+          <Text size="2xl.bold"> 참여 인원 목록 </Text>
+          {isManager && (
+            <Button onPress={onToggleEditAuthority} size="sm">
+              <Text color="white">
+                {isEditAuthority ? '권한 수정 완료' : '권한 수정'}
+              </Text>
+            </Button>
+          )}
+        </Flex>
+      }
     />
   );
 };
