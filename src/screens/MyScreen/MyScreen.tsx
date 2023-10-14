@@ -9,6 +9,7 @@ import { SettingStackParamList } from '@/navigations/type';
 
 import MemberTab from './components/MemberTab';
 import MyInfoTab from './components/MyInfoTab';
+import RefrigeratorTab from './components/RefrigeratorTab';
 
 const routes = [
   {
@@ -37,7 +38,7 @@ const MyScreen = () => {
       case 'member':
         return <MemberTab />;
       case 'refrigerator':
-        return <Text>으아ㅏ아ㅏ</Text>;
+        return <RefrigeratorTab />;
     }
   }, []);
 
