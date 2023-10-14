@@ -5,6 +5,7 @@ import instance from '@/configs/axios/instance';
 import { ApiResponseType } from '../type';
 import { ByIdDto } from './types/dto/by-id-dto';
 import { CreateDto } from './types/dto/create-dto';
+import { UpdateDto } from './types/dto/update-dto';
 import { ByIdModel } from './types/model/by-id-model';
 import { CreateModel } from './types/model/create-model';
 
@@ -27,6 +28,15 @@ export class RefrigeratorApi {
     const { data } = await this.axios({
       method: 'POST',
       url: `/refrigerator/create`,
+      data: req,
+    });
+    return data;
+  };
+
+  update = async (req: UpdateDto): Promise<ApiResponseType<boolean>> => {
+    const { data } = await this.axios({
+      method: 'PATCH',
+      url: `/refrigerator/update`,
       data: req,
     });
     return data;
