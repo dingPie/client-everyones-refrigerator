@@ -7,7 +7,7 @@ import { NavigationProp } from '@react-navigation/native';
 import CustomTabView from '@/components/@Layout/CustomTabView';
 import { SettingStackParamList } from '@/navigations/type';
 
-import MemberTab from './components/MemberTab';
+import MemberTab from './components/MemberTab/MemberTab';
 import MyInfoTab from './components/MyInfoTab';
 import RefrigeratorTab from './components/RefrigeratorTab';
 

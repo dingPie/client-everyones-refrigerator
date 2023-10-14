@@ -31,7 +31,7 @@ import { SettingStackParamList } from '@/navigations/type';
 
 import { deleteToken } from '@/utils/async-storage/token';
 
-import useEditNotificationForm from '../useEditNotificationForm';
+import useEditNotificationForm from '../../useEditNotificationForm';
 import AuthInfoWrapper from './AuthInfoWrapper';
 import NotificationWrapper from './NotificationWrapper';
 

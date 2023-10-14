@@ -21,7 +21,7 @@ import {
   LUNCH_ALERT_TIME_LIST,
 } from '@/constants/const';
 
-import { EditNotificationDataType } from '../useEditNotificationForm';
+import { EditNotificationDataType } from '../../useEditNotificationForm';
 
 interface NotificationWrapperProps {
   onPressSaveEditNotificationButton: () => void;

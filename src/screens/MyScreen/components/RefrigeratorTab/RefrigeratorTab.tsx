@@ -21,7 +21,7 @@ import useCustomToast from '@/hooks/useCustomToast';
 import useGetMyAuthority from '@/hooks/useGetMyAuthority';
 import { SettingStackParamList } from '@/navigations/type';
 
-import useEditRefrigeratorForm from '../useEditRefrigeratorForm';
+import useEditRefrigeratorForm from '../../useEditRefrigeratorForm';
 import EditRefrigeratorWrapper from './EditRefrigeratorWrapper';
 
 type MyNavigationProps = NavigationProp<SettingStackParamList, 'My'>;

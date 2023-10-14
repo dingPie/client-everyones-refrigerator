@@ -102,7 +102,10 @@ const MemberItem = ({
           bgColor={authorityBgcolor}
           borderRadius="8px"
         >
-          <Text size="lg" color="white">
+          <Text
+            size="lg"
+            color={memberInfo.authority !== 'waiting' ? 'white' : 'gray.800'}
+          >
             {LABEL.USER.AUTHORITY[memberInfo.authority]}
           </Text>
         </Flex>

@@ -8,7 +8,7 @@ import { MyRefrigeratorItemType } from '@/apis/refrigerator/types/model/by-id-mo
 import RowLabelWrapper from '@/components/#Atoms/RowLabelWrapper';
 import CustomInputController from '@/components/#Molecules/CustomInputController';
 
-import { EditRefrigeratorDataType } from '../useEditRefrigeratorForm';
+import { EditRefrigeratorDataType } from '../../useEditRefrigeratorForm';
 
 interface EditRefrigeratorWrapperProps {
   isEditRefrigerator: boolean;
