@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { memo, useCallback, useEffect, useMemo } from 'react';
 
 import { Button, FlatList, Flex, Text, VStack, useDisclose } from 'native-base';
 
@@ -142,4 +142,4 @@ const MemberTab = () => {
   );
 };
 
-export default MemberTab;
+export default memo(MemberTab);
