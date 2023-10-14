@@ -54,11 +54,13 @@ const CustomTabView = ({
           fontSize: 16,
           lineHeight: 20,
           fontWeight: '700',
+          marginTop: 10,
         }}
         style={{
           backgroundColor: 'white',
           shadowOffset: { height: 0, width: 0 },
           shadowColor: 'transparent',
+          height: 60,
         }}
         {...props}
       />
