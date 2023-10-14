@@ -1,7 +1,10 @@
+import { RefrigeratorUserAuthorityType } from '@/types/type';
+
 export interface UserListByRefrigeratorItemType {
   id: number;
   userName: string;
-  authority: string;
+  authority: RefrigeratorUserAuthorityType;
+  userId: number;
 }
 
 export type GetUserListByRefrigeratorModel = {

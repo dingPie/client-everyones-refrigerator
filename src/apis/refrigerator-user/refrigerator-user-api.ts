@@ -12,6 +12,7 @@ import { WithdrawalDto } from './types/dto/withdrawal-dto';
 import { GetUserListByRefrigeratorModel } from './types/model/get-user-list-by-refrigerator-model';
 import { MyInfoByRefrigeratorModel } from './types/model/my-info-by-refrigerator-model';
 import { MyRefrigeratorListModel } from './types/model/my-refrigerator-list-model';
+import { PatchAuthorityModel } from './types/model/patch-authority-model';
 
 export class RefrigeratorUserApi {
   axios: AxiosInstance = instance;
@@ -60,10 +61,12 @@ export class RefrigeratorUserApi {
     return data;
   };
 
-  authority = async (req: AuthorityDto): Promise<ApiResponseType<any>> => {
+  authority = async (
+    req: AuthorityDto,
+  ): Promise<ApiResponseType<PatchAuthorityModel>> => {
     const { data } = await this.axios({
       method: 'PATCH',
-      url: `/refrigerator-user/join`,
+      url: `/refrigerator-user/authority`,
       data: req,
     });
     return data;
