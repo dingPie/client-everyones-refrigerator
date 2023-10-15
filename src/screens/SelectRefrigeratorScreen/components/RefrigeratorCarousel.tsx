@@ -31,8 +31,8 @@ const RefrigeratorCarousel = ({
       mode="parallax"
       modeConfig={{
         parallaxAdjacentItemScale: 0.8,
-        parallaxScrollingScale: 0.95,
-        parallaxScrollingOffset: 80,
+        parallaxScrollingScale: 1,
+        parallaxScrollingOffset: 120,
       }}
       panGestureHandlerProps={{ activeOffsetX: [-10, 10] }}
       renderItem={({ item, index }) => {
