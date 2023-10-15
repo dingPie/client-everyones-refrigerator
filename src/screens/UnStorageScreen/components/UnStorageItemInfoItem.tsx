@@ -14,11 +14,14 @@ interface UnStorageItemInfoItemProps {
 const UnStorageItemInfoItem = ({ item }: UnStorageItemInfoItemProps) => {
   return (
     <VStack
-      space="6px"
+      space="12px"
       p="16px"
       mb="8px"
-      bgColor="rgba(0, 0, 0, 0.8)"
+      mx="2px"
+      // bgColor="rgba(0, 0, 0, 0.8)"
+      bgColor="white"
       borderRadius="8px"
+      shadow={3}
     >
       {/* 상단 아이콘, 버튼 */}
       <HStack justifyContent="space-between" alignItems="center" w="100%">
@@ -36,54 +39,30 @@ const UnStorageItemInfoItem = ({ item }: UnStorageItemInfoItemProps) => {
 
       {/* 하단 정보 */}
       <VStack w="100%">
-        <HStack justifyContent="space-between" alignItems="center">
-          <Text
-            color="white"
-            textAlign="left"
-            noOfLines={2}
-            maxW="300px"
-            size="md.bold"
-          >
+        <HStack justifyContent="space-between" alignItems="center" mb="4px">
+          <Text textAlign="left" noOfLines={2} maxW="300px" size="lg.bold">
             {item.itemInfo.name}
           </Text>
         </HStack>
         <HStack justifyContent="space-between" alignItems="center">
-          <Text
-            color="white"
-            textAlign="left"
-            noOfLines={2}
-            maxW="300px"
-            size="md"
-          >
+          <Text textAlign="left" noOfLines={2} maxW="300px" size="md">
             보관 시작일
           </Text>
-          <Text color="white" textAlign="left">
+          <Text textAlign="left">
             {dayjs(item.itemInfo.createdAt).format('YYYY-MM-DD hh:mm')}
           </Text>
         </HStack>
         <HStack justifyContent="space-between" alignItems="center">
-          <Text
-            color="white"
-            textAlign="left"
-            noOfLines={2}
-            maxW="300px"
-            size="md"
-          >
+          <Text textAlign="left" noOfLines={2} maxW="300px" size="md">
             소비 / 폐기일
           </Text>
-          <Text color="white" textAlign="left">
+          <Text textAlign="left">
             {dayjs(item.itemInfo.updatedAt).format('YYYY-MM-DD hh:mm')}
           </Text>
         </HStack>
 
         {item.itemInfo.memo && (
-          <Text
-            color="white"
-            textAlign="left"
-            noOfLines={2}
-            maxW="300px"
-            size="md"
-          >
+          <Text textAlign="left" noOfLines={2} maxW="300px" size="md">
             {item.itemInfo.memo}
           </Text>
         )}

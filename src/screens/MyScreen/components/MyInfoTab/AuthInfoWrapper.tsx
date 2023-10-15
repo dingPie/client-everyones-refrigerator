@@ -17,7 +17,14 @@ const AuthInfoWrapper = ({
 }: AuthInfoWrapperProps) => {
   return (
     <VStack space="12px">
-      <HStack justifyContent="space-between" alignItems="center">
+      <HStack
+        justifyContent="space-between"
+        alignItems="center"
+        bgColor="white"
+        px="8px"
+        py="12px"
+        borderRadius="8px"
+      >
         <Text size="2xl.bold">연결된 계정</Text>
         <Pressable onPress={onPressLogoutButton}>
           <Text size="md" color="gray.800" px="12px">

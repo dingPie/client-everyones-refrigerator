@@ -12,6 +12,7 @@ import {
 
 import { UserListByRefrigeratorItemType } from '@/apis/refrigerator-user/types/model/get-user-list-by-refrigerator-model';
 
+import AuthorityBadge from '@/components/#Atoms/AuthorityBadge';
 import CustomIcon from '@/components/@common/CustomIcon';
 
 import { LABEL } from '@/constants/label';
@@ -31,18 +32,6 @@ const MemberItem = ({
   onChangeMemberAuthority,
   isEditAuthority,
 }: MemberItemProps) => {
-  const authorityBgcolor = useMemo(() => {
-    if (memberInfo.authority === 'admin') {
-      return 'primary.700';
-    } else if (memberInfo.authority === 'manager') {
-      return 'primary.500';
-    } else if (memberInfo.authority === 'normal') {
-      return 'primary.300';
-    } else {
-      return 'gray.300';
-    }
-  }, [memberInfo.authority]);
-
   return (
     <HStack
       justifyContent="space-between"
@@ -62,8 +51,7 @@ const MemberItem = ({
           </Text>
         </VStack>
       </HStack>
-      {/* P_TODO: 여기..badge 색상 선정 */}
-      {/* P_TODO: select 렌더링 조건 어케할까 */}
+
       {isEditAuthority ? (
         <Select
           defaultValue={memberInfo.authority}
@@ -95,20 +83,7 @@ const MemberItem = ({
             })}
         </Select>
       ) : (
-        <Flex
-          alignItems="center"
-          px="8px"
-          py="6px"
-          bgColor={authorityBgcolor}
-          borderRadius="8px"
-        >
-          <Text
-            size="lg"
-            color={memberInfo.authority !== 'waiting' ? 'white' : 'gray.800'}
-          >
-            {LABEL.USER.AUTHORITY[memberInfo.authority]}
-          </Text>
-        </Flex>
+        <AuthorityBadge authority={memberInfo.authority} />
       )}
     </HStack>
   );

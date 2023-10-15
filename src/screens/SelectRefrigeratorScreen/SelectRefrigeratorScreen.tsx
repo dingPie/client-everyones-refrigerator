@@ -169,14 +169,14 @@ const SelectRefrigeratorScreen = () => {
         flex={1}
         h="100%"
         space="40px"
-        borderRadius="10px"
-        borderColor="white"
-        color="primary.400"
         justifyContent="center"
         alignItems="center"
-        bgColor="primary.50"
+        bgColor="primary.400"
+        // bgColor="white"
       >
-        <Text size="3xl.bold">냉장고 선택</Text>
+        <Text color="white" size="4xl.bold">
+          냉장고 선택
+        </Text>
 
         <RefrigeratorCarousel
           refrigeratorList={myRefrigeratorList}
@@ -189,7 +189,7 @@ const SelectRefrigeratorScreen = () => {
 
         <HStack justifyContent="flex-end" w="100%" px="32px">
           <Pressable onPress={onClickLogoutButton}>
-            <Text size="lg" color="gray.700">
+            <Text size="lg.bold" color="gray.200">
               로그아웃
             </Text>
           </Pressable>

@@ -12,10 +12,12 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { useAuthLoginMutation } from '@/apis/auth/auth-api.mutation';
 
+import CustomFastImage from '@/components/#Atoms/CustomFastImage';
 import CustomIcon from '@/components/@common/CustomIcon';
 import { useGlobalContext } from '@/contexts/global/useGlobalStoreContext';
 import { AuthStackParamList } from '@/navigations/type';
 
+import { MY_IMAGES } from '@/image';
 import { setToken } from '@/utils/async-storage/token';
 
 type LoginNavigationProps = StackNavigationProp<AuthStackParamList, 'Login'>;
@@ -79,16 +81,22 @@ const LoginScreen = () => {
       flex={1}
       h="100%"
       px="24px"
-      bgColor="secondary.400"
+      bgColor="primary.500"
       alignItems="center"
       justifyContent="space-between"
     >
-      <VStack space="40px" alignItems="center" mt="50%">
+      <VStack alignItems="center" mt="40%">
         {/* P_TODO: 아이콘, 폰트 나중에 바꾸기 */}
-        <Text size="4xl.bold" color="white">
+        <Text size="title" color="white">
           모두의 냉장고
         </Text>
-        <CustomIcon name="SolidRefrigerator" size={120} color="white" />
+
+        <CustomFastImage
+          source={MY_IMAGES.REFRIGERATOR_LOGO_IMAGE}
+          w="240px"
+          h="360px"
+          resizeMode="contain"
+        />
       </VStack>
 
       <VStack mb="20%" w="100%" space="8px">
@@ -97,13 +105,12 @@ const LoginScreen = () => {
           flexDir="row"
           alignItems="center"
           bgColor="white"
-          px="16px"
-          py="12px"
+          p="16px"
           borderRadius="6px"
           shadow={4}
         >
           <CustomIcon name="GoogleLogo" size={18} />
-          <Text size="md" fontWeight="500" color="gray.700" ml="32px">
+          <Text size="lg.bold" fontWeight="500" color="gray.700" ml="32px">
             Google 로 시작하기
           </Text>
         </Pressable>

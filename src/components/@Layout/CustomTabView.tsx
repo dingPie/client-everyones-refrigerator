@@ -44,14 +44,14 @@ const CustomTabView = ({
   const renderTabBar = (props: TabBarProps) => {
     return (
       <TabBar
-        activeColor="#A076F9"
+        activeColor="#6a92cc"
         indicatorStyle={{
-          backgroundColor: '#A076F9',
+          backgroundColor: '#6a92cc',
           height: 3,
         }}
         labelStyle={{
           color: '#939393',
-          fontSize: 16,
+          fontSize: 18,
           lineHeight: 20,
           fontWeight: '700',
           marginTop: 10,
@@ -89,9 +89,9 @@ export default memo(CustomTabView);
 export const CustomTabBar = (props: TabBarProps) => {
   return (
     <TabBar
-      activeColor="#A076F9"
+      activeColor="#6a92cc"
       indicatorStyle={{
-        backgroundColor: '#A076F9',
+        backgroundColor: '#6a92cc',
         height: 3,
       }}
       labelStyle={{
