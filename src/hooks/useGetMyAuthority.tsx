@@ -1,6 +1,11 @@
+import { useMemo } from 'react';
+
 import { useQueryClient } from '@tanstack/react-query';
 
-import { REFRIGERATOR_USER_API_QUERY_KEY } from '@/apis/refrigerator-user/refrigerator-user-api.query';
+import {
+  REFRIGERATOR_USER_API_QUERY_KEY,
+  useGetMyInfoByRefrigeratorQuery,
+} from '@/apis/refrigerator-user/refrigerator-user-api.query';
 import { MyInfoByRefrigeratorModel } from '@/apis/refrigerator-user/types/model/my-info-by-refrigerator-model';
 import { ApiResponseType } from '@/apis/type';
 
@@ -17,7 +22,32 @@ const useGetMyAuthority = () => {
     queryKey,
   ) as ApiResponseType<MyInfoByRefrigeratorModel>;
 
-  const authority = myInfoByRefrigeratorData.result.authority;
+  const { data: newMyInfoByRefrigeratorData } = useGetMyInfoByRefrigeratorQuery(
+    {
+      variables: {
+        refrigeratorId: refrigeratorId || -1,
+      },
+      options: {
+        enabled: !!refrigeratorId && !myInfoByRefrigeratorData,
+        onError: (err: any) => {
+          console.log(
+            '$######## 이 냉장고의 내 정보 불러오기 에러',
+            err.response.data?.message,
+          );
+        },
+      },
+    },
+  );
+
+  const authority = useMemo(
+    () =>
+      myInfoByRefrigeratorData?.result?.authority ||
+      newMyInfoByRefrigeratorData?.result?.authority,
+    [
+      myInfoByRefrigeratorData?.result?.authority,
+      newMyInfoByRefrigeratorData?.result?.authority,
+    ],
+  );
 
   return {
     isAdmin: authority === 'admin',
