@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 
 import dayjs from 'dayjs';
 import { Box, Button, HStack, Text, VStack } from 'native-base';
@@ -7,14 +7,31 @@ import { ItemInfoItemType } from '@/apis/item/types/model/list-by-space-model';
 
 import CustomFastImage from '@/components/#Atoms/CustomFastImage';
 import { useGlobalContext } from '@/contexts/global/useGlobalStoreContext';
+import useGetMyAuthority from '@/hooks/useGetMyAuthority';
 
 interface ItemInfoItemProps {
   item: ItemInfoItemType;
   onPressConsumeItem: (item: ItemInfoItemType) => void;
+  onPressDiscardItem: (item: ItemInfoItemType) => void;
 }
 
-const ItemInfoItem = ({ item, onPressConsumeItem }: ItemInfoItemProps) => {
+const ItemInfoItem = ({
+  item,
+  onPressConsumeItem,
+  onPressDiscardItem,
+}: ItemInfoItemProps) => {
   const { id } = useGlobalContext((ctx) => ctx.state);
+  const { isManager } = useGetMyAuthority();
+
+  const isMine = useMemo(
+    () => Number(id) === Number(item.userId),
+    [id, item.userId],
+  );
+
+  const isNotExpired = useMemo(
+    () => dayjs().isBefore(item.expireDate),
+    [item.expireDate],
+  );
 
   return (
     <VStack
@@ -28,9 +45,7 @@ const ItemInfoItem = ({ item, onPressConsumeItem }: ItemInfoItemProps) => {
       <HStack justifyContent="space-between" alignItems="center" w="100%">
         <Box
           borderRadius="8px"
-          bgColor={
-            dayjs().isBefore(item.expireDate) ? 'success.400' : 'warning.100'
-          }
+          bgColor={isNotExpired ? 'success.400' : 'warning.100'}
           size="60px"
           p="6px"
         >
@@ -43,7 +58,7 @@ const ItemInfoItem = ({ item, onPressConsumeItem }: ItemInfoItemProps) => {
             h="100%"
           />
         </Box>
-        {Number(id) === Number(item.userId) && (
+        {isMine && (
           <Button
             onPress={() => onPressConsumeItem(item)}
             bgColor="success.500"
@@ -55,6 +70,21 @@ const ItemInfoItem = ({ item, onPressConsumeItem }: ItemInfoItemProps) => {
           >
             <Text size="lg.bold" color="white">
               사용하기
+            </Text>
+          </Button>
+        )}
+        {!isMine && isManager && !isNotExpired && (
+          <Button
+            onPress={() => onPressDiscardItem(item)}
+            bgColor="warning.500"
+            h="40px"
+            py="0px"
+            _pressed={{
+              bgColor: 'warning.600',
+            }}
+          >
+            <Text size="lg.bold" color="white">
+              폐기하기
             </Text>
           </Button>
         )}

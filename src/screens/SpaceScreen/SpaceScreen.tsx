@@ -16,6 +16,7 @@ import { ItemInfoItemType } from '@/apis/item/types/model/list-by-space-model';
 import { RefrigeratorSpaceItemType } from '@/apis/refrigerator-space/types/model/list-model';
 
 import ConsumeItemModal from '@/components/#Molecules/ConsumeItemModal';
+import useCustomModal from '@/contexts/Modal/useCustomModal';
 import useCustomToast from '@/hooks/useCustomToast';
 import { HomeStackParamList } from '@/navigations/type';
 
@@ -33,6 +34,7 @@ const SpaceScreen = () => {
   const refrigeratorSpaceInfo = route.params as RefrigeratorSpaceItemType;
 
   const Toast = useCustomToast();
+  const Modal = useCustomModal();
 
   const [isMine, setIsMine] = useState(false);
 
@@ -100,10 +102,12 @@ const SpaceScreen = () => {
         });
       },
       onSuccess: (data) => {
+        const status = data.result.status === 'used' ? '사용' : '폐기';
         Toast.show({
-          title: `${data.result.updatedQuantity} 개의 상품이 사용되었어요.`,
+          title: `${data.result.updatedQuantity} 개의 상품이 ${status}되었어요.`,
         });
         setSelectedItem(null);
+
         queryClient.invalidateQueries(
           ITEM_API_QUERY_KEY.GET_LIST_BY_SPACE({
             refrigeratorSpaceId: refrigeratorSpaceInfo.id,
@@ -124,7 +128,6 @@ const SpaceScreen = () => {
   const onPressConsumeItem = useCallback((item: ItemInfoItemType) => {
     setConsumeNum('1');
     setSelectedItem(item);
-    // P_TODO: API 붙여야 함.
   }, []);
 
   const onPressConsumeItemConfirmButton = useCallback(() => {
@@ -151,13 +154,42 @@ const SpaceScreen = () => {
     fetchNextPage();
   };
 
+  const onPressDiscardItem = useCallback((item: ItemInfoItemType) => {
+    Modal.show({
+      title: '보관 상품 폐기',
+      content: '보관 상품이 지난 상품이에요.\n이 상품을 폐기했나요?',
+      buttons: [
+        {
+          text: '취소',
+          isCancel: true,
+        },
+        {
+          text: '폐기',
+          onPress: () => {
+            itemUpdateMutate({
+              itemInfoId: item.id,
+              quantity: item.storageQuantity,
+              status: 'discarded',
+            });
+            Modal.close();
+            // P_TODO: 페기 API 호출
+          },
+        },
+      ],
+    });
+  }, []);
+
   return (
     <>
       <FlatList
         data={itemList}
         renderItem={({ item }) => {
           return (
-            <ItemInfoItem item={item} onPressConsumeItem={onPressConsumeItem} />
+            <ItemInfoItem
+              item={item}
+              onPressConsumeItem={onPressConsumeItem}
+              onPressDiscardItem={onPressDiscardItem}
+            />
           );
         }}
         ListHeaderComponent={() => (
