@@ -62,8 +62,7 @@ const MemberItem = ({
           </Text>
         </VStack>
       </HStack>
-      {/* P_TODO: 여기..badge 색상 선정 */}
-      {/* P_TODO: select 렌더링 조건 어케할까 */}
+
       {isEditAuthority ? (
         <Select
           defaultValue={memberInfo.authority}
@@ -97,13 +96,12 @@ const MemberItem = ({
       ) : (
         <Flex
           alignItems="center"
-          px="8px"
+          px="10px"
           py="6px"
           bgColor={authorityBgcolor}
           borderRadius="8px"
         >
           <Text
-            size="lg"
             color={memberInfo.authority !== 'waiting' ? 'white' : 'gray.800'}
           >
             {LABEL.USER.AUTHORITY[memberInfo.authority]}
