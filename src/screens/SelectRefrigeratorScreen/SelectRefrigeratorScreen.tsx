@@ -169,10 +169,10 @@ const SelectRefrigeratorScreen = () => {
         flex={1}
         h="100%"
         space="40px"
-        borderRadius="10px"
         justifyContent="center"
         alignItems="center"
-        bgColor="primary.500"
+        bgColor="primary.400"
+        // bgColor="white"
       >
         <Text color="white" size="4xl.bold">
           냉장고 선택

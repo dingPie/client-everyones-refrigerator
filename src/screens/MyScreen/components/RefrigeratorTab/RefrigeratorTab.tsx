@@ -1,6 +1,6 @@
 import React, { memo, useCallback } from 'react';
 
-import { Button, Flex, Text, VStack, useDisclose } from 'native-base';
+import { Button, Flex, HStack, Text, VStack, useDisclose } from 'native-base';
 import { FormProvider } from 'react-hook-form';
 
 import { useNavigation } from '@react-navigation/core';
@@ -119,8 +119,16 @@ const RefrigeratorTab = () => {
   ]);
 
   return (
-    <VStack flex={1} bgColor="white" px="16px" py="24px" space="16px">
-      <Flex flexDir="row" justifyContent="space-between" h="40px">
+    <VStack flex={1} bgColor="gray.100" px="16px" py="24px" space="16px">
+      <HStack
+        alignItems="center"
+        justifyContent="space-between"
+        // h="40px"
+        bgColor="white"
+        px="8px"
+        py="12px"
+        borderRadius="8px"
+      >
         <Text size="2xl.bold"> 냉장고 정보 </Text>
         {isAdmin && (
           <Button
@@ -136,7 +144,7 @@ const RefrigeratorTab = () => {
             </Text>
           </Button>
         )}
-      </Flex>
+      </HStack>
 
       <FormProvider {...editRefrigeratorMethod}>
         <EditRefrigeratorWrapper

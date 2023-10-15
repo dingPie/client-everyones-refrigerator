@@ -33,7 +33,7 @@ const BottomTabNavigation = () => {
           paddingTop: 7,
         },
         headerTitleAlign: 'center',
-        tabBarActiveTintColor: '#A076F9',
+        tabBarActiveTintColor: '#6a92cc',
         tabBarInactiveTintColor: '#939393',
         tabBarHideOnKeyboard: true,
         tabBarShowLabel: false,

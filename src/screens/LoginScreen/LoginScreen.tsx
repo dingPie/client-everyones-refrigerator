@@ -81,7 +81,7 @@ const LoginScreen = () => {
       flex={1}
       h="100%"
       px="24px"
-      bgColor="secondary.400"
+      bgColor="primary.500"
       alignItems="center"
       justifyContent="space-between"
     >

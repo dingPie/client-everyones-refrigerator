@@ -35,7 +35,14 @@ const NotificationWrapper = ({
 
   return (
     <VStack space="12px">
-      <HStack justifyContent="space-between" alignItems="center">
+      <HStack
+        justifyContent="space-between"
+        alignItems="center"
+        bgColor="white"
+        px="8px"
+        py="12px"
+        borderRadius="8px"
+      >
         <Text size="xl.bold">알림설정</Text>
         <Button onPress={onPressSaveEditNotificationButton} size="sm">
           <Text size="md.bold" color="white" px="12px">
@@ -45,7 +52,7 @@ const NotificationWrapper = ({
       </HStack>
 
       {/* 점심시간 알림 Toggle, Select */}
-      <VStack space="8px" p="8px" bgColor="gray.50" borderRadius="4px">
+      <VStack space="8px" bgColor="white" px="8px" py="12px" borderRadius="8px">
         <HStack justifyContent="space-between" alignItems="center">
           <Text size="lg.bold">점심시간 알림</Text>
           <Controller
@@ -108,7 +115,7 @@ const NotificationWrapper = ({
       </VStack>
 
       {/* 만료알림 Toggle, Select */}
-      <VStack space="8px" p="8px" bgColor="gray.50" borderRadius="4px">
+      <VStack space="8px" bgColor="white" px="8px" py="12px" borderRadius="8px">
         <HStack justifyContent="space-between" alignItems="center">
           <Text size="lg.bold">상품 만료 알림</Text>
           <Controller
@@ -170,7 +177,7 @@ const NotificationWrapper = ({
       </VStack>
 
       {/* 기타알림여부 */}
-      <VStack space="8px" p="8px" bgColor="gray.50" borderRadius="4px">
+      <VStack space="8px" bgColor="white" px="8px" py="12px" borderRadius="8px">
         <HStack justifyContent="space-between" alignItems="center">
           <Text size="lg.bold">기타 알림</Text>
           <Controller
@@ -191,12 +198,13 @@ const NotificationWrapper = ({
         </HStack>
       </VStack>
 
-      {/* P_TODO: 만료일 노출 여부는 아직 넣지 말자. */}
-
-      <Text size="xl.bold">표시 설정</Text>
-
       {/* 기타알림여부 */}
-      <VStack space="8px" p="8px" bgColor="gray.50" borderRadius="4px">
+      {/* P_TODO: 만료일 노출 여부는 아직 넣지 말자. */}
+      {/* <HStack bgColor="white" px="8px" py="12px" borderRadius="8px">
+        <Text size="xl.bold">표시 설정</Text>
+      </HStack>
+
+      <VStack space="8px" bgColor="white" px="8px" py="12px" borderRadius="8px">
         <HStack justifyContent="space-between" alignItems="center">
           <Text size="lg.bold">홈에서 만료일 확인</Text>
           <Controller
@@ -215,7 +223,7 @@ const NotificationWrapper = ({
             }}
           />
         </HStack>
-      </VStack>
+      </VStack> */}
     </VStack>
   );
 };

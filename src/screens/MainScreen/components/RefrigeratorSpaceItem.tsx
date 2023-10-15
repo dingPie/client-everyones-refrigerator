@@ -31,10 +31,11 @@ const RefrigeratorSpaceItem = ({
     >
       <VStack
         space="8px"
-        bgColor="gray.200"
+        bgColor="white"
         borderRadius="8px"
         p="16px"
         mb="12px"
+        mx="2px"
         shadow={2}
       >
         <HStack justifyContent="space-between" alignItems="center">

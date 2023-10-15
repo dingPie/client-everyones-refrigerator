@@ -218,7 +218,7 @@ const MyInfoTab = () => {
   }, [myInfoByRefrigeratorInfo, useEditNotificationMethod]);
 
   return (
-    <ScrollView flex={1} h="100%" bgColor="white" py="24px" px="16px">
+    <ScrollView flex={1} h="100%" bgColor="gray.100" py="24px" px="16px">
       <VStack flex={1} space="24px">
         {/* 상단 유저 로그인정보, 로그아웃 버튼 */}
         <AuthInfoWrapper

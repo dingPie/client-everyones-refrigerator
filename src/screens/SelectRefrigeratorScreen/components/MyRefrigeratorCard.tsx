@@ -29,6 +29,7 @@ const MyRefrigeratorCard = ({
         refrigeratorItem.authority === REFRIGERATOR_USER.AUTHORITY.WAITING
       }
       onPress={() => onPressMyRefrigeratorCard(refrigeratorItem)}
+      my="20px"
     >
       <VStack
         opacity={
@@ -45,6 +46,7 @@ const MyRefrigeratorCard = ({
         height={LAYOUT.WINDOW_HEIGHT * 0.5}
         borderRadius={'16px'}
         bgColor="white"
+        // bgColor="primary.400"
         shadow={5}
       >
         <Flex

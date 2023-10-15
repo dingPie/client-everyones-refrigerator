@@ -62,7 +62,7 @@ const UsedItemListTab = () => {
       onEndReached={onEndReachedItem}
       onEndReachedThreshold={0.2}
       ListFooterComponent={<Box h="40px">{hasNextPage && <Spinner />}</Box>} // onEndReached를 작동시키기 위함
-      bgColor="white"
+      bgColor="gray.100"
       px="16px"
       py="24px"
     />

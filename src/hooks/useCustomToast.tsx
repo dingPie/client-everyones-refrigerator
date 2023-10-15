@@ -32,7 +32,7 @@ const useCustomToast = () => {
       h="auto"
       status={status}
       mx="20px"
-      bgColor={`${status}.100`}
+      bgColor={`${status}.200`}
       bottom="80px"
       {...alertProps}
     >

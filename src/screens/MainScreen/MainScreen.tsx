@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 
-import { Box, FlatList, Pressable, Text } from 'native-base';
+import { Box, FlatList, Flex, Pressable, Text } from 'native-base';
 
 import { useNavigation } from '@react-navigation/core';
 import { NavigationProp } from '@react-navigation/native';
@@ -155,52 +155,52 @@ const MainScreen = () => {
 
   return (
     <>
-      <Box
-        flex={1}
-        h="100%"
-        borderRadius="10px"
-        borderColor="white"
-        color="primary.400"
+      <FlatList
+        data={refrigeratorSpaceWithItemList}
+        renderItem={({ item }) => {
+          return (
+            <RefrigeratorSpaceItem
+              refrigeratorSpaceWithItem={item}
+              onPressRefrigeratorSpace={onPressRefrigeratorSpace}
+              onPressSpaceInItem={onPressSpaceInItem}
+            />
+          );
+        }}
+        ListHeaderComponent={() => (
+          <Flex
+            p="12px"
+            borderRadius="16px"
+            bgColor="white"
+            mb="16px"
+            mx="2px"
+            shadow={3}
+          >
+            <Text size="3xl.bold">{refrigeratorData?.result.name}</Text>
+          </Flex>
+        )}
+        // bgColor="white"
+        bgColor="gray.100"
+        px="16px"
+        py="24px"
+      />
+      <Pressable
+        onPress={onPressAddItemButton}
+        position="absolute"
+        bottom="20px"
+        right="20px"
+        alignItems="center"
+        justifyContent="center"
+        boxSize="60px"
+        bgColor="primary.500"
+        rounded="full"
+        _pressed={{
+          bgColor: 'primary.600',
+        }}
       >
-        <FlatList
-          data={refrigeratorSpaceWithItemList}
-          renderItem={({ item }) => {
-            return (
-              <RefrigeratorSpaceItem
-                refrigeratorSpaceWithItem={item}
-                onPressRefrigeratorSpace={onPressRefrigeratorSpace}
-                onPressSpaceInItem={onPressSpaceInItem}
-              />
-            );
-          }}
-          ListHeaderComponent={() => (
-            <Text size="3xl.bold" mb="24px">
-              {refrigeratorData?.result.name}
-            </Text>
-          )}
-          bgColor="white"
-          px="16px"
-          py="24px"
-        />
-        <Pressable
-          onPress={onPressAddItemButton}
-          position="absolute"
-          bottom="20px"
-          right="20px"
-          alignItems="center"
-          justifyContent="center"
-          boxSize="60px"
-          bgColor="primary.200"
-          rounded="full"
-          _pressed={{
-            bgColor: 'primary.300',
-          }}
-        >
-          <Text size="4xl.bold" color="white">
-            +
-          </Text>
-        </Pressable>
-      </Box>
+        <Text size="4xl.bold" color="white">
+          +
+        </Text>
+      </Pressable>
 
       <ConsumeItemModal
         isOpen={isOpenConsumeItemModal}

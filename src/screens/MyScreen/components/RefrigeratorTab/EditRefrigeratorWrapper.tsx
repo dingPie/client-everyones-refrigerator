@@ -25,7 +25,7 @@ const EditRefrigeratorWrapper = ({
   const { control } = method;
 
   return (
-    <VStack flex={1} space="16px" p="16px" borderRadius="8px" bgColor="gray.50">
+    <VStack flex={1} space="16px" p="16px" borderRadius="8px" bgColor="white">
       <RowLabelWrapper
         label="냉장고 이름"
         boxProps={{
