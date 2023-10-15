@@ -1,27 +1,56 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 
-import { Box, Text } from 'native-base';
+import { Text, VStack } from 'native-base';
 
-import { useNavigation } from '@react-navigation/core';
 import { NavigationProp } from '@react-navigation/native';
 
+import CustomTabView from '@/components/@Layout/CustomTabView';
 import { SettingStackParamList } from '@/navigations/type';
+
+import MemberTab from './components/MemberTab/MemberTab';
+import MyInfoTab from './components/MyInfoTab';
+import RefrigeratorTab from './components/RefrigeratorTab';
+
+const routes = [
+  {
+    key: 'my',
+    title: '내 정보',
+  },
+  {
+    key: 'member',
+    title: '참여 인원',
+  },
+  {
+    key: 'refrigerator',
+    title: '냉장고 설정',
+  },
+];
 
 type MyNavigationProps = NavigationProp<SettingStackParamList, 'My'>;
 
 const MyScreen = () => {
-  const navigation = useNavigation<MyNavigationProps>();
+  const [tabIndex, setTabIndex] = useState(0);
+
+  const renderScene = useCallback(({ route }: { route: { key: string } }) => {
+    switch (route.key) {
+      case 'my':
+        return <MyInfoTab />;
+      case 'member':
+        return <MemberTab />;
+      case 'refrigerator':
+        return <RefrigeratorTab />;
+    }
+  }, []);
 
   return (
-    <Box
-      flex={1}
-      h="100%"
-      borderRadius="10px"
-      borderColor="white"
-      color="primary.400"
-    >
-      <Text size="xl">내 정보 설정 페이지</Text>
-    </Box>
+    <>
+      <CustomTabView
+        routes={routes}
+        tabIndex={tabIndex}
+        renderScene={renderScene}
+        setTabIndex={setTabIndex}
+      />
+    </>
   );
 };
 

@@ -57,3 +57,6 @@ export const IMAGE_URL_LIST = [
     uri: 'https://drive.google.com/uc?export=view&id=1yhYWsGhAV8Iprgacp6TImL73Zoiq4dz2',
   },
 ];
+
+export const LUNCH_ALERT_TIME_LIST = [11, 12, 13, 14, 15];
+export const BEFORE_EXPIRE_ALERT_DATE_LIST = [1, 2, 3];

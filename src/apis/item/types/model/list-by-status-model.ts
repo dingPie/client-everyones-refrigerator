@@ -6,7 +6,15 @@ export interface ItemWithStatusItemType {
   id: number;
   status: ItemStatusType;
   refrigeratorId: number;
-  itemInfo: ItemInfoItemType;
+  itemInfo: {
+    id: number;
+    name: string;
+    expireDate: Date | string;
+    imgUrl: string;
+    memo?: string;
+    createdAt: Date | string;
+    updatedAt: Date | string;
+  };
 }
 
 export type ListByStatusDtoModel = ItemWithStatusItemType[];

@@ -41,3 +41,11 @@ export const usePatchRefrigeratorUserMyInfoByRefrigeratorMutation = (
     ...params?.options,
   });
 };
+
+export const useRefrigeratorWithdrawalMutation = (
+  params?: UseMutationParams<typeof refrigeratorUserApi.withdrawal>,
+) => {
+  return useMutation(refrigeratorUserApi.withdrawal, {
+    ...params?.options,
+  });
+};

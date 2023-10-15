@@ -9,12 +9,22 @@ import refrigeratorApi from './refrigerator-api';
 export const AUTH_API_MUTATION_KEY = {
   CREATE: (params?: Parameter<typeof refrigeratorApi.create>) =>
     ['create', params].filter(isNotNull),
+  UPDATE: (params?: Parameter<typeof refrigeratorApi.update>) =>
+    ['update', params].filter(isNotNull),
 };
 
 export const useRefrigeratorCreateMutation = (
   params?: UseMutationParams<typeof refrigeratorApi.create>,
 ) => {
   return useMutation(refrigeratorApi.create, {
+    ...params?.options,
+  });
+};
+
+export const useRefrigeratorUpdateMutation = (
+  params?: UseMutationParams<typeof refrigeratorApi.update>,
+) => {
+  return useMutation(refrigeratorApi.update, {
     ...params?.options,
   });
 };
