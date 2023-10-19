@@ -58,5 +58,5 @@ export const IMAGE_URL_LIST = [
   },
 ];
 
-export const LUNCH_ALERT_TIME_LIST = [11, 12, 13, 14, 15];
+export const LUNCH_ALERT_TIME_LIST = [11, 12, 13, 14, 15, 16];
 export const BEFORE_EXPIRE_ALERT_DATE_LIST = [1, 2, 3];

@@ -17,7 +17,9 @@ import CustomIcon from '@/components/@common/CustomIcon';
 import { useGlobalContext } from '@/contexts/global/useGlobalStoreContext';
 import { AuthStackParamList } from '@/navigations/type';
 
+import ASYNC_STORAGE_KEY from '@/constants/async-storage-key';
 import { MY_IMAGES } from '@/image';
+import { getAsyncStorage } from '@/utils/async-storage/helper';
 import { setToken } from '@/utils/async-storage/token';
 
 type LoginNavigationProps = StackNavigationProp<AuthStackParamList, 'Login'>;
@@ -53,6 +55,10 @@ const LoginScreen = () => {
       const { uid, email } = result.user;
       const provider = result.additionalUserInfo?.providerId;
 
+      const fcmToken = (await getAsyncStorage(
+        ASYNC_STORAGE_KEY.FCM_TOKEN,
+      )) as string;
+
       // P_TODO: prod에서는 어떻게 되는지 확인해야 함.
       // P_TODO: 한번만 버튼 눌리게 막아야 함.
 
@@ -61,6 +67,7 @@ const LoginScreen = () => {
           provider,
           userLoginId: email,
           providerUid: uid,
+          fcmToken,
         });
       }
     } catch (err: any) {
@@ -101,7 +108,7 @@ const LoginScreen = () => {
 
       <VStack mb="20%" w="100%" space="8px">
         <Pressable
-          onPress={async () => await onPressGoogleLoginButton()}
+          onPress={() => onPressGoogleLoginButton()}
           flexDir="row"
           alignItems="center"
           bgColor="white"
