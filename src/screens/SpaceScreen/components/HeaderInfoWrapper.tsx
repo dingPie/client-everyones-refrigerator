@@ -79,6 +79,9 @@ const HeaderInfoWrapper = ({
           onChange={setIsMine}
           size="md"
           mr="-14px"
+          bgColor="white"
+          borderColor="gray.400"
+          borderWidth="1px"
         >
           {''}
         </Checkbox>
