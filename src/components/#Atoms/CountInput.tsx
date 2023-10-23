@@ -16,7 +16,7 @@ interface CountInputProps {
   max?: number;
 }
 
-const CountInput = ({ setValue, value, max = 10_000 }: CountInputProps) => {
+const CountInput = ({ setValue, value, max = 10000 }: CountInputProps) => {
   const onClickPlusConsumeNum = useCallback(() => {
     setValue(Number(value) < max ? (Number(value) + 1).toString() : value);
   }, [max, setValue, value]);

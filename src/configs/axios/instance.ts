@@ -11,6 +11,8 @@ const isDev = ENV.NODE_ENV === 'development';
 
 const instance = axios.create({
   baseURL: ENV.API_BASE_URL,
+  // baseURL:
+  //   'https://port-0-api-everyones-refrigerator-jvpb2mlo0p8w4p.sel5.cloudtype.app/v1',
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
