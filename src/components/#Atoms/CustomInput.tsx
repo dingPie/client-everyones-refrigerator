@@ -55,7 +55,16 @@ const CustomInput = ({
     }
   }, [variant]);
 
-  return <Input {...baseStyle} {...sizeStyle} {...variantStyle} {...props} />;
+  return (
+    <Input
+      color="gray.900"
+      placeholderTextColor="gray.600"
+      {...baseStyle}
+      {...sizeStyle}
+      {...variantStyle}
+      {...props}
+    />
+  );
 };
 
 export default CustomInput;

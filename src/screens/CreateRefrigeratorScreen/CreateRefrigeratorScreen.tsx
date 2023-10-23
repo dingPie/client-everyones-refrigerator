@@ -193,6 +193,7 @@ const CreateRefrigeratorScreen = () => {
                 onPress={onPressAddEmptyRefrigeratorButton}
                 mx="16px"
                 py="4px"
+                shadow={4}
               >
                 <Text color="white" size="4xl.bold">
                   +

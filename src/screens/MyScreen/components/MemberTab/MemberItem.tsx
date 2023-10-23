@@ -65,15 +65,25 @@ const MemberItem = ({
           placeholder={
             memberInfo.authority === 'admin' ? '어드민' : '승인 대기'
           }
-          _selectedItem={{
-            bg: 'primary.50',
-            endIcon: <CheckIcon size="5" />,
-          }}
           dropdownIcon={<ChevronDownIcon size="4" mr="8px" />}
           size="md"
           width="120px"
           h="40px"
           bgColor="white"
+          _selectedItem={{
+            bg: 'gray.100',
+            endIcon: <CheckIcon size="5" />,
+          }}
+          _actionSheetContent={{
+            color: 'gray.900',
+            bgColor: 'white',
+          }}
+          _item={{
+            _text: {
+              color: 'black',
+            },
+            bgColor: 'white',
+          }}
         >
           {/* P_MEMO: master, 대기중은 수정할 수 없음. */}
           {Object.entries(LABEL.USER.AUTHORITY)

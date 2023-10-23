@@ -90,11 +90,21 @@ const NotificationWrapper = ({
                   isDisabled={!value}
                   bgColor="white"
                   placeholder="12"
+                  dropdownIcon={<ChevronDownIcon size="4" mr="8px" />}
                   _selectedItem={{
-                    bg: 'primary.50',
+                    bg: 'gray.100',
                     endIcon: <CheckIcon size="5" />,
                   }}
-                  dropdownIcon={<ChevronDownIcon size="4" mr="8px" />}
+                  _actionSheetContent={{
+                    color: 'gray.900',
+                    bgColor: 'white',
+                  }}
+                  _item={{
+                    _text: {
+                      color: 'black',
+                    },
+                    bgColor: 'white',
+                  }}
                 >
                   {LUNCH_ALERT_TIME_LIST.map((hour) => {
                     return (
@@ -152,11 +162,21 @@ const NotificationWrapper = ({
                   isDisabled={!value}
                   bgColor="white"
                   placeholder="1일"
+                  dropdownIcon={<ChevronDownIcon size="4" mr="8px" />}
                   _selectedItem={{
-                    bg: 'primary.50',
+                    bg: 'gray.100',
                     endIcon: <CheckIcon size="5" />,
                   }}
-                  dropdownIcon={<ChevronDownIcon size="4" mr="8px" />}
+                  _actionSheetContent={{
+                    color: 'gray.900',
+                    bgColor: 'white',
+                  }}
+                  _item={{
+                    _text: {
+                      color: 'black',
+                    },
+                    bgColor: 'white',
+                  }}
                 >
                   {BEFORE_EXPIRE_ALERT_DATE_LIST.map((date) => {
                     return (
