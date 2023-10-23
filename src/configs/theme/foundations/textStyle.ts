@@ -25,15 +25,15 @@ export const normalStyle = {
     lineHeight: '27px',
   },
   md: {
-    fontSize: '16px',
+    fontSize: '15px',
     lineHeight: '24px',
   },
   sm: {
-    fontSize: '15px',
+    fontSize: '14px',
     lineHeight: '21px',
   },
   xs: {
-    fontSize: '14px',
+    fontSize: '12px',
     lineHeight: '18px',
   },
 };
