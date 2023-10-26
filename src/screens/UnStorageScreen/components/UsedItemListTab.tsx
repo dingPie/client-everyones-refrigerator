@@ -6,12 +6,14 @@ import { useGetItemListByStatusInfiniteQuery } from '@/apis/item/item-api.query'
 
 import { useGlobalContext } from '@/contexts/global/useGlobalStoreContext';
 import useCustomToast from '@/hooks/useCustomToast';
+import useHandleError from '@/hooks/useHandleError';
 
 import UnStorageItemInfoItem from './UnStorageItemInfoItem';
 
 const UsedItemListTab = () => {
   const Toast = useCustomToast();
   const { refrigeratorId } = useGlobalContext((ctx) => ctx.state);
+  const { handleApiError } = useHandleError();
 
   const {
     data: usedItemListData,
@@ -30,16 +32,7 @@ const UsedItemListTab = () => {
           return lastPage.result.cursor;
         }
       },
-      onError: (err: any) => {
-        console.log(
-          '$######## 사용한 상품 불러오기 에러',
-          err.response.data?.message,
-        );
-        Toast.show({
-          title: err.response.data?.message || '',
-          status: 'error',
-        });
-      },
+      onError: handleApiError,
     },
   });
 

@@ -20,6 +20,7 @@ import { ApiResponseType } from '@/apis/type';
 import { useGlobalContext } from '@/contexts/global/useGlobalStoreContext';
 import useCustomToast from '@/hooks/useCustomToast';
 import useGetMyAuthority from '@/hooks/useGetMyAuthority';
+import useHandleError from '@/hooks/useHandleError';
 import { SettingStackParamList } from '@/navigations/type';
 
 import MemberItem from './MemberItem';
@@ -31,6 +32,7 @@ const MemberTab = () => {
   const queryClient = useQueryClient();
   const Toast = useCustomToast();
   const { refrigeratorId } = useGlobalContext((ctx) => ctx.state);
+  const { handleApiError } = useHandleError();
 
   const { isManager } = useGetMyAuthority();
 
@@ -41,13 +43,7 @@ const MemberTab = () => {
       },
       options: {
         enabled: !!refrigeratorId,
-        onError: (err: any) => {
-          console.log('유저목록 불러오기 에러 :', err.response.data?.message);
-          Toast.show({
-            title: err.response.data?.message || '',
-            status: 'error',
-          });
-        },
+        onError: handleApiError,
       },
     });
 
@@ -79,13 +75,7 @@ const MemberTab = () => {
           );
         },
 
-        onError: (err: any) => {
-          console.log('권한 변경 에러', err.response.data?.message);
-          Toast.show({
-            title: err.response.data?.message || '',
-            status: 'error',
-          });
-        },
+        onError: handleApiError,
       },
     });
 

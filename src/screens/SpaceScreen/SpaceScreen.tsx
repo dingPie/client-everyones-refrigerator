@@ -154,30 +154,33 @@ const SpaceScreen = () => {
     fetchNextPage();
   };
 
-  const onPressDiscardItem = useCallback((item: ItemInfoItemType) => {
-    Modal.show({
-      title: '보관 상품 폐기',
-      content: '보관 상품이 지난 상품이에요.\n이 상품을 폐기했나요?',
-      buttons: [
-        {
-          text: '취소',
-          isCancel: true,
-        },
-        {
-          text: '폐기',
-          onPress: () => {
-            itemUpdateMutate({
-              itemInfoId: item.id,
-              quantity: item.storageQuantity,
-              status: 'discarded',
-            });
-            Modal.close();
-            // P_TODO: 페기 API 호출
+  const onPressDiscardItem = useCallback(
+    (item: ItemInfoItemType) => {
+      Modal.show({
+        title: '보관 상품 폐기',
+        content: '보관 상품이 지난 상품이에요.\n이 상품을 폐기했나요?',
+        buttons: [
+          {
+            text: '취소',
+            isCancel: true,
           },
-        },
-      ],
-    });
-  }, []);
+          {
+            text: '폐기',
+            onPress: () => {
+              itemUpdateMutate({
+                itemInfoId: item.id,
+                quantity: item.storageQuantity,
+                status: 'discarded',
+              });
+              Modal.close();
+              // P_TODO: 페기 API 호출
+            },
+          },
+        ],
+      });
+    },
+    [Modal, itemUpdateMutate],
+  );
 
   return (
     <>

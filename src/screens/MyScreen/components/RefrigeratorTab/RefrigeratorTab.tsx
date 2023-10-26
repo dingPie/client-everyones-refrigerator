@@ -19,6 +19,7 @@ import { ApiResponseType } from '@/apis/type';
 import { useGlobalContext } from '@/contexts/global/useGlobalStoreContext';
 import useCustomToast from '@/hooks/useCustomToast';
 import useGetMyAuthority from '@/hooks/useGetMyAuthority';
+import useHandleError from '@/hooks/useHandleError';
 import { SettingStackParamList } from '@/navigations/type';
 
 import useEditRefrigeratorForm from '../../useEditRefrigeratorForm';
@@ -33,6 +34,9 @@ const RefrigeratorTab = () => {
   const { refrigeratorId } = useGlobalContext((ctx) => ctx.state);
 
   const editRefrigeratorMethod = useEditRefrigeratorForm();
+  const { getValues, setValue } = editRefrigeratorMethod;
+
+  const { handleApiError, handleFormError } = useHandleError();
 
   const { isAdmin } = useGetMyAuthority();
 
@@ -43,16 +47,7 @@ const RefrigeratorTab = () => {
     },
     options: {
       enabled: !!refrigeratorId,
-      onError: (err: any) => {
-        console.log(
-          '$######## 냉장고 정보 불러오기 에러',
-          err.response.data?.message,
-        );
-        Toast.show({
-          title: err.response.data?.message || '',
-          status: 'error',
-        });
-      },
+      onError: handleApiError,
     },
   });
 
@@ -75,13 +70,7 @@ const RefrigeratorTab = () => {
           title: '냉장고 정보 수정이 완료되었어요.',
         });
       },
-      onError: (err: any) => {
-        console.log('냉장고 정보 수정 에러', err.response.data?.message);
-        Toast.show({
-          title: err.response.data?.message || '',
-          status: 'error',
-        });
-      },
+      onError: handleApiError,
     },
   });
 
@@ -94,27 +83,21 @@ const RefrigeratorTab = () => {
   const onPressOnEditRefrigeratorButton = useCallback(() => {
     if (!refrigeratorData) return;
     onOpenEditRefrigerator();
-    editRefrigeratorMethod.setValue('name', refrigeratorData?.result.name);
-    editRefrigeratorMethod.setValue(
-      'code',
-      refrigeratorData?.result.code.split('_')[0],
-    );
-    editRefrigeratorMethod.setValue(
-      'isShowUserName',
-      refrigeratorData?.result.isShowUserName,
-    );
-  }, [editRefrigeratorMethod, onOpenEditRefrigerator, refrigeratorData]);
+    setValue('name', refrigeratorData?.result.name);
+    setValue('code', refrigeratorData?.result.code.split('_')[0]);
+    setValue('isShowUserName', refrigeratorData?.result.isShowUserName);
+  }, [onOpenEditRefrigerator, refrigeratorData, setValue]);
 
   const onPressSaveEditRefrigeratorButton = useCallback(() => {
     updateRefrigeratorMutate({
       id: refrigeratorData?.result.id || -1,
-      ...editRefrigeratorMethod.getValues(),
+      ...getValues(),
     });
     onCloseEditRefrigerator();
   }, [
-    editRefrigeratorMethod,
+    getValues,
     onCloseEditRefrigerator,
-    refrigeratorData,
+    refrigeratorData?.result.id,
     updateRefrigeratorMutate,
   ]);
 

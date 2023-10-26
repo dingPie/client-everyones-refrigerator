@@ -19,6 +19,7 @@ import { ApiResponseType } from '@/apis/type';
 
 import { useGlobalContext } from '@/contexts/global/useGlobalStoreContext';
 import useCustomToast from '@/hooks/useCustomToast';
+import useHandleError from '@/hooks/useHandleError';
 import { HomeStackParamList } from '@/navigations/type';
 
 import ImageSelectActionsheet from './components/ImageSelectActionsheet';
@@ -31,9 +32,9 @@ const AddItemScreen = () => {
   const navigation = useNavigation<AddItemNavigationProps>();
   const queryClient = useQueryClient();
   const Toast = useCustomToast();
-
+  const { handleApiError, handleFormError } = useHandleError();
   const addItemMethod = useAddItemForm();
-  const { getValues, setValue } = addItemMethod;
+  const { getValues, setValue, handleSubmit } = addItemMethod;
 
   const { refrigeratorId } = useGlobalContext((ctx) => ctx.state);
 
@@ -43,17 +44,7 @@ const AddItemScreen = () => {
     },
     options: {
       enabled: !!refrigeratorId,
-      onError: (err: any) => {
-        console.log(
-          '$######## 이 냉장고의 내 정보 불러오기 에러',
-          err.response.data?.message,
-        );
-
-        Toast.show({
-          title: err.response.data?.message || '',
-          status: 'error',
-        });
-      },
+      onError: handleApiError,
     },
   });
 
@@ -79,16 +70,7 @@ const AddItemScreen = () => {
     },
     options: {
       enabled: !!refrigeratorId,
-      onError: (err: any) => {
-        console.log(
-          '$######## 냉장고 칸 정보 불러오기 에러',
-          err.response.data?.message,
-        );
-        Toast.show({
-          title: err.response.data?.message || '',
-          status: 'error',
-        });
-      },
+      onError: handleApiError,
     },
   });
 
@@ -105,13 +87,7 @@ const AddItemScreen = () => {
         );
         navigation.goBack();
       },
-      onError: (err: any) => {
-        console.log('$######## 아이템 추가 에러', err.response.data?.message);
-        Toast.show({
-          title: err.response.data?.message || '',
-          status: 'error',
-        });
-      },
+      onError: handleApiError,
     },
   });
 
@@ -135,21 +111,7 @@ const AddItemScreen = () => {
   );
 
   // P_TODO: 추가 가능한 갯수에 대한 유효성검사는 백엔드에서 처리함 . FE에서 더 처리하려면 API를 추가로 호출해야 하는데, 굳이 그럴 필요가 없다.
-  const onPressAddItemButton = useCallback(async () => {
-    const isValid =
-      getValues('refrigeratorSpaceId') ||
-      getValues('name') ||
-      getValues('imgUrl') ||
-      getValues('quantity');
-
-    if (!isValid) {
-      Toast.show({
-        title: '필수 값을 입력해주세요.',
-        status: 'error',
-      });
-      return;
-    }
-
+  const onPressAddItemButton = handleSubmit(async () => {
     itemCreateMutate({
       name: getValues('name'),
       imgUrl: getValues('imgUrl'),
@@ -158,7 +120,7 @@ const AddItemScreen = () => {
       ownerName: getValues('ownerName'),
       memo: getValues('memo'),
     });
-  }, [Toast, getValues, itemCreateMutate]);
+  }, handleFormError);
 
   // P_MEMO: 이 이름 보이기 외에도 해야될게 있다면 여기서 init 해줌.
   useEffect(() => {
