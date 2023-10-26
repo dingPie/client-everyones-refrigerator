@@ -68,6 +68,7 @@ const RefrigeratorSpaceInputItem = ({
           <CustomInputController
             keyName={`refrigeratorSpaceList.${index}.name`}
             placeholder="냉장실 1번칸"
+            maxLength={20}
           />
         </RowLabelWrapper>
         <RowLabelWrapper
@@ -86,9 +87,10 @@ const RefrigeratorSpaceInputItem = ({
             <CustomInputController
               keyName={`refrigeratorSpaceList.${index}.maxCountPerSpace`}
               keyboardType="numeric"
-              placeholder="최대 1,000"
+              placeholder="최대 999"
               w="120px"
               isShowError={false}
+              maxLength={3}
             />
             <Text>개</Text>
           </HStack>

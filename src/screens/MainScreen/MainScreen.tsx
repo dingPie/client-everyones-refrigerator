@@ -166,7 +166,7 @@ const MainScreen = () => {
             />
           );
         }}
-        ListHeaderComponent={() => (
+        ListHeaderComponent={
           <Flex
             p="12px"
             borderRadius="16px"
@@ -177,7 +177,7 @@ const MainScreen = () => {
           >
             <Text size="3xl.bold">{refrigeratorData?.result.name}</Text>
           </Flex>
-        )}
+        }
         // bgColor="white"
         bgColor="gray.100"
         px="16px"

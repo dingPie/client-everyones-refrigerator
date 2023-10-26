@@ -29,15 +29,18 @@ const BaseSettingWrapper = ({}: BaseSettingWrapperProps) => {
         <RowLabelWrapper label="냉장고 이름" isRequire>
           <CustomInputController
             keyName={'name'}
-            placeholder="이 냉장고의 이름"
+            placeholder="냉장고 그룹 이름"
+            maxLength={20}
           />
         </RowLabelWrapper>
 
         <RowLabelWrapper label="냉장고 코드">
           <CustomInputController
             keyName={'code'}
-            placeholder="AAAAAA 형태의 대문자 6자리 dfddfdf"
+            placeholder="영문 대문자 6자리"
+            autoCapitalize="characters"
             numberOfLines={1}
+            maxLength={6}
           />
         </RowLabelWrapper>
 
@@ -57,9 +60,10 @@ const BaseSettingWrapper = ({}: BaseSettingWrapperProps) => {
             <CustomInputController
               keyName={'maxCountStoragePerUser'}
               keyboardType="numeric"
-              placeholder="최대 1,000"
+              placeholder="최대 999"
               w="120px"
               isShowError={false}
+              maxLength={3}
             />
             <Text>개</Text>
           </HStack>
@@ -82,6 +86,7 @@ const BaseSettingWrapper = ({}: BaseSettingWrapperProps) => {
               keyName={'maxStoragePeriod'}
               keyboardType="numeric"
               placeholder="최대 30"
+              maxLength={2}
               w="120px"
               isShowError={false}
             />
