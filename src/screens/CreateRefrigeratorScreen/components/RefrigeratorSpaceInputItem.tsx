@@ -53,7 +53,7 @@ const RefrigeratorSpaceInputItem = ({
         <Pressable
           onPress={() => onPressRemoveEmptyRefrigeratorButton(index)}
           borderRadius="100px"
-          bgColor="primary.300"
+          bgColor="primary.100"
           p="6px"
           _pressed={{
             bgColor: 'primary.400',

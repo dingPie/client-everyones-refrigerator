@@ -63,7 +63,7 @@ const EditRefrigeratorWrapper = ({
       <RowLabelWrapper label="최대 보관 기간">
         <Text size="lg.bold">{maxStoragePeriod} 일</Text>
       </RowLabelWrapper>
-      <RowLabelWrapper label="최대 보관 갯수">
+      <RowLabelWrapper label="인당 보관 가능한 갯수">
         <Text size="lg.bold">
           {refrigeratorInfo?.maxCountStoragePerUser} 개
         </Text>
@@ -80,7 +80,11 @@ const EditRefrigeratorWrapper = ({
                   value=""
                   isChecked={value}
                   onChange={onChange}
-                  size="md"
+                  boxSize="24px"
+                  _icon={{
+                    size: '20px',
+                    color: 'primary.700',
+                  }}
                   mr="-14px"
                   bgColor="white"
                   borderColor="gray.400"

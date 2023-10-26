@@ -77,7 +77,11 @@ const HeaderInfoWrapper = ({
           value=""
           isChecked={isMine}
           onChange={setIsMine}
-          size="md"
+          boxSize="24px"
+          _icon={{
+            size: '20px',
+            color: 'primary.700',
+          }}
           mr="-14px"
           bgColor="white"
           borderColor="gray.400"

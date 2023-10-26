@@ -193,7 +193,11 @@ const InputWrapper = ({
                   onChange(value ? '' : myInfoByRefrigeratorInfo?.userName)
                 }
                 isDisabled={refrigeratorInfo?.isShowUserName}
-                size="md"
+                boxSize="24px"
+                _icon={{
+                  size: '20px',
+                  color: 'primary.700',
+                }}
                 mr="-14px"
                 bgColor="white"
                 borderColor="gray.400"

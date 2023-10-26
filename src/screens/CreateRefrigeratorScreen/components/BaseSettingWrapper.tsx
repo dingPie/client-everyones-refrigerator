@@ -45,10 +45,13 @@ const BaseSettingWrapper = ({}: BaseSettingWrapperProps) => {
         </RowLabelWrapper>
 
         <RowLabelWrapper
-          label="최대 보관 갯수"
+          label="인당 보관 가능한 갯수"
           isRequire
           boxProps={{
             py: '4px',
+          }}
+          labelProps={{
+            w: 'auto',
           }}
         >
           <HStack
@@ -113,7 +116,11 @@ const BaseSettingWrapper = ({}: BaseSettingWrapperProps) => {
                   value=""
                   isChecked={value}
                   onChange={onChange}
-                  size="md"
+                  boxSize="24px"
+                  _icon={{
+                    size: '20px',
+                    color: 'primary.700',
+                  }}
                   mr="-14px"
                   bgColor="white"
                   borderColor="gray.400"
