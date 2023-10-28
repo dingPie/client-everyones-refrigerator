@@ -18,6 +18,7 @@ import { MyRefrigeratorItemType } from '@/apis/refrigerator-user/types/model/my-
 import useCustomModal from '@/contexts/Modal/useCustomModal';
 import { useGlobalContext } from '@/contexts/global/useGlobalStoreContext';
 import useCustomToast from '@/hooks/useCustomToast';
+import useHandleError from '@/hooks/useHandleError';
 import {
   CompositeScreenNavigationProp,
   IntroStackParamList,
@@ -39,6 +40,7 @@ const SelectRefrigeratorScreen = () => {
   const queryClient = useQueryClient();
   const Modal = useCustomModal();
   const Toast = useCustomToast();
+  const { handleApiError, handleFormError } = useHandleError();
 
   const joinRefrigeratorMethod = useJoinRefrigeratorForm();
   const { handleSubmit, getValues, reset } = joinRefrigeratorMethod;
@@ -51,9 +53,7 @@ const SelectRefrigeratorScreen = () => {
           data.result.myRefrigeratorList,
         );
       },
-      onError: (err) => {
-        console.log('내가 참여중인 냉장고 목록 불러오기 오류', err);
-      },
+      onError: handleApiError,
     },
   });
 
@@ -106,9 +106,7 @@ const SelectRefrigeratorScreen = () => {
           title: '로그아웃 되었어요.',
         });
       },
-      onError: (err) => {
-        console.log('@@@ 로그아웃 에러', err);
-      },
+      onError: handleApiError,
     },
   });
 

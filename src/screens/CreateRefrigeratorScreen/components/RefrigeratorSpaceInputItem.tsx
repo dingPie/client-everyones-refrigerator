@@ -44,16 +44,16 @@ const RefrigeratorSpaceInputItem = ({
       p="16px"
       mx="16px"
       mb="16px"
-      bgColor="primary.50"
       borderRadius="6px"
-      shadow={2}
+      bgColor="white"
+      shadow={4}
     >
       <HStack justifyContent="space-between" alignItems="center">
         <Text size="lg.bold"> {`${index + 1}번 칸`} </Text>
         <Pressable
           onPress={() => onPressRemoveEmptyRefrigeratorButton(index)}
           borderRadius="100px"
-          bgColor="primary.300"
+          bgColor="primary.100"
           p="6px"
           _pressed={{
             bgColor: 'primary.400',
@@ -68,6 +68,7 @@ const RefrigeratorSpaceInputItem = ({
           <CustomInputController
             keyName={`refrigeratorSpaceList.${index}.name`}
             placeholder="냉장실 1번칸"
+            maxLength={20}
           />
         </RowLabelWrapper>
         <RowLabelWrapper
@@ -86,9 +87,10 @@ const RefrigeratorSpaceInputItem = ({
             <CustomInputController
               keyName={`refrigeratorSpaceList.${index}.maxCountPerSpace`}
               keyboardType="numeric"
-              placeholder="최대 1,000개"
+              placeholder="최대 999"
               w="120px"
               isShowError={false}
+              maxLength={3}
             />
             <Text>개</Text>
           </HStack>
@@ -115,11 +117,23 @@ const RefrigeratorSpaceInputItem = ({
                   h="40px"
                   bgColor="white"
                   placeholder="보관 유형"
+                  dropdownIcon={<ChevronDownIcon size="4" mr="8px" />}
+                  borderColor="gray.400"
+                  color="gray.900"
                   _selectedItem={{
-                    bg: 'primary.50',
+                    bg: 'gray.100',
                     endIcon: <CheckIcon size="5" />,
                   }}
-                  dropdownIcon={<ChevronDownIcon size="4" mr="8px" />}
+                  _actionSheetContent={{
+                    color: 'gray.900',
+                    bgColor: 'white',
+                  }}
+                  _item={{
+                    _text: {
+                      color: 'black',
+                    },
+                    bgColor: 'white',
+                  }}
                 >
                   {Object.values(REFRIGERATOR_SPACE.PURPOSE_TYPE).map(
                     (type) => {
@@ -163,11 +177,23 @@ const RefrigeratorSpaceInputItem = ({
                   h="40px"
                   bgColor="white"
                   placeholder="칸 형태"
+                  dropdownIcon={<ChevronDownIcon size="4" mr="8px" />}
+                  borderColor="gray.400"
+                  color="gray.900"
                   _selectedItem={{
-                    bg: 'primary.50',
+                    bg: 'gray.100',
                     endIcon: <CheckIcon size="5" />,
                   }}
-                  dropdownIcon={<ChevronDownIcon size="4" mr="8px" />}
+                  _actionSheetContent={{
+                    color: 'gray.900',
+                    bgColor: 'white',
+                  }}
+                  _item={{
+                    _text: {
+                      color: 'black',
+                    },
+                    bgColor: 'white',
+                  }}
                 >
                   {Object.values(REFRIGERATOR_SPACE.SHAPE_TYPE).map((type) => {
                     return (

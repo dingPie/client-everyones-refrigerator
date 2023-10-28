@@ -58,13 +58,25 @@ const InputWrapper = ({
                 size="md"
                 minWidth="144px"
                 h="48px"
+                color="black"
                 bgColor="white"
+                borderColor="gray.400"
                 placeholder="보관 유형"
+                dropdownIcon={<ChevronDownIcon size="4" mr="8px" />}
                 _selectedItem={{
-                  bg: 'primary.50',
+                  bg: 'gray.100',
                   endIcon: <CheckIcon size="5" />,
                 }}
-                dropdownIcon={<ChevronDownIcon size="4" mr="8px" />}
+                _actionSheetContent={{
+                  color: 'gray.900',
+                  bgColor: 'white',
+                }}
+                _item={{
+                  _text: {
+                    color: 'black',
+                  },
+                  bgColor: 'white',
+                }}
               >
                 {refrigeratorSpaceList?.map((refrigeratorSpace) => {
                   return (
@@ -183,8 +195,15 @@ const InputWrapper = ({
                   onChange(value ? '' : myInfoByRefrigeratorInfo?.userName)
                 }
                 isDisabled={refrigeratorInfo?.isShowUserName}
-                size="md"
+                boxSize="24px"
+                _icon={{
+                  size: '20px',
+                  color: 'primary.700',
+                }}
                 mr="-14px"
+                bgColor="white"
+                borderColor="gray.400"
+                borderWidth="1px"
               >
                 {''}
               </Checkbox>

@@ -74,9 +74,6 @@ const SpaceScreen = () => {
           return lastPage.result.cursor;
         }
       },
-      onSuccess: (data) => {
-        // console.log('무한 스크롤!!', data, data.pageParams, data.pages);
-      },
       onError: (err: any) => {
         console.log('아이템ㅁ 목록 불러오기 에러', err.response.data?.message);
         Toast.show({
@@ -154,30 +151,33 @@ const SpaceScreen = () => {
     fetchNextPage();
   };
 
-  const onPressDiscardItem = useCallback((item: ItemInfoItemType) => {
-    Modal.show({
-      title: '보관 상품 폐기',
-      content: '보관 상품이 지난 상품이에요.\n이 상품을 폐기했나요?',
-      buttons: [
-        {
-          text: '취소',
-          isCancel: true,
-        },
-        {
-          text: '폐기',
-          onPress: () => {
-            itemUpdateMutate({
-              itemInfoId: item.id,
-              quantity: item.storageQuantity,
-              status: 'discarded',
-            });
-            Modal.close();
-            // P_TODO: 페기 API 호출
+  const onPressDiscardItem = useCallback(
+    (item: ItemInfoItemType) => {
+      Modal.show({
+        title: '보관 상품 폐기',
+        content: '보관 상품이 지난 상품이에요.\n이 상품을 폐기했나요?',
+        buttons: [
+          {
+            text: '취소',
+            isCancel: true,
           },
-        },
-      ],
-    });
-  }, []);
+          {
+            text: '폐기',
+            onPress: () => {
+              itemUpdateMutate({
+                itemInfoId: item.id,
+                quantity: item.storageQuantity,
+                status: 'discarded',
+              });
+              Modal.close();
+              // P_TODO: 페기 API 호출
+            },
+          },
+        ],
+      });
+    },
+    [Modal, itemUpdateMutate],
+  );
 
   return (
     <>
@@ -192,18 +192,17 @@ const SpaceScreen = () => {
             />
           );
         }}
-        ListHeaderComponent={() => (
+        ListHeaderComponent={
           <HeaderInfoWrapper
             refrigeratorSpaceInfo={refrigeratorSpaceInfo}
             isMine={isMine}
             setIsMine={setIsMine}
             totalCount={itemTotalCountData?.result.totalCount}
           />
-        )}
+        }
         onEndReached={onEndReachedItem}
         onEndReachedThreshold={0.2}
         ListFooterComponent={<Box h="40px">{hasNextPage && <Spinner />}</Box>} // onEndReached를 작동시키기 위함
-        bgColor="white"
         px="16px"
         py="24px"
       />

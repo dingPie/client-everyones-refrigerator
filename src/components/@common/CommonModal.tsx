@@ -50,7 +50,7 @@ const CommonModal = ({
       {component ? (
         component
       ) : (
-        <Modal.Content p="24px">
+        <Modal.Content p="24px" bgColor="white">
           <VStack justifyContent="space-between" space="30px">
             <Text size="xl.bold" {...titleProps}>
               {title}

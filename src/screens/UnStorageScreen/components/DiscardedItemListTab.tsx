@@ -6,12 +6,14 @@ import { useGetItemListByStatusInfiniteQuery } from '@/apis/item/item-api.query'
 
 import { useGlobalContext } from '@/contexts/global/useGlobalStoreContext';
 import useCustomToast from '@/hooks/useCustomToast';
+import useHandleError from '@/hooks/useHandleError';
 
 import UnStorageItemInfoItem from './UnStorageItemInfoItem';
 
 const DiscardedItemListTab = () => {
   const Toast = useCustomToast();
   const { refrigeratorId } = useGlobalContext((ctx) => ctx.state);
+  const { handleApiError } = useHandleError();
 
   const {
     data: discardedItemListData,
@@ -30,16 +32,7 @@ const DiscardedItemListTab = () => {
           return lastPage.result.cursor;
         }
       },
-      onError: (err: any) => {
-        console.log(
-          '$######## 사용한 상품 불러오기 에러',
-          err.response.data?.message,
-        );
-        Toast.show({
-          title: err.response.data?.message || '',
-          status: 'error',
-        });
-      },
+      onError: handleApiError,
     },
   });
 
@@ -66,7 +59,7 @@ const DiscardedItemListTab = () => {
       px="16px"
       py="24px"
       // P_TODO: 목록 비었을 떄 추가.
-      ListEmptyComponent={<Text>비었어용</Text>}
+      ListEmptyComponent={<></>}
     />
   );
 };

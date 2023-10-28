@@ -19,8 +19,8 @@ const SettingStackNavigation = () => {
       initialRouteName="My"
     >
       <Auth.Screen name="My" component={MyScreen} />
-      <Auth.Screen name="Refrigerator" component={RefrigeratorScreen} />
-      <Auth.Screen name="Member" component={MemberScreen} />
+      {/* <Auth.Screen name="Refrigerator" component={RefrigeratorScreen} />
+      <Auth.Screen name="Member" component={MemberScreen} /> */}
     </Auth.Navigator>
   );
 };

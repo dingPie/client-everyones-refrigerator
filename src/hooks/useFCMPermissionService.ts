@@ -2,6 +2,9 @@ import { useEffect } from 'react';
 
 import messaging from '@react-native-firebase/messaging';
 
+import ASYNC_STORAGE_KEY from '@/constants/async-storage-key';
+import { setAsyncStorage } from '@/utils/async-storage/helper';
+
 /**
  *
  * ios => GoogleService-Info.plist
@@ -18,6 +21,8 @@ function useFCMService() {
   const getFCMToken = async () => {
     try {
       const token = await messaging().getToken();
+      console.log('#################### FCM 토큰', token);
+      setAsyncStorage(ASYNC_STORAGE_KEY.FCM_TOKEN, token);
     } catch (e) {
       console.log(e);
     }

@@ -4,6 +4,7 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 import { useAuthRefreshMutation } from '@/apis/auth/auth-api.mutation';
 
+import GlobalLoading from '@/components/@Layout/GlobalLoading';
 import Splash from '@/components/Splash';
 import { useGlobalContext } from '@/contexts/global/useGlobalStoreContext';
 import withAppProvider from '@/hocs/withAppProvider';
@@ -83,7 +84,18 @@ function App() {
     prepare();
   }, []);
 
-  return <>{appIsReady ? <Navigations /> : <Splash />}</>;
+  return (
+    <>
+      {appIsReady ? (
+        <>
+          <Navigations />
+          <GlobalLoading />
+        </>
+      ) : (
+        <Splash />
+      )}
+    </>
+  );
 }
 
 export default withAppProvider(App);

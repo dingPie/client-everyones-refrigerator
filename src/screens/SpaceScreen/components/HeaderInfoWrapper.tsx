@@ -25,8 +25,8 @@ const HeaderInfoWrapper = ({
   return (
     <VStack
       space="8px"
-      bgColor="gray.300"
-      borderRadius="8px"
+      bgColor="white"
+      borderTopRadius="8px"
       p="16px"
       mb="12px"
     >
@@ -77,8 +77,15 @@ const HeaderInfoWrapper = ({
           value=""
           isChecked={isMine}
           onChange={setIsMine}
-          size="md"
+          boxSize="24px"
+          _icon={{
+            size: '20px',
+            color: 'primary.700',
+          }}
           mr="-14px"
+          bgColor="white"
+          borderColor="gray.400"
+          borderWidth="1px"
         >
           {''}
         </Checkbox>

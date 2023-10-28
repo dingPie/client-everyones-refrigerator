@@ -23,7 +23,7 @@ export function useGetItemListBySpaceInfiniteQuery(
 
   const query = useInfiniteQuery(
     queryKey,
-    ({ pageParam = 1 }) => {
+    ({ pageParam = 0 }) => {
       return itemApi.listBySpace({
         ...params.variables,
         cursor: pageParam,
@@ -41,7 +41,7 @@ export function useGetItemListByStatusInfiniteQuery(
 
   const query = useInfiniteQuery(
     queryKey,
-    ({ pageParam = 1 }) => {
+    ({ pageParam = 0 }) => {
       return itemApi.listByStatus({
         ...params.variables,
         cursor: pageParam,

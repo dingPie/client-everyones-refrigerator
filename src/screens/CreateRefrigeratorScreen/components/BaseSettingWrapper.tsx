@@ -29,22 +29,29 @@ const BaseSettingWrapper = ({}: BaseSettingWrapperProps) => {
         <RowLabelWrapper label="냉장고 이름" isRequire>
           <CustomInputController
             keyName={'name'}
-            placeholder="이 냉장고 그룹의 이름"
+            placeholder="냉장고 그룹 이름"
+            maxLength={20}
           />
         </RowLabelWrapper>
 
         <RowLabelWrapper label="냉장고 코드">
           <CustomInputController
             keyName={'code'}
-            placeholder="AAAAAA 형태의 대문자 6자리"
+            placeholder="영문 대문자 6자리"
+            autoCapitalize="characters"
+            numberOfLines={1}
+            maxLength={6}
           />
         </RowLabelWrapper>
 
         <RowLabelWrapper
-          label="최대 보관 갯수"
+          label="인당 보관 가능한 갯수"
           isRequire
           boxProps={{
             py: '4px',
+          }}
+          labelProps={{
+            w: 'auto',
           }}
         >
           <HStack
@@ -56,9 +63,10 @@ const BaseSettingWrapper = ({}: BaseSettingWrapperProps) => {
             <CustomInputController
               keyName={'maxCountStoragePerUser'}
               keyboardType="numeric"
-              placeholder="최대 1,000개"
+              placeholder="최대 999"
               w="120px"
               isShowError={false}
+              maxLength={3}
             />
             <Text>개</Text>
           </HStack>
@@ -80,7 +88,8 @@ const BaseSettingWrapper = ({}: BaseSettingWrapperProps) => {
             <CustomInputController
               keyName={'maxStoragePeriod'}
               keyboardType="numeric"
-              placeholder="최대 30일"
+              placeholder="최대 30"
+              maxLength={2}
               w="120px"
               isShowError={false}
             />
@@ -107,8 +116,15 @@ const BaseSettingWrapper = ({}: BaseSettingWrapperProps) => {
                   value=""
                   isChecked={value}
                   onChange={onChange}
-                  size="md"
+                  boxSize="24px"
+                  _icon={{
+                    size: '20px',
+                    color: 'primary.700',
+                  }}
                   mr="-14px"
+                  bgColor="white"
+                  borderColor="gray.400"
+                  borderWidth="1px"
                 >
                   {''}
                 </Checkbox>

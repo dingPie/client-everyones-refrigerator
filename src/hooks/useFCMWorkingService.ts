@@ -1,10 +1,12 @@
-import React, { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
-import { Alert } from 'react-native';
+import { Toast } from 'native-base';
 
 import messaging, {
   FirebaseMessagingTypes,
 } from '@react-native-firebase/messaging';
+
+import { LAYOUT } from '@/constants/layout';
 
 function useFCMWorkingService() {
   const onNotificationOpenedApp = useCallback(() => {
@@ -34,17 +36,32 @@ function useFCMWorkingService() {
 
   const handleRemoteMessage = useCallback(
     (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
-      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+      const { body, title } = remoteMessage.notification || {};
+      Toast.show({
+        title: `${title}`,
+        description: body,
+        bgColor: 'white',
+        _title: {
+          color: 'gray.900',
+          fontSize: 'lg',
+          mb: '4px',
+        },
+        _description: {
+          color: 'gray.900',
+        },
+        width: `${LAYOUT.WINDOW_WIDTH - 40}px`,
+        placement: 'top',
+      });
     },
     [],
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     const unsubscribe = messaging().onMessage(handleRemoteMessage);
     return unsubscribe;
   }, [handleRemoteMessage]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     onNotificationOpenedApp();
     getInitialNotification();
   }, [onNotificationOpenedApp, getInitialNotification]);

@@ -21,7 +21,7 @@ const ImageSelectActionsheet = ({
 }: ImageSelectActionsheetProps) => {
   return (
     <Actionsheet isOpen={isOpen} onClose={onClose}>
-      <Actionsheet.Content h="200px" px="16px">
+      <Actionsheet.Content h="200px" px="16px" bgColor="white">
         <Flex w="100%" mb="24px">
           <Text size="lg.bold">아이콘 선택</Text>
         </Flex>

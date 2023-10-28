@@ -27,6 +27,7 @@ import {
 import useCustomModal from '@/contexts/Modal/useCustomModal';
 import { useGlobalContext } from '@/contexts/global/useGlobalStoreContext';
 import useCustomToast from '@/hooks/useCustomToast';
+import useHandleError from '@/hooks/useHandleError';
 import { SettingStackParamList } from '@/navigations/type';
 
 import { deleteToken } from '@/utils/async-storage/token';
@@ -40,9 +41,12 @@ type MyNavigationProps = NavigationProp<SettingStackParamList, 'My'>;
 const MyInfoTab = () => {
   const navigation = useNavigation<MyNavigationProps>();
   const queryClient = useQueryClient();
-  const useEditNotificationMethod = useEditNotificationForm();
+  const editNotificationMethod = useEditNotificationForm();
+  const { setValue, getValues, handleSubmit } = editNotificationMethod;
   const Toast = useCustomToast();
   const Modal = useCustomModal();
+  const { handleApiError } = useHandleError();
+
   const { refrigeratorId } = useGlobalContext((ctx) => ctx.state);
   const dispatch = useGlobalContext((ctx) => ctx.dispatch);
 
@@ -52,16 +56,7 @@ const MyInfoTab = () => {
     },
     options: {
       enabled: !!refrigeratorId,
-      onError: (err: any) => {
-        console.log(
-          '이 냉장고의 내 정보 불러오기 에러:',
-          err.response.data?.message,
-        );
-        Toast.show({
-          title: err.response.data?.message || '',
-          status: 'error',
-        });
-      },
+      onError: handleApiError,
     },
   });
 
@@ -79,13 +74,7 @@ const MyInfoTab = () => {
           title: '로그아웃 되었어요.',
         });
       },
-      onError: (err: any) => {
-        console.log('@@@ 로그아웃 에러', err);
-        Toast.show({
-          title: err.response.data?.message || '',
-          status: 'error',
-        });
-      },
+      onError: handleApiError,
     },
   });
 
@@ -102,13 +91,7 @@ const MyInfoTab = () => {
             }),
           ]);
         },
-        onError: (err: any) => {
-          console.log('@@@ 로그아웃 에러', err);
-          Toast.show({
-            title: err.response.data?.message || '',
-            status: 'error',
-          });
-        },
+        onError: handleApiError,
       },
     });
 
@@ -117,7 +100,7 @@ const MyInfoTab = () => {
       onSuccess: (data) => {
         if (data.result) {
           Toast.show({
-            title: '내 권한 수정이 완료되었어요.',
+            title: '냉장고 탈퇴가 완료되었어요.',
           });
           queryClient.invalidateQueries([
             REFRIGERATOR_USER_API_QUERY_KEY.GET_MY_INFO_BY_REFRIGERATOR({
@@ -134,13 +117,7 @@ const MyInfoTab = () => {
           });
         }
       },
-      onError: (err: any) => {
-        console.log('@@@ 로그아웃 에러', err);
-        Toast.show({
-          title: err.response.data?.message || '',
-          status: 'error',
-        });
-      },
+      onError: handleApiError,
     },
   });
 
@@ -162,15 +139,14 @@ const MyInfoTab = () => {
   }, [Modal, authLogoutMutate]);
 
   const onPressSaveEditNotificationButton = useCallback(async () => {
-    await useEditNotificationMethod.trigger();
     patchRefrigeratorUserMyInfoByRefrigeratorMutate({
       refrigeratorId: refrigeratorId || -1,
-      ...useEditNotificationMethod.getValues(),
+      ...getValues(),
     });
   }, [
+    getValues,
     patchRefrigeratorUserMyInfoByRefrigeratorMutate,
     refrigeratorId,
-    useEditNotificationMethod,
   ]);
 
   const onPressWithdrawalButton = useCallback(() => {
@@ -198,24 +174,14 @@ const MyInfoTab = () => {
 
   useEffect(() => {
     if (!myInfoByRefrigeratorInfo) return;
-
-    useEditNotificationMethod.setValue(
-      'isAlertEtc',
-      myInfoByRefrigeratorInfo?.isAlertEtc,
-    );
-    useEditNotificationMethod.setValue(
-      'isShowExpireDate',
-      myInfoByRefrigeratorInfo?.isShowExpireDate,
-    );
-    useEditNotificationMethod.setValue(
-      'lunchAlertTime',
-      myInfoByRefrigeratorInfo?.lunchAlertTime,
-    );
-    useEditNotificationMethod.setValue(
+    setValue('isAlertEtc', myInfoByRefrigeratorInfo?.isAlertEtc);
+    setValue('isShowExpireDate', myInfoByRefrigeratorInfo?.isShowExpireDate);
+    setValue('lunchAlertTime', myInfoByRefrigeratorInfo?.lunchAlertTime);
+    setValue(
       'beforeExpireAlertDate',
       myInfoByRefrigeratorInfo?.beforeExpireAlertDate,
     );
-  }, [myInfoByRefrigeratorInfo, useEditNotificationMethod]);
+  }, [myInfoByRefrigeratorInfo, setValue]);
 
   return (
     <ScrollView flex={1} h="100%" bgColor="gray.100" py="24px" px="16px">
@@ -226,7 +192,7 @@ const MyInfoTab = () => {
           onPressLogoutButton={onPressLogoutButton}
         />
 
-        <FormProvider {...useEditNotificationMethod}>
+        <FormProvider {...editNotificationMethod}>
           <NotificationWrapper
             onPressSaveEditNotificationButton={
               onPressSaveEditNotificationButton

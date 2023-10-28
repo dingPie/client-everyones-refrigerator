@@ -10,7 +10,9 @@ import { refresh } from './refresh';
 const isDev = ENV.NODE_ENV === 'development';
 
 const instance = axios.create({
-  baseURL: ENV.API_BASE_URL,
+  // baseURL: 'http://localhost:8080/v1',
+  baseURL:
+    'https://port-0-api-everyones-refrigerator-jvpb2mlo0p8w4p.sel5.cloudtype.app/v1',
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
@@ -44,8 +46,8 @@ instance.interceptors.response.use(
       const isUnAuthError = status === 429;
       const isExpiredToken = status === 419;
 
-      if (isDev)
-        apiLogger({ status, reqData, resData: error, method: 'error' });
+      // if (isDev)
+      apiLogger({ status, reqData, resData: error, method: 'error' });
 
       if (isExpiredToken) {
         return refresh(reqData);
