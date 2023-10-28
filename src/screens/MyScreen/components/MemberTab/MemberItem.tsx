@@ -70,6 +70,8 @@ const MemberItem = ({
           width="120px"
           h="40px"
           bgColor="white"
+          color="gray.800"
+          borderColor="gray.400"
           _selectedItem={{
             bg: 'gray.100',
             endIcon: <CheckIcon size="5" />,
