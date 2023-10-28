@@ -7,5 +7,6 @@ export const ENV = {
   APP_VERSION_NAME: Config.APP_VERSION_NAME,
 
   NODE_ENV: Config.NODE_ENV,
-  API_BASE_URL: Config.API_BASE_URL,
+  DEV_API_BASE_URL: Config.DEV_API_BASE_URL,
+  PROD_API_BASE_URL: Config.PROD_API_BASE_URL,
 } as const;

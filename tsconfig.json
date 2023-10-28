@@ -39,6 +39,11 @@
     "skipLibCheck": true /* Skip type checking of declaration files. */,
     "resolveJsonModule": true /* Allows importing modules with a ‘.json’ extension, which is a common practice in node projects. */
   },
-  "include": ["global.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "global.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/apis/refrigerator-user/types/dto/get-user-list-by-refrigerator-dto.ts"
+  ],
   "exclude": ["node_modules"]
 }

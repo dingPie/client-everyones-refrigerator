@@ -1,10 +1,11 @@
 import { getColorSchema } from '@/utils/color-generator';
 
 const Light = {
-  primary: getColorSchema('#A076F9'),
+  // primary: getColorSchema('#0359AE'),
+  primary: getColorSchema('#6a92cc'),
   secondary: getColorSchema('#6528F7'),
   warning: getColorSchema('#FF6060'),
-  success: getColorSchema('#4850FF'),
+  success: getColorSchema('#00CC99'),
   gray: {
     50: '#FAFAFA',
     100: '#F7F7F7',
@@ -27,54 +28,7 @@ const Light = {
   modal: '#FFFFFF',
 };
 
-const Dark = {
-  primary: {
-    50: '#D5E3FE',
-    100: '#B8D0FF',
-    200: '#8D9DE0',
-    300: '#687CD8',
-    400: '#5667FF',
-    500: '#485BFF',
-    600: '#232CE4',
-    700: '#0007BB',
-    800: '#00187B',
-    900: '#001159',
-  },
-  secondary: {
-    50: '#EDE8FF',
-    100: '#E0DAFF',
-    200: '#D5CAFF',
-    300: '#BDAFFF',
-    400: '#9480FF',
-    500: '#755AFF',
-    600: '#5B3AFF',
-    700: '#411FEF',
-    800: '#3100BD',
-    900: '#20007B',
-  },
-  warning: getColorSchema('#FF6060'),
-  success: getColorSchema('#4850FF'),
-  gray: {
-    50: '#292A2E',
-    100: '#313236',
-    200: '#39393D',
-    300: '#4A4D55',
-    400: '#5C606A',
-    500: '#757983',
-    600: '#8C919F',
-    700: '#B8BCC8',
-    800: '#D1D4DD',
-    900: '#DFE1E7',
-  },
-  black: '#E5E7EC',
-  white: '#232325',
-  background: {
-    primary: '#FFFFFF',
-    secondary: '#FAFAFA',
-    tertiary: '#F0F0F0',
-  },
-  modal: '#FFFFFF',
-};
+const Dark = {};
 
 const Brand = {
   kakao: {
@@ -111,7 +65,7 @@ const Dim = {
 
 const mode = {
   light: Light,
-  dark: Dark,
+  dark: Light,
 };
 
 const colors = {

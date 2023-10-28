@@ -9,7 +9,7 @@ export const normalStyle = {
     lineHeight: '40px',
   },
   '3xl': {
-    fontSize: '30px',
+    fontSize: '28px',
     lineHeight: '36px',
   },
   '2xl': {
@@ -25,7 +25,7 @@ export const normalStyle = {
     lineHeight: '27px',
   },
   md: {
-    fontSize: '16px',
+    fontSize: '15px',
     lineHeight: '24px',
   },
   sm: {

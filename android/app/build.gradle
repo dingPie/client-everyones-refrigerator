@@ -245,7 +245,7 @@ android {
         ndk {
             debugSymbolLevel 'SYMBOL_TABLE'
         }
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
