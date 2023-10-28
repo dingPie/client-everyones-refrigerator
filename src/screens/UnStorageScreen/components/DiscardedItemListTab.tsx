@@ -59,7 +59,7 @@ const DiscardedItemListTab = () => {
       px="16px"
       py="24px"
       // P_TODO: 목록 비었을 떄 추가.
-      ListEmptyComponent={<Text>비었어용</Text>}
+      ListEmptyComponent={<></>}
     />
   );
 };

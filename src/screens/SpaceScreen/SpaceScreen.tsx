@@ -74,9 +74,6 @@ const SpaceScreen = () => {
           return lastPage.result.cursor;
         }
       },
-      onSuccess: (data) => {
-        // console.log('무한 스크롤!!', data, data.pageParams, data.pages);
-      },
       onError: (err: any) => {
         console.log('아이템ㅁ 목록 불러오기 에러', err.response.data?.message);
         Toast.show({

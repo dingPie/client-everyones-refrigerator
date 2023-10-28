@@ -42,6 +42,7 @@ const CountInput = ({ setValue, value, max = 10000 }: CountInputProps) => {
         w="60px"
         h="48px"
         size="md"
+        color="black"
         _focus={{
           bgColor: 'white',
         }}

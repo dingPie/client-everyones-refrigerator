@@ -58,7 +58,9 @@ const InputWrapper = ({
                 size="md"
                 minWidth="144px"
                 h="48px"
+                color="black"
                 bgColor="white"
+                borderColor="gray.400"
                 placeholder="보관 유형"
                 dropdownIcon={<ChevronDownIcon size="4" mr="8px" />}
                 _selectedItem={{

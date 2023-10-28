@@ -88,6 +88,8 @@ const NotificationWrapper = ({
                   minWidth="80px"
                   h="40px"
                   isDisabled={!value}
+                  color="gray.800"
+                  borderColor="gray.400"
                   bgColor="white"
                   placeholder="12"
                   dropdownIcon={<ChevronDownIcon size="4" mr="8px" />}
@@ -161,6 +163,8 @@ const NotificationWrapper = ({
                   h="40px"
                   isDisabled={!value}
                   bgColor="white"
+                  color="gray.800"
+                  borderColor="gray.400"
                   placeholder="1일"
                   dropdownIcon={<ChevronDownIcon size="4" mr="8px" />}
                   _selectedItem={{

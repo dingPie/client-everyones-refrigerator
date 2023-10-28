@@ -27,7 +27,7 @@ const JoinOtherRefrigeratorModal = ({
 
   return (
     <Modal {...props}>
-      <Modal.Content p="24px">
+      <Modal.Content p="24px" bgColor="white">
         <VStack justifyContent="space-between" space="30px">
           <Text size="lg.bold">냉장고 코드를 입력하여 참여하세요</Text>
 

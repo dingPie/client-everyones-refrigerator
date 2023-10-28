@@ -63,7 +63,7 @@ const EditRefrigeratorWrapper = ({
       <RowLabelWrapper label="최대 보관 기간">
         <Text size="lg.bold">{maxStoragePeriod} 일</Text>
       </RowLabelWrapper>
-      <RowLabelWrapper label="인당 보관 가능한 갯수">
+      <RowLabelWrapper label="인당 보관 가능한 갯수" labelProps={{ w: 'auto' }}>
         <Text size="lg.bold">
           {refrigeratorInfo?.maxCountStoragePerUser} 개
         </Text>
