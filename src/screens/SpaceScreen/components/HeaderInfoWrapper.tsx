@@ -25,8 +25,8 @@ const HeaderInfoWrapper = ({
   return (
     <VStack
       space="8px"
-      bgColor="gray.300"
-      borderRadius="8px"
+      bgColor="white"
+      borderTopRadius="8px"
       p="16px"
       mb="12px"
     >
