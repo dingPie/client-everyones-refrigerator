@@ -139,7 +139,7 @@ const AddItemScreen = () => {
         borderRadius="10px"
         bgColor="white"
       >
-        <Text size="3xl.bold">내 물건 추가하기</Text>
+        <Text size="2xl.bold">내 물건 추가하기</Text>
 
         <FormProvider {...addItemMethod}>
           <InputWrapper

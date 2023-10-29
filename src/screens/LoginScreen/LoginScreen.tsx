@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import { Pressable, Text, VStack } from 'native-base';
 
@@ -29,6 +29,8 @@ const LoginScreen = () => {
 
   const { dispatch } = useGlobalContext((state) => state);
 
+  const loginRef = useRef(false);
+
   const { mutate: loginMutate } = useAuthLoginMutation({
     options: {
       onSuccess: (data) => {
@@ -45,6 +47,7 @@ const LoginScreen = () => {
   });
 
   const onPressGoogleLoginButton = async () => {
+    if (loginRef.current) return;
     try {
       await GoogleSignin.hasPlayServices({
         showPlayServicesUpdateDialog: true,
@@ -80,6 +83,8 @@ const LoginScreen = () => {
       } else {
         console.error('그 외에 에러', err);
       }
+    } finally {
+      loginRef.current = false;
     }
   };
 

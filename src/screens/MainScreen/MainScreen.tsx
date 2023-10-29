@@ -175,7 +175,7 @@ const MainScreen = () => {
             mx="2px"
             shadow={3}
           >
-            <Text size="3xl.bold">{refrigeratorData?.result.name}</Text>
+            <Text size="2xl.bold">{refrigeratorData?.result.name}</Text>
           </Flex>
         }
         // bgColor="white"

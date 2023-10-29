@@ -1,20 +1,16 @@
 import React, { memo } from 'react';
 
 import {
-  Box,
   Button,
   CheckIcon,
   ChevronDownIcon,
   HStack,
-  Pressable,
   Select,
   Switch,
   Text,
   VStack,
 } from 'native-base';
 import { Controller, useFormContext } from 'react-hook-form';
-
-import { MyInfoByRefrigeratorItemType } from '@/apis/refrigerator-user/types/model/my-info-by-refrigerator-model';
 
 import {
   BEFORE_EXPIRE_ALERT_DATE_LIST,
@@ -64,7 +60,7 @@ const NotificationWrapper = ({
                   <Switch
                     size="lg"
                     value={!!value}
-                    onChange={() => {
+                    onToggle={() => {
                       onChange(!value ? 12 : null);
                     }}
                   />
@@ -122,7 +118,7 @@ const NotificationWrapper = ({
               );
             }}
           />
-          <Text>시에 점심 알림이 갈 거에요.</Text>
+          <Text>시에 점심 알림이 와요.</Text>
         </HStack>
       </VStack>
 
@@ -139,7 +135,7 @@ const NotificationWrapper = ({
                   <Switch
                     size="lg"
                     value={!!value}
-                    onChange={() => {
+                    onToggle={() => {
                       onChange(!value ? 1 : null);
                     }}
                   />
@@ -196,7 +192,9 @@ const NotificationWrapper = ({
               );
             }}
           />
-          <Text>전 9시에 알림이 갈 거에요.</Text>
+          <Text>
+            전 <Text fontWeight="700">9시</Text> 에 알림이 와요.
+          </Text>
         </HStack>
       </VStack>
 
@@ -213,7 +211,7 @@ const NotificationWrapper = ({
                   <Switch
                     size="lg"
                     value={value}
-                    onChange={() => onChange(!value)}
+                    onToggle={() => onChange(!value)}
                   />
                 </>
               );
@@ -240,7 +238,7 @@ const NotificationWrapper = ({
                   <Switch
                     size="lg"
                     value={value}
-                    onChange={() => onChange(!value)}
+                    onToggle={() => onChange(!value)}
                   />
                 </>
               );
