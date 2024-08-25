@@ -140,33 +140,7 @@ const CreateRefrigeratorScreen = () => {
           );
         }}
         keyExtractor={(_, index) => index.toString()}
-        ListHeaderComponent={
-          <>
-            {/* 상단 냉장고 기본 설정 */}
-            <BaseSettingWrapper />
-            {/* 중단 냉장고에서 사용할 내 이름 설정 */}
-            <RowLabelWrapper
-              label="닉네임"
-              isRequire
-              boxProps={{
-                p: '20px',
-                mb: '32px',
-                borderBottomColor: 'gray.100',
-                borderBottomWidth: '6px',
-              }}
-            >
-              <CustomInputController
-                keyName={`userName`}
-                placeholder="이 그룹에서의 닉네임"
-                maxLength={20}
-              />
-            </RowLabelWrapper>
-
-            <Text size="2xl.bold" px="16px" mb="16px">
-              냉장고 칸 별 설정
-            </Text>
-          </>
-        }
+        ListHeaderComponent={<BaseSettingWrapper />}
         ListFooterComponent={
           <Button
             onPress={onPressAddEmptyRefrigeratorButton}

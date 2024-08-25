@@ -38,7 +38,7 @@ const useCustomToast = () => {
         h="auto"
         status={colorStatus}
         mx="20px"
-        bottom="80px"
+        top="20px"
         {...alertProps}
       >
         <HStack w="100%" justifyContent="space-between" alignItems="flex-start">
@@ -69,7 +69,10 @@ const useCustomToast = () => {
   };
 
   const showToast = (props: ToastComponentProps) => {
-    toast.show({ render: () => <ToastComponent {...props} /> });
+    toast.show({
+      render: () => <ToastComponent {...props} />,
+      placement: 'top',
+    });
   };
   const Toast = { show: showToast };
 
